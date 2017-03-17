@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:security="http://security.common.services.v1.wsapi.lexisnexis.com" xmlns:tns="http://getshepardsignals.citatortools.services.v1.wsapi.lexisnexis.com" xmlns:common="http://common.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://getshepardsignals.citatortools.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="Common.xsd" namespace="http://common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="Security.xsd" namespace="http://security.common.services.v1.wsapi.lexisnexis.com" />
+  <element name="GetShepardSignals" type="tns:GetShepardSignals">
+    <annotation>
+      <documentation>
+        This tag set encloses the other message parameters and is used to identify
+        this message as a ShepardSignalsList request.
+        </documentation>
+    </annotation>
+  </element>
+  <element name="GetShepardSignalsResponse" type="tns:GetShepardSignalsResponse">
+    <annotation>
+      <documentation>
+        This tag set encloses the other message parameters and is used to identify 
+        this message as a ShepardSignalsListResponse.
+        </documentation>
+    </annotation>
+  </element>
+  <complexType name="GetShepardSignals">
+    <sequence>
+      <element name="binarySecurityToken" type="security:BinarySecurityToken" />
+      <element name="citationList" type="tns:CitationList">
+        <annotation>
+          <documentation>
+                This tag set encloses a list of citation elements.
+                </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CitationList">
+    <sequence>
+      <element maxOccurs="unbounded" name="citation" type="tns:Citation">
+        <annotation>
+          <documentation>
+                This tag set encloses the list of citations for which Shepard 
+                Signals are needed.
+                </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="Citation">
+    <sequence>
+      <element name="cite" type="tns:Cite">
+        <annotation>
+          <documentation>
+                The primary citation used to find the Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="parallelList" type="tns:ParallelList">
+        <annotation>
+          <documentation>
+                This tag set encloses parallel citations that can be used to 
+                retrieve the Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="Cite">
+    <sequence>
+      <element name="citeString" type="string">
+        <annotation>
+          <documentation>
+                The primary citation string used to generate a Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="countryCode" type="tns:CountryCode">
+        <annotation>
+          <documentation>
+                The three-letter ISO 3166 country code for the reporter.
+                </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="vrpIndex" type="tns:VRPIndex">
+        <annotation>
+          <documentation>
+                The volume, page, and report index for the citation.
+                </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="CountryCode">
+    <restriction base="string">
+      <enumeration value="USA" />
+      <enumeration value="CAN" />
+    </restriction>
+  </simpleType>
+  <complexType name="VRPIndex">
+    <all>
+      <element name="volume" type="integer">
+        <annotation>
+          <documentation>
+                The volume for the citation.
+                </documentation>
+        </annotation>
+      </element>
+      <element name="reporterIndex" type="integer">
+        <annotation>
+          <documentation>
+                The reporter index for the citation.
+                </documentation>
+        </annotation>
+      </element>
+      <element name="page" type="integer">
+        <annotation>
+          <documentation>
+                The normalized page for the citation.
+                </documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+  <complexType name="ParallelList">
+    <sequence>
+      <element minOccurs="1" maxOccurs="unbounded" name="parallelCiteString" type="string">
+        <annotation>
+          <documentation>
+                This is an alternate citation of the case that can be used 
+                to retrieve the Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="GetShepardSignalsResponse">
+    <all>
+      <element name="shepardSignalsList" type="tns:ShepardSignalsList">
+        <annotation>
+          <documentation>
+                This tag set encloses a list of Shepard Signal elements.
+                </documentation>
+        </annotation>
+      </element>
+      <element name="citationFailureList" type="tns:CitationFailureList">
+        <annotation>
+          <documentation>
+                This tag set encloses a list of the citation failure diagnostics.
+                </documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+  <complexType name="ShepardSignalsList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="shepardSignal" type="tns:ShepardSignal">
+        <annotation>
+          <documentation>
+                Contains the meta-data elements for a Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ShepardSignal">
+    <all>
+      <element name="citeString" type="string">
+        <annotation>
+          <documentation>
+                The primary citation to use in the retrieval of a Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+      <element name="shepIndicator" type="boolean">
+        <annotation>
+          <documentation>
+                Indicates whether the citation is "Shep-able".
+                </documentation>
+        </annotation>
+      </element>
+      <element name="toaIndicator" type="boolean">
+        <annotation>
+          <documentation>
+                Indicates whether the citation is"TOA-able".
+                </documentation>
+        </annotation>
+      </element>
+      <element name="description" type="string">
+        <annotation>
+          <documentation>
+                A brief textual description of the Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+      <element name="signal" type="long">
+        <annotation>
+          <documentation>
+                A numeric indicator for the Shepard Signal type.
+                </documentation>
+        </annotation>
+      </element>
+      <element name="citationStatus" type="tns:citationStatus">
+        <annotation>
+          <documentation>
+                A diagnostic signal providing more details on the success of 
+                the citation to generate a Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+  <simpleType name="citationStatus">
+    <restriction base="string">
+      <enumeration value="Ok" />
+      <enumeration value="OkUnambiguousTableCase" />
+    </restriction>
+  </simpleType>
+  <complexType name="CitationFailureList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="citationFailure" type="tns:CitationFailure">
+        <annotation>
+          <documentation>
+                Contains the diagnostic information for a citation that failed 
+                to process.
+                </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CitationFailure">
+    <all>
+      <element name="citeString" type="string">
+        <annotation>
+          <documentation>
+                The citation that failed to yield a Shepard Signal.
+                </documentation>
+        </annotation>
+      </element>
+      <element name="errorCode" type="tns:errorCode">
+        <annotation>
+          <documentation>
+                A key value indicating the nature of the failure to retrieve 
+                a Shepard Signal for that citation.
+                </documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+  <simpleType name="errorCode">
+    <restriction base="string">
+      <enumeration value="AmbiguousTableCase" />
+      <enumeration value="DocumentNotFound" />
+      <enumeration value="SourceNotRecognized" />
+      <enumeration value="UnknownError" />
+    </restriction>
+  </simpleType>
+</schema>

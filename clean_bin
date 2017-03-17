@@ -1,0 +1,8 @@
+#!/bin/bash
+sudo rm -f /var/www/lexnex/bin/System*
+sudo rm -f /var/www/lexnex/bin/Microsoft.*
+sudo rm -f /var/www/lexnex/bin/N*
+sudo rm -f /var/www/lexnex/bin/DotNet*
+sudo rm -f /var/www/lexnex/bin/Entity*
+sudo rm -f /var/www/lexnex/bin/Asp*
+sudo cp /var/www/lexnex/bin_bkup/* /var/www/lexnex/bin/.

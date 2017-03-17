@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:security="http://security.common.services.v1.wsapi.lexisnexis.com" xmlns:tns="http://browsesupportedregions.dossier.services.v1.wsapi.lexisnexis.com" xmlns:common="http://common.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://browsesupportedregions.dossier.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="../Security.xsd" namespace="http://security.common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="../Common.xsd" namespace="http://common.services.v1.wsapi.lexisnexis.com" />
+  <element name="BrowseSupportedRegions" type="tns:BrowseSupportedRegions">
+    <annotation>
+      <documentation>Retrieve a list of regions to restrict a Dossier Search to.</documentation>
+    </annotation>
+  </element>
+  <element name="BrowseSupportedRegionsResponse" type="tns:BrowseSupportedRegionsResponse">
+    <annotation>
+      <documentation>A list of regions at the requested level.</documentation>
+    </annotation>
+  </element>
+  <complexType name="BrowseSupportedRegions">
+    <sequence>
+      <element name="binarySecurityToken" type="security:BinarySecurityToken">
+        <annotation>
+          <documentation>Security token that must be provided on all non-authentication requests.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="regionId" type="string">
+        <annotation>
+          <documentation>An identifier used to represent a specific region in
+                  the region list.  If no region is supplied, a list of the
+				  broadest regions (a country list) will be returned.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="BrowseSupportedRegionsResponse">
+    <sequence>
+      <element name="regionList" type="tns:RegionList">
+        <annotation>
+          <documentation>A list of regions.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="RegionList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="Region" type="tns:Region">
+        <annotation>
+          <documentation>A region.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="Region">
+    <sequence>
+      <element name="regionName" type="string">
+        <annotation>
+          <documentation>The region's name.</documentation>
+        </annotation>
+      </element>
+      <element name="regionId" type="string">
+        <annotation>
+          <documentation>The region's id, which can be used in a
+					Dossier Search or used to call the BrowseSupportedRegions operation
+					again to get sub-regions (if subregionsAvailable = true).</documentation>
+        </annotation>
+      </element>
+      <element name="regionType" type="string">
+        <annotation>
+          <documentation>Various region types (e.g. "country", "state", etc.) are 
+					supported by Dossier and can be used when searching the Dossier service. 
+					For example, you could locate a particular country by including the
+					"country(12345)" query in your Dossier search.</documentation>
+        </annotation>
+      </element>
+      <element name="subregionsAvailable" type="boolean">
+        <annotation>
+          <documentation>A flag that indicates that subregions are available,
+					and that BrowseSupportedRegions may be called again using this regionId to
+					obtain the list of subregions.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

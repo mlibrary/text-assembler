@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:tns="http://browseglobalsources.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:common="http://common.services.v1.wsapi.lexisnexis.com" xmlns:gsdcommon="http://common.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:sourcecommon="http://common.source.services.v1.wsapi.lexisnexis.com" xmlns:security="http://security.common.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://browseglobalsources.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="Common.xsd" namespace="http://common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="Security.xsd" namespace="http://security.common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="SourceCommon.xsd" namespace="http://common.source.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="GlobalSourceDirectoryCommon.xsd" namespace="http://common.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" />
+  <element name="BrowseGlobalSources" type="tns:BrowseGlobalSources">
+    <annotation>
+      <documentation>Allows you to browse the global source directory hierarchy associated with your credentials (as dictated by your menu). The source directory is organized as a tree-like structure containing folders and sources. Since the names of folders and sources can change, folder identifiers and source identifiers are used to maintain persistence.</documentation>
+    </annotation>
+  </element>
+  <element name="BrowseGlobalSourcesResponse" type="tns:BrowseGlobalSourcesResponse">
+    <annotation>
+      <documentation>Includes information about the requested node in the source hierarchy (i.e. tree).</documentation>
+    </annotation>
+  </element>
+  <complexType name="BrowseGlobalSources">
+    <sequence>
+      <element name="locale" type="common:Locale">
+        <annotation>
+          <documentation>Optional locale indicating language of request.</documentation>
+        </annotation>
+      </element>
+      <element name="binarySecurityToken" type="security:BinarySecurityToken">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">f4348ad8876542bc93748c89fb98a7e</example>
+						Security token that must be provided on all non-authentication requests.
+					</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="includeTypeOfSource" type="boolean">
+        <annotation>
+          <documentation>
+					   If true, it returns the "Type of Source" in Response Source objects.
+					   Else, it does not return the "Type of Source" in Response.
+                    </documentation>
+        </annotation>
+      </element>
+      <element name="nodeId" type="string">
+        <annotation>
+          <documentation>The node indicating the location in the tree the client is currently browsing.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="intersectionFilterList" type="gsdcommon:FilterList">
+        <annotation>
+          <documentation>
+						Sets the list of filters to be applied to the incoming request.  The
+						filters will be applied using a logical AND combination, meaning that only
+						results that match ALL the filters (the intersection of the filters) will
+						be returned.
+					</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="sourceViewType" type="tns:SourceViewType">
+        <annotation>
+          <documentation>This parameter controls what type of sources are returned in the source list. It can be all sources, group sources only, or single sources only. This functionality is not the same as a filter. A filter removed a source from consideration, while this only removes its display. As an example, a Node with group and single sources would still compute its combinability information based on all sources, not just the ones that may be displayed. Additionally, setting this value to single or group sources only may result in a node being selected.  The default is ALL_SOURCES.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="useCSP" type="boolean">
+        <annotation>
+          <documentation>Sets the CSP value. false = R4.1 behavior (DFS combinability rules) true = R5 behavior (Combined Search combinability rules)</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="returnCountryFilterList" type="boolean">
+        <annotation>
+          <documentation>By default, this list is returned, but it can be ommitted to improve response time.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="returnFirstLevelPubFilterList" type="boolean">
+        <annotation>
+          <documentation>By default, this list is returned, but it can be ommitted to improve response time.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="returnIndustryTopicsFilterList" type="boolean">
+        <annotation>
+          <documentation>By default, this list is returned, but it can be ommitted to improve response time.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="returnJurisdictionFilterList" type="boolean">
+        <annotation>
+          <documentation>By default, this list is returned, but it can be ommitted to improve response time.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="returnLegalTopicsFilterList" type="boolean">
+        <annotation>
+          <documentation>By default, this list is returned, but it can be ommitted to improve response time.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="returnNewsTopicsFilterList" type="boolean">
+        <annotation>
+          <documentation>By default, this list is returned, but it can be ommitted to improve response time.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="returnRelatedFilterList" type="boolean">
+        <annotation>
+          <documentation>By default, this list is returned, but it can be ommitted to improve response time.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="returnSecondLevelPubFilterList" type="boolean">
+        <annotation>
+          <documentation>By default, this list is returned, but it can be ommitted to improve response time.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="SourceViewType">
+    <restriction base="string">
+      <enumeration value="ALL_SOURCES" />
+      <enumeration value="GROUP_SOURCES_ONLY" />
+      <enumeration value="SINGLE_SOURCES_ONLY" />
+    </restriction>
+  </simpleType>
+  <simpleType name="FilterType">
+    <restriction base="string">
+      <enumeration value="AND" />
+      <enumeration value="AND_NOT" />
+      <enumeration value="OR" />
+    </restriction>
+  </simpleType>
+  <complexType name="SourceFilterList">
+    <sequence>
+      <element maxOccurs="unbounded" ref="common:sourceId">
+        <annotation>
+          <documentation>Unique identifier for a standard LexisNexis source.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="PrimaryContentTypeOnlyFilterList">
+    <sequence>
+      <element maxOccurs="unbounded" name="primaryContentTypeOnlyFilter" type="integer">
+        <annotation>
+          <documentation>A primary content type only filter.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="BrowseGlobalSourcesResponse">
+    <sequence>
+      <element minOccurs="0" name="countryFilterList" type="tns:FilterDetailList">
+        <annotation>
+          <documentation>the list of NodeIdentifierNameResponse that represent the country nodes for context sensitive filtering. The list of countries that are valid for the user. These values would be used in the Rosetta application to populate the Country filter drop down when browsing sources. This list would only be countries which contain sources the user is entitled to. It will also only be populated when the include country info is set to true on the request.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="firstLevelPubFilterList" type="tns:FilterDetailList">
+        <annotation>
+          <documentation>the list of NodeIdentifierNameResponse that represent the first level publication type nodes for context sensitive filtering. The list of first level publictions nodes under the selected pub type that are valid for the user. These values would be used in the Rosetta application to populate the first level pub type filter drop down when browsing sources. This list would only be first level pub types which contain sources the user is entitled to. It will also only be populated when the include pub type info is set to true on the request.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="industryTopicsFilterList" type="tns:FilterDetailList">
+        <annotation>
+          <documentation>The list of valid topics for the user. This would be used to populate the topics filter that will appear on the Rosetta application when browsing sources by publication type.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="jurisdictionFilterList" type="tns:FilterDetailList">
+        <annotation>
+          <documentation>the list of NodeIdentifierNameResponse that represent the jurisdiction nodes for context sensitive filtering. The list of jurisdictions under the selected country that are valid for the user. These values would be used in the Rosetta application to populate the Jurisdiction filter drop down when browsing sources. This list would only be jurisdictions which contain sources the user is entitled to. It will also only be populated when a country filter was passed in on the request and the include jurisdiction info is set to true on the request.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="legalTopicsFilterList" type="tns:FilterDetailList">
+        <annotation>
+          <documentation>The list of valid topics for the user. This would be used to populate the topics filter that will appear on the Rosetta application when browsing sources by publication type.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="newsTopicsFilterList" type="tns:FilterDetailList">
+        <annotation>
+          <documentation>The list of valid topics for the user. This would be used to populate the topics filter that will appear on the Rosetta application when browsing sources by publication type.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="nodeList" type="tns:NodeList">
+        <annotation>
+          <documentation>The list of GlobalNode (category) results matching the parameters of the request. These indicate nodes for further browsing in the tree.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="relatedNodeList" type="tns:NodeList">
+        <annotation>
+          <documentation>The list of GlobalNode related nodes results matching the parameters of the request.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="secondLevelPubFilterList" type="tns:FilterDetailList">
+        <annotation>
+          <documentation>Returns the list of NodeIdentifierNameResponse that represent the first second publication type nodes for context sensitive filtering. The list of second level publictions nodes under the selected pub type that are valid for the user. These values would be used in the Rosetta application to populate the second level pub type filter drop down when browsing sources. This list would only be second level pub types which contain sources the user is entitled to. It will also only be populated when the include pub type info is set to true on the request.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="sourceLandmarkList" type="tns:SourceLandmarkList">
+        <annotation>
+          <documentation>The list of SourceLandmark represents source locations in the list corresponding to the start of the next chunks. This is calculated from the first request using the explodeResultSize. Subsequent calls to retrieve chunks of the resulting sources should use the same explodeResultSize value as the original value on the request for this data to stay accurate.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="sourceList" type="sourcecommon:SourceList">
+        <annotation>
+          <documentation>Returns the list of GlobalSource results matching the parameters of the request.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="taxNodeName" type="string">
+        <annotation>
+          <documentation>The taxonomy node name when the input (requested) node is a taxonomy node.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="totalResultCount" type="integer">
+        <annotation>
+          <documentation>Returns the total number of sources matching this request.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="usingCountryFilter" type="boolean">
+        <annotation>
+          <documentation>This is a special flag for determining the SDS behavior that was applied when a country filter is passed in. If a country filter is passed in, and the user has no entitlements under that country, then SDS throws away that country filter and backs out to a "All countries" scenerio. If the country filter is a valid one, then the value here will be true, but if SDS did not apply the country filter, then the value will be false.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="NodeList">
+    <sequence>
+      <element maxOccurs="unbounded" name="node" type="tns:GlobalNode">
+        <annotation>
+          <documentation>A GlobalNode (category) result matching the parameters of the request. These indicate nodes for further browsing in the tree.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="RelatedNodeList">
+    <sequence>
+      <element maxOccurs="unbounded" name="node" type="tns:GlobalNode">
+        <annotation>
+          <documentation>A GlobalNode (category) result matching the parameters of the request. These indicate nodes for further browsing in the tree.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SourceLandmarkList">
+    <sequence>
+      <element maxOccurs="unbounded" name="sourceLandmark" type="tns:SourceLandmark">
+        <annotation>
+          <documentation>The Source Landmark is an object used to collect jump locations for large result objects. For example, if there were 1000 results, there may be a landmark entry marking #1, #101, #201, #301, etc. These could then be used by clients to allow users to jump to those locations in the result set rather than returning the entire set to the user.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SourceLandmark">
+    <sequence>
+      <element minOccurs="0" name="index" type="integer">
+        <annotation>
+          <documentation>Returns the location in the original results this source is located at.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="source" type="sourcecommon:Source">
+        <annotation>
+          <documentation>The source information for the landmarked source.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="GlobalNode">
+    <sequence>
+      <element minOccurs="0" name="combinabilityFamilyList" type="sourcecommon:CombinabilityList">
+        <annotation>
+          <documentation>The combinability family list is a list of Strings defining the source's combinability family.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="filterIndicator" type="tns:AppliedFilterType">
+        <annotation>
+          <documentation>Indicates if the source was valid and entitled for the client, but was filtered out using the dynamic filtering that was applied.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="indexProcessed" type="tns:IndexProcessedType">
+        <annotation>
+          <documentation>Indicator used to determine if a source has been through the indexing processes.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="name" type="string">
+        <annotation>
+          <documentation>Display Name for the Node</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="nodeId" type="string">
+        <annotation>
+          <documentation>The Node ID value for the Node to be used for subsequent calls</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="numChildren" type="integer">
+        <annotation>
+          <documentation>By default, this attribute will not be set on the response because it is expensive. It can be turned on/off through the NodeAttributeSwitches object. It will be set to -1 if the param was not set in the call.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="containingChildren" type="boolean">
+        <annotation>
+          <documentation>If this node has children, then this attribute will indicate as such. The population if this attribute can be expensive, so it can be turned on/off using the NodeAttributeSwitches object. If the population of this attribute is off, then the value will be false by default.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="entitled" type="boolean">
+        <annotation>
+          <documentation>Returns whether or not the node is considered entitled. If any source under this node is entitled, then the node is entitled.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="transactional" type="boolean">
+        <annotation>
+          <documentation>Indicates if the source is a transactional source per the user's package definitions.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="valid" type="boolean">
+        <annotation>
+          <documentation>Returns whether or not the node being requested is a valid Node ID? This would be false if a list is passed in from an application containing a Node that was recently removed from the system.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="AppliedFilterType">
+    <restriction base="string">
+      <enumeration value="FIXED_PRICE_ONLY" />
+      <enumeration value="NONE_APPLIED" />
+      <enumeration value="TRANSACTIONAL_ONLY" />
+    </restriction>
+  </simpleType>
+  <simpleType name="IndexProcessedType">
+    <restriction base="string">
+      <enumeration value="FULL" />
+      <enumeration value="NONE" />
+      <enumeration value="PARTIAL" />
+    </restriction>
+  </simpleType>
+  <complexType name="FilterDetailList">
+    <sequence>
+      <element maxOccurs="unbounded" name="filterDetail" type="tns:FilterDetail">
+        <annotation>
+          <documentation>A node identifier</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="FilterDetail">
+    <sequence>
+      <element minOccurs="0" name="childCount" type="integer">
+        <annotation>
+          <documentation>Number of children the node contains.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="groupId" type="integer">
+        <annotation>
+          <documentation>The group Id of the object being returned.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="filterId" type="string">
+        <annotation>
+          <documentation>The filter Id of the object being returned.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="nodeName" type="string">
+        <annotation>
+          <documentation>The name of the node being returned.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="containingChildren" type="boolean">
+        <annotation>
+          <documentation>A quick check indicating if there are children.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="GlobalAdfType">
+    <restriction base="string">
+      <enumeration value="NO_ADF" />
+      <enumeration value="MANDATORY_ADF" />
+      <enumeration value="TABLE_OF_CONTENTS" />
+      <enumeration value="INFORMATIONAL" />
+      <enumeration value="CLASSIC_SOURCE" />
+      <enumeration value="CONTENT_SOURCE" />
+      <enumeration value="ABSOLUTELY_MANDATORY" />
+    </restriction>
+  </simpleType>
+  <simpleType name="DisplayApproachType">
+    <restriction base="string">
+      <enumeration value="DISPLAY_APPROACH_DYNAMIC" />
+      <enumeration value="DISPLAY_APPROACH_FABRICATED" />
+      <enumeration value="DISPLAY_APPROACH_UNSUPPORTED" />
+    </restriction>
+  </simpleType>
+  <simpleType name="PageBrowsableType">
+    <restriction base="string">
+      <enumeration value="PAGE_BROWSABLE_FULL" />
+      <enumeration value="PAGE_BROWSABLE_NONE" />
+      <enumeration value="PAGE_BROWSABLE_PARTIAL" />
+    </restriction>
+  </simpleType>
+  <simpleType name="PermissibleUseType">
+    <restriction base="string">
+      <enumeration value="NONE" />
+      <enumeration value="DPPA" />
+      <enumeration value="GLPBA" />
+      <enumeration value="BOTH" />
+    </restriction>
+  </simpleType>
+  <simpleType name="PubTreeType">
+    <restriction base="string">
+      <enumeration value="PUB_TREE_NOT_SET" />
+      <enumeration value="PUB_TREE_OPEN" />
+      <enumeration value="PUB_TREE_CLOSED" />
+    </restriction>
+  </simpleType>
+</schema>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:security="http://security.common.services.v1.wsapi.lexisnexis.com" xmlns:sourcecommon="http://common.source.services.v1.wsapi.lexisnexis.com" xmlns:tns="http://browsesources.source.services.v1.wsapi.lexisnexis.com" xmlns:common="http://common.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://browsesources.source.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="Common.xsd" namespace="http://common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="Security.xsd" namespace="http://security.common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="SourceCommon.xsd" namespace="http://common.source.services.v1.wsapi.lexisnexis.com" />
+  <element name="BrowseSources" type="tns:BrowseSources">
+    <annotation>
+      <documentation>
+            Allows you to browse the source directory hierarchy associated
+            with your credentials (as dictated by your menu). The source 
+            directory is organized as a tree-like structure containing folders 
+            and sources. Since the names of folders and sources can change, 
+            folder identifiers and source identifiers are used to maintain 
+            persistence. 
+         </documentation>
+    </annotation>
+  </element>
+  <element name="BrowseSourcesResponse" type="tns:BrowseSourcesResponse">
+    <annotation>
+      <documentation>
+            Includes information about the requested node in the source 
+            hierarchy (i.e. tree).
+         </documentation>
+    </annotation>
+  </element>
+  <complexType name="BrowseSources">
+    <sequence>
+      <element name="locale" type="common:Locale">
+        <annotation>
+          <documentation>
+					Optional locale indicating language of request.
+				</documentation>
+        </annotation>
+      </element>
+      <element name="binarySecurityToken" type="security:BinarySecurityToken">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">f4348ad8876542bc93748c89fb98a7e</example>
+                  Security token that must be provided on all non-authentication
+                  requests.
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="folderId" type="integer">
+        <annotation>
+          <documentation>
+                  The node indicating the location in the tree the client is currently browsing.
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="sourcePackageId" type="string">
+        <annotation>
+          <documentation>
+                  The menu you want to browse with.
+				  Default: all menus.
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="useCSP" type="boolean">
+        <annotation>
+          <documentation>
+                Internal Use Only!
+                Use Combined Search Pricing Rules/Logic.
+              </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="Folder">
+    <sequence>
+      <element name="name" type="string">
+        <annotation>
+          <documentation>
+                  The name of a Category node.
+               </documentation>
+        </annotation>
+      </element>
+      <element name="folderId" type="integer">
+        <annotation>
+          <documentation>
+                  An identifier that is associated with a particular Category Folder in 
+                  the source directory.
+               </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="FolderList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="folder" type="tns:Folder">
+        <annotation>
+          <documentation>
+                  Specific information about a Node (name and ID).
+               </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="BrowseSourcesResponse">
+    <sequence>
+      <element name="sourceList" type="sourcecommon:SourceList">
+        <annotation>
+          <documentation>
+                  A list of sources contained within the requested Category Node.
+               </documentation>
+        </annotation>
+      </element>
+      <element name="folderList" type="tns:FolderList">
+        <annotation>
+          <documentation>
+         	      A list of sub-Category Nodes contained within the requested Category.
+         	   </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

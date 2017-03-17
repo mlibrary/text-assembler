@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:tns="http://common.tableofcontents.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://common.tableofcontents.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <complexType name="TOCResponse">
+    <sequence>
+      <element name="tocId" type="string">
+        <annotation>
+          <documentation>Identifier for the source for which the TOC is being
+          requested.  Used as input for a subsequent TOC navigation request.</documentation>
+        </annotation>
+      </element>
+      <element name="caption" type="string">
+        <annotation>
+          <documentation>The caption (title) text of the root node of the TOC. 
+          Example: Halsbury's Laws of England</documentation>
+        </annotation>
+      </element>
+      <element name="tocDepth" type="long">
+        <annotation>
+          <documentation>The depth of the deepest node within the TOC. Example: 7</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="copyright" type="string">
+        <annotation>
+          <documentation>Optional displayable TOC copyright information. 
+          Example: Copyright (c) 2004 LexisNexisWSKImplementation. All rights reserved.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="disclaimer" type="tns:Disclaimer">
+        <annotation>
+          <documentation>Optional TOC disclaimer information.</documentation>
+        </annotation>
+      </element>
+      <element name="tocNodeList" type="tns:TOCResponseNodeList">
+        <annotation>
+          <documentation>List of TOC nodes returned in response to the TOC state information specified in the request.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="diagnostic" type="tns:Diagnostic">
+        <annotation>
+          <documentation>Returned when a non-fatal error condition is encountered, i.e.
+          TOC version mismatch indicating that the table of contents has been updated
+          during the user's session.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="TOCResponseNodeList">
+    <annotation>
+      <documentation>List of TOC nodes returned in response to a TOC request.</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="tocNode" type="tns:TOCNode">
+        <annotation>
+          <documentation>A single entry (node) in the TOC.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="TOCNode">
+    <annotation>
+      <documentation>Represents a single entry in the TOC.</documentation>
+    </annotation>
+    <sequence>
+      <element name="tocNodeId" type="string">
+        <annotation>
+          <documentation>Identifier for a TOC node.  Unique within the TOC.</documentation>
+        </annotation>
+      </element>
+      <element name="nodeLevel" type="long">
+        <annotation>
+          <documentation>Represents 1-based depth level of this node in the TOC hierarchy.
+            Example:  2</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="labelName" type="string">
+        <annotation>
+          <documentation>Optional additional text for use in prefixing the
+            caption of the TOC entry represented by this node.  
+            Sometimes but not necessarily used in combination with 
+            the labelNumber element.
+            Example:  Rule</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="labelNumber" type="string">
+        <annotation>
+          <documentation>Optional additional numeric or alphabetic text indicating
+            the ordinal position of this node within the TOC hierarchy
+            or sub-hierarchy. Sometimes but not necessarily used in 
+            combination with the labelName element.
+            Examples:  3., E., IV.</documentation>
+        </annotation>
+      </element>
+      <element name="caption" type="string">
+        <annotation>
+          <documentation>The caption (title) text of the corresponding TOC node.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="documentId" type="string">
+        <annotation>
+          <documentation>Optional identifier for source document accessed via a TOC node.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="referencePoint" type="string">
+        <annotation>
+          <documentation>Optional token used in conjunction with documentId to 
+            represent a fixed location within a document.
+            Example:  aaa</documentation>
+        </annotation>
+      </element>
+      <element name="hasChildren" type="boolean">
+        <annotation>
+          <documentation>Flag indicating if this node has any child nodes. Example: true</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="childNode" type="tns:TOCNode">
+        <annotation>
+          <documentation>Child node (only for TOC ancestry).</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="Disclaimer">
+    <sequence>
+      <element name="text" type="string">
+        <annotation>
+          <documentation>Descriptive text for disclaimer purposes for this 
+          TOC.</documentation>
+        </annotation>
+      </element>
+      <element name="displayLocation" type="tns:DisclaimerDisplayLocation">
+        <annotation>
+          <documentation>Indicates where the disclaimer text should be 
+          displayed relative to the TOC.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="Diagnostic">
+    <sequence>
+      <element name="code" type="string">
+        <annotation>
+          <documentation>Unique code identifying the type of diagnostic being
+          returned.  Example:  TOC_VERSION_MISMATCH</documentation>
+        </annotation>
+      </element>
+      <element name="rationale" type="string">
+        <annotation>
+          <documentation>Explanatory text describing the nature and reason
+          for the diagnostic.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="DisclaimerDisplayLocation">
+    <annotation>
+      <documentation>Enumeration for specifying the display location of the TOC 
+      disclaimer text.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="TopOfToc" />
+      <enumeration value="EndOfToc" />
+      <enumeration value="NotSpecified" />
+    </restriction>
+  </simpleType>
+</schema>

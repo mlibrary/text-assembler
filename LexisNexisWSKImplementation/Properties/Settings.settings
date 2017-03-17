@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LexisNexisWSKImplementation.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LexisNexis_LNWebReference_WSAPI" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.lexisnexis.com/wsapi/v1/services/Authentication</Value>
+    </Setting>
+    <Setting Name="LexisNexisWSKImplementation_LNWebReference_WSAPI" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://wskcert-www.lexisnexis.com/wsapi/v1/services/Authentication</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,1809 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:search-narrowsearch="http://narrowsearch.search.services.v1.wsapi.lexisnexis.com" xmlns:ldc-getsourcesbyjurisdiction="http://getsourcesbyjurisdiction.ldc.services.v1.wsapi.lexisnexis.com" xmlns:citatortools-getshepardsignals="http://getshepardsignals.citatortools.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getdocumentinsourcecontext="http://getdocumentinsourcecontext.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:source-searchsources="http://searchsources.source.services.v1.wsapi.lexisnexis.com" xmlns:index-searchcompanyindex="http://searchcompanyindex.index.services.v1.wsapi.lexisnexis.com" xmlns:resultsorting-sortresults="http://sortresults.resultsorting.services.v1.wsapi.lexisnexis.com" xmlns:sourcedirectory-getsourcedetails="http://getsourcedetails.sourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:ldc-searchcitationformats="http://searchcitationformats.ldc.services.v1.wsapi.lexisnexis.com" xmlns:citator-getcitationsignals="http://getcitationsignals.citator.services.v1.wsapi.lexisnexis.com" xmlns:dossier-retrievefulltextattributelist="http://retrievefulltextattributelist.dossier.services.v1.wsapi.lexisnexis.com" xmlns:dossier-retrievedossierlinks="http://retrievedossierlinks.dossier.services.v1.wsapi.lexisnexis.com" xmlns:dossier-browseindustryhierarchy="http://browseindustryhierarchy.dossier.services.v1.wsapi.lexisnexis.com" xmlns:tableofcontents-getrelatedtocids="http://getrelatedtocids.tableofcontents.services.v1.wsapi.lexisnexis.com" xmlns:dossier-searchindustrydossier="http://searchindustrydossier.dossier.services.v1.wsapi.lexisnexis.com" xmlns:index-browseindexterms="http://browseindexterms.index.services.v1.wsapi.lexisnexis.com" xmlns:cfg="http://wsdlwizard.v1.wsapi.lexisnexis.com" xmlns:globalsourcedirectory-getglobalsourcefilters="http://getglobalsourcefilters.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:dossier-browsesupportedregions="http://browsesupportedregions.dossier.services.v1.wsapi.lexisnexis.com" xmlns:index-getcompanydetail="http://getcompanydetail.index.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getadjacentdocument="http://getadjacentdocument.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:search-search="http://search.search.services.v1.wsapi.lexisnexis.com" xmlns:classification-browseresultclassifications="http://browseresultclassifications.classification.services.v1.wsapi.lexisnexis.com" xmlns:dossier-searchindustrydossierwithresulthierarchy="http://searchindustrydossierwithresulthierarchy.dossier.services.v1.wsapi.lexisnexis.com" xmlns:search-bulksearch="http://bulksearch.search.services.v1.wsapi.lexisnexis.com" xmlns:dossier-comparecompanies="http://comparecompanies.dossier.services.v1.wsapi.lexisnexis.com" xmlns:ldc-getshepardslexcite="http://getshepardslexcite.ldc.services.v1.wsapi.lexisnexis.com" xmlns:tns="http://services.v1.wsapi.lexisnexis.com" xmlns:dossier-retrievedossiertaxonomy="http://retrievedossiertaxonomy.dossier.services.v1.wsapi.lexisnexis.com" xmlns:resultsorting-legalsearchgetsortkeys="http://legalsearchgetsortkeys.resultsorting.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getattachments="http://getattachments.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:dossier-retrievecorporatehierarchy="http://retrievecorporatehierarchy.dossier.services.v1.wsapi.lexisnexis.com" xmlns:globalsourcedirectory-findglobalsourcesbykeyword="http://findglobalsourcesbykeyword.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:index-searchindexterms="http://searchindexterms.index.services.v1.wsapi.lexisnexis.com" xmlns:ldc-browsecitationformats="http://browsecitationformats.ldc.services.v1.wsapi.lexisnexis.com" xmlns:dossier-searchcompanydossier="http://searchcompanydossier.dossier.services.v1.wsapi.lexisnexis.com" xmlns:authentication-authenticatelocation="http://authenticatelocation.authentication.services.v1.wsapi.lexisnexis.com" xmlns:dossier-searchexecutivedossier="http://searchexecutivedossier.dossier.services.v1.wsapi.lexisnexis.com" xmlns:resultsorting-legalsearchsortresults="http://legalsearchsortresults.resultsorting.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getdocumentswithcustomview="http://getdocumentswithcustomview.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:ldc-getdocumentbydocketnumber="http://getdocumentbydocketnumber.ldc.services.v1.wsapi.lexisnexis.com" xmlns:dossier-createdossierlinkid="http://createdossierlinkid.dossier.services.v1.wsapi.lexisnexis.com" xmlns:resultsorting-getsortkeys="http://getsortkeys.resultsorting.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getdocumentversions="http://getdocumentversions.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-resolveremotelink="http://resolveremotelink.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:index-getindextermtaxonomies="http://getindextermtaxonomies.index.services.v1.wsapi.lexisnexis.com" xmlns:citator-findcitations="http://findcitations.citator.services.v1.wsapi.lexisnexis.com" xmlns:savedsearch-modifysavedsearch="http://modifysavedsearch.savedsearch.services.v1.wsapi.lexisnexis.com" xmlns:ldc-getdocumentbypartyname="http://getdocumentbypartyname.ldc.services.v1.wsapi.lexisnexis.com" xmlns:index-browsecorporatestructure="http://browsecorporatestructure.index.services.v1.wsapi.lexisnexis.com" xmlns:dossier-retrievecomponentlist="http://retrievecomponentlist.dossier.services.v1.wsapi.lexisnexis.com" xmlns:citator-getcitationdocument="http://getcitationdocument.citator.services.v1.wsapi.lexisnexis.com" xmlns:tableofcontents-navigatetoc="http://navigatetoc.tableofcontents.services.v1.wsapi.lexisnexis.com" xmlns:source-browsesources="http://browsesources.source.services.v1.wsapi.lexisnexis.com" xmlns:savedsearch-getsavedsearchdetails="http://getsavedsearchdetails.savedsearch.services.v1.wsapi.lexisnexis.com" xmlns:search-legalsearch="http://legalsearch.search.services.v1.wsapi.lexisnexis.com" xmlns:ldc-getcitationformatdetails="http://getcitationformatdetails.ldc.services.v1.wsapi.lexisnexis.com" xmlns:globalsourcedirectory-getglobalsourcetaxonomies="http://getglobalsourcetaxonomies.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:dossier-retrievecompanycategorylist="http://retrievecompanycategorylist.dossier.services.v1.wsapi.lexisnexis.com" xmlns:source-getgroupsourcemembernames="http://getgroupsourcemembernames.source.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getattachmentlist="http://getattachmentlist.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:search-getsearchablesegmentsv2="http://getsearchablesegmentsv2.search.services.v1.wsapi.lexisnexis.com" xmlns:sourcedirectory-browsesourcedirectory="http://browsesourcedirectory.sourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:globalsourcedirectory-browseglobalsourcesalphabetically="http://browseglobalsourcesalphabetically.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:ldc-getdocumentbycitation="http://getdocumentbycitation.ldc.services.v1.wsapi.lexisnexis.com" xmlns:dossier-retrievecomponents="http://retrievecomponents.dossier.services.v1.wsapi.lexisnexis.com" xmlns:citatortools-getsignalsandhn="http://getsignalsandhn.citatortools.services.v1.wsapi.lexisnexis.com" xmlns:savedsearch-executesavedsearch="http://executesavedsearch.savedsearch.services.v1.wsapi.lexisnexis.com" xmlns:citator-getcourtsandpracticeareas="http://getcourtsandpracticeareas.citator.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getdocumentsbyrange="http://getdocumentsbyrange.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:authentication-authenticateenduser="http://authenticateenduser.authentication.services.v1.wsapi.lexisnexis.com" xmlns:globalsourcedirectory-browseglobalsources="http://browseglobalsources.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:globalsourcedirectory-findglobalsourcebysourcecode="http://findglobalsourcebysourcecode.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getdocumentsbydocumentid="http://getdocumentsbydocumentid.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:dossier-resolvedossierlinkid="http://resolvedossierlinkid.dossier.services.v1.wsapi.lexisnexis.com" xmlns:authentication-authenticate="http://authenticate.authentication.services.v1.wsapi.lexisnexis.com" xmlns:savedsearch-savesearch="http://savesearch.savedsearch.services.v1.wsapi.lexisnexis.com" xmlns:source-getsourcedetails="http://getsourcedetails.source.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-getretrievablesegments="http://getretrievablesegments.retrieve.services.v1.wsapi.lexisnexis.com" xmlns:savedsearch-deletesavedsearches="http://deletesavedsearches.savedsearch.services.v1.wsapi.lexisnexis.com" xmlns:tableofcontents-gettocdocumentnavigationpath="http://gettocdocumentnavigationpath.tableofcontents.services.v1.wsapi.lexisnexis.com" xmlns:citator-getcitationreport="http://getcitationreport.citator.services.v1.wsapi.lexisnexis.com" xmlns:sourcedirectory-searchsourcedirectory="http://searchsourcedirectory.sourcedirectory.services.v1.wsapi.lexisnexis.com" xmlns:retrieval-reportdocumentuse="http://reportdocumentuse.retrieval.services.v1.wsapi.lexisnexis.com" xmlns:search-getsearchablesegments="http://getsearchablesegments.search.services.v1.wsapi.lexisnexis.com" xmlns:savedsearch-listsavedsearches="http://listsavedsearches.savedsearch.services.v1.wsapi.lexisnexis.com" name="WSAPI" targetNamespace="http://services.v1.wsapi.lexisnexis.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import schemaLocation="Authentication.xsd" namespace="http://authenticate.authentication.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="AuthenticateEndUser.xsd" namespace="http://authenticateenduser.authentication.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="AuthenticateLocation.xsd" namespace="http://authenticatelocation.authentication.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="Search.xsd" namespace="http://search.search.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="NarrowSearch.xsd" namespace="http://narrowsearch.search.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BulkSearch.xsd" namespace="http://bulksearch.search.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="LegalSearch.xsd" namespace="http://legalsearch.search.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetSearchableSegments.xsd" namespace="http://getsearchablesegments.search.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetSearchableSegmentsV2.xsd" namespace="http://getsearchablesegmentsv2.search.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetSourcesByJurisdiction.xsd" namespace="http://getsourcesbyjurisdiction.ldc.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetDocumentByPartyName.xsd" namespace="http://getdocumentbypartyname.ldc.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetDocumentByDocketNumber.xsd" namespace="http://getdocumentbydocketnumber.ldc.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetShepardsLexcite.xsd" namespace="http://getshepardslexcite.ldc.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetDocumentByCitation.xsd" namespace="http://getdocumentbycitation.ldc.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseCitationFormats.xsd" namespace="http://browsecitationformats.ldc.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchCitationFormats.xsd" namespace="http://searchcitationformats.ldc.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetCitationFormatDetails.xsd" namespace="http://getcitationformatdetails.ldc.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SaveSearch.xsd" namespace="http://savesearch.savedsearch.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="ExecuteSavedSearch.xsd" namespace="http://executesavedsearch.savedsearch.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="ListSavedSearches.xsd" namespace="http://listsavedsearches.savedsearch.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetSavedSearchDetails.xsd" namespace="http://getsavedsearchdetails.savedsearch.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="DeleteSavedSearches.xsd" namespace="http://deletesavedsearches.savedsearch.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="ModifySavedSearch.xsd" namespace="http://modifysavedsearch.savedsearch.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetAttachments.xsd" namespace="http://getattachments.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetAttachmentList.xsd" namespace="http://getattachmentlist.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetDocumentsByDocumentId.xsd" namespace="http://getdocumentsbydocumentid.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetDocumentsByRange.xsd" namespace="http://getdocumentsbyrange.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetDocumentVersions.xsd" namespace="http://getdocumentversions.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetAdjacentDocument.xsd" namespace="http://getadjacentdocument.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetDocumentInSourceContext.xsd" namespace="http://getdocumentinsourcecontext.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="ResolveRemoteLink.xsd" namespace="http://resolveremotelink.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="ReportDocumentUse.xsd" namespace="http://reportdocumentuse.retrieval.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetDocumentsWithCustomView.xsd" namespace="http://getdocumentswithcustomview.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetRetrievableSegments.xsd" namespace="http://getretrievablesegments.retrieve.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetShepardSignals.xsd" namespace="http://getshepardsignals.citatortools.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetSignalsAndHN.xsd" namespace="http://getsignalsandhn.citatortools.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetCitationDocument.xsd" namespace="http://getcitationdocument.citator.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetCitationReport.xsd" namespace="http://getcitationreport.citator.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="FindCitations.xsd" namespace="http://findcitations.citator.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetCourtsAndPracticeAreas.xsd" namespace="http://getcourtsandpracticeareas.citator.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetCitationSignals.xsd" namespace="http://getcitationsignals.citator.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseSourceDirectory.xsd" namespace="http://browsesourcedirectory.sourcedirectory.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchSourceDirectory.xsd" namespace="http://searchsourcedirectory.sourcedirectory.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetSourceDetails-SourceDirectory.xsd" namespace="http://getsourcedetails.sourcedirectory.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseSources.xsd" namespace="http://browsesources.source.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchSources.xsd" namespace="http://searchsources.source.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetSourceDetails.xsd" namespace="http://getsourcedetails.source.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetGroupSourceMemberNames.xsd" namespace="http://getgroupsourcemembernames.source.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchIndexTerms.xsd" namespace="http://searchindexterms.index.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseIndexTerms.xsd" namespace="http://browseindexterms.index.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetIndexTermTaxonomies.xsd" namespace="http://getindextermtaxonomies.index.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchCompanyIndex.xsd" namespace="http://searchcompanyindex.index.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseCorporateStructure.xsd" namespace="http://browsecorporatestructure.index.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetCompanyDetail.xsd" namespace="http://getcompanydetail.index.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="NavigateTOC.xsd" namespace="http://navigatetoc.tableofcontents.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetTOCDocumentNavigationPath.xsd" namespace="http://gettocdocumentnavigationpath.tableofcontents.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetRelatedTOCIds.xsd" namespace="http://getrelatedtocids.tableofcontents.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseResultClassifications.xsd" namespace="http://browseresultclassifications.classification.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetSortKeys.xsd" namespace="http://getsortkeys.resultsorting.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SortResults.xsd" namespace="http://sortresults.resultsorting.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="LegalSearchSortResults.xsd" namespace="http://legalsearchsortresults.resultsorting.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="LegalSearchGetSortKeys.xsd" namespace="http://legalsearchgetsortkeys.resultsorting.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseSupportedRegions.xsd" namespace="http://browsesupportedregions.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="CompareCompanies.xsd" namespace="http://comparecompanies.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="CreateDossierLinkId.xsd" namespace="http://createdossierlinkid.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="ResolveDossierLinkId.xsd" namespace="http://resolvedossierlinkid.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="RetrieveCorporateHierarchy.xsd" namespace="http://retrievecorporatehierarchy.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="RetrieveDossierLinks.xsd" namespace="http://retrievedossierlinks.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="RetrieveDossierTaxonomy.xsd" namespace="http://retrievedossiertaxonomy.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchCompanyDossier.xsd" namespace="http://searchcompanydossier.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="RetrieveComponents.xsd" namespace="http://retrievecomponents.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="RetrieveComponentList.xsd" namespace="http://retrievecomponentlist.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="RetrieveCompanyCategoryList.xsd" namespace="http://retrievecompanycategorylist.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="RetrieveFullTextAttributeList.xsd" namespace="http://retrievefulltextattributelist.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchIndustryDossier.xsd" namespace="http://searchindustrydossier.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchIndustryDossierWithResultHierarchy.xsd" namespace="http://searchindustrydossierwithresulthierarchy.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseIndustryHierarchy.xsd" namespace="http://browseindustryhierarchy.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="SearchExecutiveDossier.xsd" namespace="http://searchexecutivedossier.dossier.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseGlobalSourcesAlphabetically.xsd" namespace="http://browseglobalsourcesalphabetically.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="FindGlobalSourceBySourceCode.xsd" namespace="http://findglobalsourcebysourcecode.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetGlobalSourceFilters.xsd" namespace="http://getglobalsourcefilters.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="GetGlobalSourceTaxonomies.xsd" namespace="http://getglobalsourcetaxonomies.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="FindGlobalSourcesByKeyword.xsd" namespace="http://findglobalsourcesbykeyword.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" />
+      <import schemaLocation="BrowseGlobalSources.xsd" namespace="http://browseglobalsources.globalsourcedirectory.services.v1.wsapi.lexisnexis.com" />
+    </schema>
+  </types>
+  <message name="Authentication-AuthenticateReqMsg">
+    <part name="AuthenticateRequest" element="authentication-authenticate:Authenticate" />
+  </message>
+  <message name="Authentication-AuthenticateRespMsg">
+    <part name="AuthenticateResponse" element="authentication-authenticate:AuthenticateResponse" />
+  </message>
+  <message name="Authentication-AuthenticateEndUserReqMsg">
+    <part name="AuthenticateEndUserRequest" element="authentication-authenticateenduser:AuthenticateEndUser" />
+  </message>
+  <message name="Authentication-AuthenticateEndUserRespMsg">
+    <part name="AuthenticateEndUserResponse" element="authentication-authenticateenduser:AuthenticateEndUserResponse" />
+  </message>
+  <message name="Authentication-AuthenticateLocationReqMsg">
+    <part name="AuthenticateLocationRequest" element="authentication-authenticatelocation:AuthenticateLocation" />
+  </message>
+  <message name="Authentication-AuthenticateLocationRespMsg">
+    <part name="AuthenticateLocationResponse" element="authentication-authenticatelocation:AuthenticateLocationResponse" />
+  </message>
+  <message name="Search-SearchReqMsg">
+    <part name="SearchRequest" element="search-search:Search" />
+  </message>
+  <message name="Search-SearchRespMsg">
+    <part name="SearchResponse" element="search-search:SearchResponse" />
+  </message>
+  <message name="Search-NarrowSearchReqMsg">
+    <part name="NarrowSearchRequest" element="search-narrowsearch:NarrowSearch" />
+  </message>
+  <message name="Search-NarrowSearchRespMsg">
+    <part name="NarrowSearchResponse" element="search-narrowsearch:NarrowSearchResponse" />
+  </message>
+  <message name="Search-BulkSearchReqMsg">
+    <part name="BulkSearchRequest" element="search-bulksearch:BulkSearch" />
+  </message>
+  <message name="Search-BulkSearchRespMsg">
+    <part name="BulkSearchResponse" element="search-bulksearch:BulkSearchResponse" />
+  </message>
+  <message name="Search-LegalSearchReqMsg">
+    <part name="LegalSearchRequest" element="search-legalsearch:LegalSearch" />
+  </message>
+  <message name="Search-LegalSearchRespMsg">
+    <part name="LegalSearchResponse" element="search-legalsearch:LegalSearchResponse" />
+  </message>
+  <message name="Search-GetSearchableSegmentsReqMsg">
+    <part name="GetSearchableSegmentsRequest" element="search-getsearchablesegments:GetSearchableSegments" />
+  </message>
+  <message name="Search-GetSearchableSegmentsRespMsg">
+    <part name="GetSearchableSegmentsResponse" element="search-getsearchablesegments:GetSearchableSegmentsResponse" />
+  </message>
+  <message name="Search-GetSearchableSegmentsV2ReqMsg">
+    <part name="GetSearchableSegmentsV2Request" element="search-getsearchablesegmentsv2:GetSearchableSegmentsV2" />
+  </message>
+  <message name="Search-GetSearchableSegmentsV2RespMsg">
+    <part name="GetSearchableSegmentsV2Response" element="search-getsearchablesegmentsv2:GetSearchableSegmentsV2Response" />
+  </message>
+  <message name="LDC-GetSourcesByJurisdictionReqMsg">
+    <part name="GetSourcesByJurisdictionRequest" element="ldc-getsourcesbyjurisdiction:GetSourcesByJurisdiction" />
+  </message>
+  <message name="LDC-GetSourcesByJurisdictionRespMsg">
+    <part name="GetSourcesByJurisdictionResponse" element="ldc-getsourcesbyjurisdiction:GetSourcesByJurisdictionResponse" />
+  </message>
+  <message name="LDC-GetDocumentByPartyNameReqMsg">
+    <part name="GetDocumentByPartyNameRequest" element="ldc-getdocumentbypartyname:GetDocumentByPartyName" />
+  </message>
+  <message name="LDC-GetDocumentByPartyNameRespMsg">
+    <part name="GetDocumentByPartyNameResponse" element="ldc-getdocumentbypartyname:GetDocumentByPartyNameResponse" />
+  </message>
+  <message name="LDC-GetDocumentByDocketNumberReqMsg">
+    <part name="GetDocumentByDocketNumberRequest" element="ldc-getdocumentbydocketnumber:GetDocumentByDocketNumber" />
+  </message>
+  <message name="LDC-GetDocumentByDocketNumberRespMsg">
+    <part name="GetDocumentByDocketNumberResponse" element="ldc-getdocumentbydocketnumber:GetDocumentByDocketNumberResponse" />
+  </message>
+  <message name="LDC-GetShepardsLexciteReqMsg">
+    <part name="GetShepardsLexciteRequest" element="ldc-getshepardslexcite:GetShepardsLexcite" />
+  </message>
+  <message name="LDC-GetShepardsLexciteRespMsg">
+    <part name="GetShepardsLexciteResponse" element="ldc-getshepardslexcite:GetShepardsLexciteResponse" />
+  </message>
+  <message name="LDC-GetDocumentByCitationReqMsg">
+    <part name="GetDocumentByCitationRequest" element="ldc-getdocumentbycitation:GetDocumentByCitation" />
+  </message>
+  <message name="LDC-GetDocumentByCitationRespMsg">
+    <part name="GetDocumentByCitationResponse" element="ldc-getdocumentbycitation:GetDocumentByCitationResponse" />
+  </message>
+  <message name="LDC-BrowseCitationFormatsReqMsg">
+    <part name="BrowseCitationFormatsRequest" element="ldc-browsecitationformats:BrowseCitationFormats" />
+  </message>
+  <message name="LDC-BrowseCitationFormatsRespMsg">
+    <part name="BrowseCitationFormatsResponse" element="ldc-browsecitationformats:BrowseCitationFormatsResponse" />
+  </message>
+  <message name="LDC-SearchCitationFormatsReqMsg">
+    <part name="SearchCitationFormatsRequest" element="ldc-searchcitationformats:SearchCitationFormats" />
+  </message>
+  <message name="LDC-SearchCitationFormatsRespMsg">
+    <part name="SearchCitationFormatsResponse" element="ldc-searchcitationformats:SearchCitationFormatsResponse" />
+  </message>
+  <message name="LDC-GetCitationFormatDetailsReqMsg">
+    <part name="GetCitationFormatDetailsRequest" element="ldc-getcitationformatdetails:GetCitationFormatDetails" />
+  </message>
+  <message name="LDC-GetCitationFormatDetailsRespMsg">
+    <part name="GetCitationFormatDetailsResponse" element="ldc-getcitationformatdetails:GetCitationFormatDetailsResponse" />
+  </message>
+  <message name="SavedSearch-SaveSearchReqMsg">
+    <part name="SaveSearchRequest" element="savedsearch-savesearch:SaveSearch" />
+  </message>
+  <message name="SavedSearch-SaveSearchRespMsg">
+    <part name="SaveSearchResponse" element="savedsearch-savesearch:SaveSearchResponse" />
+  </message>
+  <message name="SavedSearch-ExecuteSavedSearchReqMsg">
+    <part name="ExecuteSavedSearchRequest" element="savedsearch-executesavedsearch:ExecuteSavedSearch" />
+  </message>
+  <message name="SavedSearch-ExecuteSavedSearchRespMsg">
+    <part name="ExecuteSavedSearchResponse" element="savedsearch-executesavedsearch:ExecuteSavedSearchResponse" />
+  </message>
+  <message name="SavedSearch-ListSavedSearchesReqMsg">
+    <part name="ListSavedSearchesRequest" element="savedsearch-listsavedsearches:ListSavedSearches" />
+  </message>
+  <message name="SavedSearch-ListSavedSearchesRespMsg">
+    <part name="ListSavedSearchesResponse" element="savedsearch-listsavedsearches:ListSavedSearchesResponse" />
+  </message>
+  <message name="SavedSearch-GetSavedSearchDetailsReqMsg">
+    <part name="GetSavedSearchDetailsRequest" element="savedsearch-getsavedsearchdetails:GetSavedSearchDetails" />
+  </message>
+  <message name="SavedSearch-GetSavedSearchDetailsRespMsg">
+    <part name="GetSavedSearchDetailsResponse" element="savedsearch-getsavedsearchdetails:GetSavedSearchDetailsResponse" />
+  </message>
+  <message name="SavedSearch-DeleteSavedSearchesReqMsg">
+    <part name="DeleteSavedSearchesRequest" element="savedsearch-deletesavedsearches:DeleteSavedSearches" />
+  </message>
+  <message name="SavedSearch-DeleteSavedSearchesRespMsg">
+    <part name="DeleteSavedSearchesResponse" element="savedsearch-deletesavedsearches:DeleteSavedSearchesResponse" />
+  </message>
+  <message name="SavedSearch-ModifySavedSearchReqMsg">
+    <part name="ModifySavedSearchRequest" element="savedsearch-modifysavedsearch:ModifySavedSearch" />
+  </message>
+  <message name="SavedSearch-ModifySavedSearchRespMsg">
+    <part name="ModifySavedSearchResponse" element="savedsearch-modifysavedsearch:ModifySavedSearchResponse" />
+  </message>
+  <message name="Retrieval-GetAttachmentsReqMsg">
+    <part name="GetAttachmentsRequest" element="retrieval-getattachments:GetAttachments" />
+  </message>
+  <message name="Retrieval-GetAttachmentsRespMsg">
+    <part name="GetAttachmentsResponse" element="retrieval-getattachments:GetAttachmentsResponse" />
+  </message>
+  <message name="Retrieval-GetAttachmentListReqMsg">
+    <part name="GetAttachmentListRequest" element="retrieval-getattachmentlist:GetAttachmentList" />
+  </message>
+  <message name="Retrieval-GetAttachmentListRespMsg">
+    <part name="GetAttachmentListResponse" element="retrieval-getattachmentlist:GetAttachmentListResponse" />
+  </message>
+  <message name="Retrieval-GetDocumentsByDocumentIdReqMsg">
+    <part name="GetDocumentsByDocumentIdRequest" element="retrieval-getdocumentsbydocumentid:GetDocumentsByDocumentId" />
+  </message>
+  <message name="Retrieval-GetDocumentsByDocumentIdRespMsg">
+    <part name="GetDocumentsByDocumentIdResponse" element="retrieval-getdocumentsbydocumentid:GetDocumentsByDocumentIdResponse" />
+  </message>
+  <message name="Retrieval-GetDocumentsByRangeReqMsg">
+    <part name="GetDocumentsByRangeRequest" element="retrieval-getdocumentsbyrange:GetDocumentsByRange" />
+  </message>
+  <message name="Retrieval-GetDocumentsByRangeRespMsg">
+    <part name="GetDocumentsByRangeResponse" element="retrieval-getdocumentsbyrange:GetDocumentsByRangeResponse" />
+  </message>
+  <message name="Retrieval-GetDocumentVersionsReqMsg">
+    <part name="GetDocumentVersionsRequest" element="retrieval-getdocumentversions:GetDocumentVersions" />
+  </message>
+  <message name="Retrieval-GetDocumentVersionsRespMsg">
+    <part name="GetDocumentVersionsResponse" element="retrieval-getdocumentversions:GetDocumentVersionsResponse" />
+  </message>
+  <message name="Retrieval-GetAdjacentDocumentReqMsg">
+    <part name="GetAdjacentDocumentRequest" element="retrieval-getadjacentdocument:GetAdjacentDocument" />
+  </message>
+  <message name="Retrieval-GetAdjacentDocumentRespMsg">
+    <part name="GetAdjacentDocumentResponse" element="retrieval-getadjacentdocument:GetAdjacentDocumentResponse" />
+  </message>
+  <message name="Retrieval-GetDocumentInSourceContextReqMsg">
+    <part name="GetDocumentInSourceContextRequest" element="retrieval-getdocumentinsourcecontext:GetDocumentInSourceContext" />
+  </message>
+  <message name="Retrieval-GetDocumentInSourceContextRespMsg">
+    <part name="GetDocumentInSourceContextResponse" element="retrieval-getdocumentinsourcecontext:GetDocumentInSourceContextResponse" />
+  </message>
+  <message name="Retrieval-ResolveRemoteLinkReqMsg">
+    <part name="ResolveRemoteLinkRequest" element="retrieval-resolveremotelink:ResolveRemoteLink" />
+  </message>
+  <message name="Retrieval-ResolveRemoteLinkRespMsg">
+    <part name="ResolveRemoteLinkResponse" element="retrieval-resolveremotelink:ResolveRemoteLinkResponse" />
+  </message>
+  <message name="Retrieval-ReportDocumentUseReqMsg">
+    <part name="ReportDocumentUseRequest" element="retrieval-reportdocumentuse:ReportDocumentUse" />
+  </message>
+  <message name="Retrieval-ReportDocumentUseRespMsg">
+    <part name="ReportDocumentUseResponse" element="retrieval-reportdocumentuse:ReportDocumentUseResponse" />
+  </message>
+  <message name="Retrieval-GetDocumentsWithCustomViewReqMsg">
+    <part name="GetDocumentsWithCustomViewRequest" element="retrieval-getdocumentswithcustomview:GetDocumentsWithCustomView" />
+  </message>
+  <message name="Retrieval-GetDocumentsWithCustomViewRespMsg">
+    <part name="GetDocumentsWithCustomViewResponse" element="retrieval-getdocumentswithcustomview:GetDocumentsWithCustomViewResponse" />
+  </message>
+  <message name="Retrieval-GetRetrievableSegmentsReqMsg">
+    <part name="GetRetrievableSegmentsRequest" element="retrieval-getretrievablesegments:GetRetrievableSegments" />
+  </message>
+  <message name="Retrieval-GetRetrievableSegmentsRespMsg">
+    <part name="GetRetrievableSegmentsResponse" element="retrieval-getretrievablesegments:GetRetrievableSegmentsResponse" />
+  </message>
+  <message name="CitatorTools-GetShepardSignalsReqMsg">
+    <part name="GetShepardSignalsRequest" element="citatortools-getshepardsignals:GetShepardSignals" />
+  </message>
+  <message name="CitatorTools-GetShepardSignalsRespMsg">
+    <part name="GetShepardSignalsResponse" element="citatortools-getshepardsignals:GetShepardSignalsResponse" />
+  </message>
+  <message name="CitatorTools-GetSignalsAndHNReqMsg">
+    <part name="GetSignalsAndHNRequest" element="citatortools-getsignalsandhn:GetSignalsAndHN" />
+  </message>
+  <message name="CitatorTools-GetSignalsAndHNRespMsg">
+    <part name="GetSignalsAndHNResponse" element="citatortools-getsignalsandhn:GetSignalsAndHNResponse" />
+  </message>
+  <message name="Citator-GetCitationDocumentReqMsg">
+    <part name="GetCitationDocumentRequest" element="citator-getcitationdocument:GetCitationDocument" />
+  </message>
+  <message name="Citator-GetCitationDocumentRespMsg">
+    <part name="GetCitationDocumentResponse" element="citator-getcitationdocument:GetCitationDocumentResponse" />
+  </message>
+  <message name="Citator-GetCitationReportReqMsg">
+    <part name="GetCitationReportRequest" element="citator-getcitationreport:GetCitationReport" />
+  </message>
+  <message name="Citator-GetCitationReportRespMsg">
+    <part name="GetCitationReportResponse" element="citator-getcitationreport:GetCitationReportResponse" />
+  </message>
+  <message name="Citator-FindCitationsReqMsg">
+    <part name="FindCitationsRequest" element="citator-findcitations:FindCitations" />
+  </message>
+  <message name="Citator-FindCitationsRespMsg">
+    <part name="FindCitationsResponse" element="citator-findcitations:FindCitationsResponse" />
+  </message>
+  <message name="Citator-GetCourtsAndPracticeAreasReqMsg">
+    <part name="GetCourtsAndPracticeAreasRequest" element="citator-getcourtsandpracticeareas:GetCourtsAndPracticeAreas" />
+  </message>
+  <message name="Citator-GetCourtsAndPracticeAreasRespMsg">
+    <part name="GetCourtsAndPracticeAreasResponse" element="citator-getcourtsandpracticeareas:GetCourtsAndPracticeAreasResponse" />
+  </message>
+  <message name="Citator-GetCitationSignalsReqMsg">
+    <part name="GetCitationSignalsRequest" element="citator-getcitationsignals:GetCitationSignals" />
+  </message>
+  <message name="Citator-GetCitationSignalsRespMsg">
+    <part name="GetCitationSignalsResponse" element="citator-getcitationsignals:GetCitationSignalsResponse" />
+  </message>
+  <message name="SourceDirectory-BrowseSourceDirectoryReqMsg">
+    <part name="BrowseSourceDirectoryRequest" element="sourcedirectory-browsesourcedirectory:BrowseSourceDirectory" />
+  </message>
+  <message name="SourceDirectory-BrowseSourceDirectoryRespMsg">
+    <part name="BrowseSourceDirectoryResponse" element="sourcedirectory-browsesourcedirectory:BrowseSourceDirectoryResponse" />
+  </message>
+  <message name="SourceDirectory-SearchSourceDirectoryReqMsg">
+    <part name="SearchSourceDirectoryRequest" element="sourcedirectory-searchsourcedirectory:SearchSourceDirectory" />
+  </message>
+  <message name="SourceDirectory-SearchSourceDirectoryRespMsg">
+    <part name="SearchSourceDirectoryResponse" element="sourcedirectory-searchsourcedirectory:SearchSourceDirectoryResponse" />
+  </message>
+  <message name="SourceDirectory-GetSourceDetailsReqMsg">
+    <part name="GetSourceDetailsRequest" element="sourcedirectory-getsourcedetails:GetSourceDetails" />
+  </message>
+  <message name="SourceDirectory-GetSourceDetailsRespMsg">
+    <part name="GetSourceDetailsResponse" element="sourcedirectory-getsourcedetails:GetSourceDetailsResponse" />
+  </message>
+  <message name="Source-BrowseSourcesReqMsg">
+    <part name="BrowseSourcesRequest" element="source-browsesources:BrowseSources" />
+  </message>
+  <message name="Source-BrowseSourcesRespMsg">
+    <part name="BrowseSourcesResponse" element="source-browsesources:BrowseSourcesResponse" />
+  </message>
+  <message name="Source-SearchSourcesReqMsg">
+    <part name="SearchSourcesRequest" element="source-searchsources:SearchSources" />
+  </message>
+  <message name="Source-SearchSourcesRespMsg">
+    <part name="SearchSourcesResponse" element="source-searchsources:SearchSourcesResponse" />
+  </message>
+  <message name="Source-GetSourceDetailsReqMsg">
+    <part name="GetSourceDetailsRequest" element="source-getsourcedetails:GetSourceDetails" />
+  </message>
+  <message name="Source-GetSourceDetailsRespMsg">
+    <part name="GetSourceDetailsResponse" element="source-getsourcedetails:GetSourceDetailsResponse" />
+  </message>
+  <message name="Source-GetGroupSourceMemberNamesReqMsg">
+    <part name="GetGroupSourceMemberNamesRequest" element="source-getgroupsourcemembernames:GetGroupSourceMemberNames" />
+  </message>
+  <message name="Source-GetGroupSourceMemberNamesRespMsg">
+    <part name="GetGroupSourceMemberNamesResponse" element="source-getgroupsourcemembernames:GetGroupSourceMemberNamesResponse" />
+  </message>
+  <message name="Index-SearchIndexTermsReqMsg">
+    <part name="SearchIndexTermsRequest" element="index-searchindexterms:SearchIndexTerms" />
+  </message>
+  <message name="Index-SearchIndexTermsRespMsg">
+    <part name="SearchIndexTermsResponse" element="index-searchindexterms:SearchIndexTermsResponse" />
+  </message>
+  <message name="Index-BrowseIndexTermsReqMsg">
+    <part name="BrowseIndexTermsRequest" element="index-browseindexterms:BrowseIndexTerms" />
+  </message>
+  <message name="Index-BrowseIndexTermsRespMsg">
+    <part name="BrowseIndexTermsResponse" element="index-browseindexterms:BrowseIndexTermsResponse" />
+  </message>
+  <message name="Index-GetIndexTermTaxonomiesReqMsg">
+    <part name="GetIndexTermTaxonomiesRequest" element="index-getindextermtaxonomies:GetIndexTermTaxonomies" />
+  </message>
+  <message name="Index-GetIndexTermTaxonomiesRespMsg">
+    <part name="GetIndexTermTaxonomiesResponse" element="index-getindextermtaxonomies:GetIndexTermTaxonomiesResponse" />
+  </message>
+  <message name="Index-SearchCompanyIndexReqMsg">
+    <part name="SearchCompanyIndexRequest" element="index-searchcompanyindex:SearchCompanyIndex" />
+  </message>
+  <message name="Index-SearchCompanyIndexRespMsg">
+    <part name="SearchCompanyIndexResponse" element="index-searchcompanyindex:SearchCompanyIndexResponse" />
+  </message>
+  <message name="Index-BrowseCorporateStructureReqMsg">
+    <part name="BrowseCorporateStructureRequest" element="index-browsecorporatestructure:BrowseCorporateStructure" />
+  </message>
+  <message name="Index-BrowseCorporateStructureRespMsg">
+    <part name="BrowseCorporateStructureResponse" element="index-browsecorporatestructure:BrowseCorporateStructureResponse" />
+  </message>
+  <message name="Index-GetCompanyDetailReqMsg">
+    <part name="GetCompanyDetailRequest" element="index-getcompanydetail:GetCompanyDetail" />
+  </message>
+  <message name="Index-GetCompanyDetailRespMsg">
+    <part name="GetCompanyDetailResponse" element="index-getcompanydetail:GetCompanyDetailResponse" />
+  </message>
+  <message name="TableOfContents-NavigateTOCReqMsg">
+    <part name="NavigateTOCRequest" element="tableofcontents-navigatetoc:NavigateTOC" />
+  </message>
+  <message name="TableOfContents-NavigateTOCRespMsg">
+    <part name="NavigateTOCResponse" element="tableofcontents-navigatetoc:NavigateTOCResponse" />
+  </message>
+  <message name="TableOfContents-GetTOCDocumentNavigationPathReqMsg">
+    <part name="GetTOCDocumentNavigationPathRequest" element="tableofcontents-gettocdocumentnavigationpath:GetTOCDocumentNavigationPath" />
+  </message>
+  <message name="TableOfContents-GetTOCDocumentNavigationPathRespMsg">
+    <part name="GetTOCDocumentNavigationPathResponse" element="tableofcontents-gettocdocumentnavigationpath:GetTOCDocumentNavigationPathResponse" />
+  </message>
+  <message name="TableOfContents-GetRelatedTOCIdsReqMsg">
+    <part name="GetRelatedTOCIdsRequest" element="tableofcontents-getrelatedtocids:GetRelatedTOCIds" />
+  </message>
+  <message name="TableOfContents-GetRelatedTOCIdsRespMsg">
+    <part name="GetRelatedTOCIdsResponse" element="tableofcontents-getrelatedtocids:GetRelatedTOCIdsResponse" />
+  </message>
+  <message name="Classification-BrowseResultClassificationsReqMsg">
+    <part name="BrowseResultClassificationsRequest" element="classification-browseresultclassifications:BrowseResultClassifications" />
+  </message>
+  <message name="Classification-BrowseResultClassificationsRespMsg">
+    <part name="BrowseResultClassificationsResponse" element="classification-browseresultclassifications:BrowseResultClassificationsResponse" />
+  </message>
+  <message name="ResultSorting-GetSortKeysReqMsg">
+    <part name="GetSortKeysRequest" element="resultsorting-getsortkeys:GetSortKeys" />
+  </message>
+  <message name="ResultSorting-GetSortKeysRespMsg">
+    <part name="GetSortKeysResponse" element="resultsorting-getsortkeys:GetSortKeysResponse" />
+  </message>
+  <message name="ResultSorting-SortResultsReqMsg">
+    <part name="SortResultsRequest" element="resultsorting-sortresults:SortResults" />
+  </message>
+  <message name="ResultSorting-SortResultsRespMsg">
+    <part name="SortResultsResponse" element="resultsorting-sortresults:SortResultsResponse" />
+  </message>
+  <message name="ResultSorting-LegalSearchSortResultsReqMsg">
+    <part name="LegalSearchSortResultsRequest" element="resultsorting-legalsearchsortresults:LegalSearchSortResults" />
+  </message>
+  <message name="ResultSorting-LegalSearchSortResultsRespMsg">
+    <part name="LegalSearchSortResultsResponse" element="resultsorting-legalsearchsortresults:LegalSearchSortResultsResponse" />
+  </message>
+  <message name="ResultSorting-LegalSearchGetSortKeysReqMsg">
+    <part name="LegalSearchGetSortKeysRequest" element="resultsorting-legalsearchgetsortkeys:LegalSearchGetSortKeys" />
+  </message>
+  <message name="ResultSorting-LegalSearchGetSortKeysRespMsg">
+    <part name="LegalSearchGetSortKeysResponse" element="resultsorting-legalsearchgetsortkeys:LegalSearchGetSortKeysResponse" />
+  </message>
+  <message name="Dossier-BrowseSupportedRegionsReqMsg">
+    <part name="BrowseSupportedRegionsRequest" element="dossier-browsesupportedregions:BrowseSupportedRegions" />
+  </message>
+  <message name="Dossier-BrowseSupportedRegionsRespMsg">
+    <part name="BrowseSupportedRegionsResponse" element="dossier-browsesupportedregions:BrowseSupportedRegionsResponse" />
+  </message>
+  <message name="Dossier-CompareCompaniesReqMsg">
+    <part name="CompareCompaniesRequest" element="dossier-comparecompanies:CompareCompanies" />
+  </message>
+  <message name="Dossier-CompareCompaniesRespMsg">
+    <part name="CompareCompaniesResponse" element="dossier-comparecompanies:CompareCompaniesResponse" />
+  </message>
+  <message name="Dossier-CreateDossierLinkIdReqMsg">
+    <part name="CreateDossierLinkIdRequest" element="dossier-createdossierlinkid:CreateDossierLinkId" />
+  </message>
+  <message name="Dossier-CreateDossierLinkIdRespMsg">
+    <part name="CreateDossierLinkIdResponse" element="dossier-createdossierlinkid:CreateDossierLinkIdResponse" />
+  </message>
+  <message name="Dossier-ResolveDossierLinkIdReqMsg">
+    <part name="ResolveDossierLinkIdRequest" element="dossier-resolvedossierlinkid:ResolveDossierLinkId" />
+  </message>
+  <message name="Dossier-ResolveDossierLinkIdRespMsg">
+    <part name="ResolveDossierLinkIdResponse" element="dossier-resolvedossierlinkid:ResolveDossierLinkIdResponse" />
+  </message>
+  <message name="Dossier-RetrieveCorporateHierarchyReqMsg">
+    <part name="RetrieveCorporateHierarchyRequest" element="dossier-retrievecorporatehierarchy:RetrieveCorporateHierarchy" />
+  </message>
+  <message name="Dossier-RetrieveCorporateHierarchyRespMsg">
+    <part name="RetrieveCorporateHierarchyResponse" element="dossier-retrievecorporatehierarchy:RetrieveCorporateHierarchyResponse" />
+  </message>
+  <message name="Dossier-RetrieveDossierLinksReqMsg">
+    <part name="RetrieveDossierLinksRequest" element="dossier-retrievedossierlinks:RetrieveDossierLinks" />
+  </message>
+  <message name="Dossier-RetrieveDossierLinksRespMsg">
+    <part name="RetrieveDossierLinksResponse" element="dossier-retrievedossierlinks:RetrieveDossierLinksResponse" />
+  </message>
+  <message name="Dossier-RetrieveDossierTaxonomyReqMsg">
+    <part name="RetrieveDossierTaxonomyRequest" element="dossier-retrievedossiertaxonomy:RetrieveDossierTaxonomy" />
+  </message>
+  <message name="Dossier-RetrieveDossierTaxonomyRespMsg">
+    <part name="RetrieveDossierTaxonomyResponse" element="dossier-retrievedossiertaxonomy:RetrieveDossierTaxonomyResponse" />
+  </message>
+  <message name="Dossier-SearchCompanyDossierReqMsg">
+    <part name="SearchCompanyDossierRequest" element="dossier-searchcompanydossier:SearchCompanyDossier" />
+  </message>
+  <message name="Dossier-SearchCompanyDossierRespMsg">
+    <part name="SearchCompanyDossierResponse" element="dossier-searchcompanydossier:SearchCompanyDossierResponse" />
+  </message>
+  <message name="Dossier-RetrieveComponentsReqMsg">
+    <part name="RetrieveComponentsRequest" element="dossier-retrievecomponents:RetrieveComponents" />
+  </message>
+  <message name="Dossier-RetrieveComponentsRespMsg">
+    <part name="RetrieveComponentsResponse" element="dossier-retrievecomponents:RetrieveComponentsResponse" />
+  </message>
+  <message name="Dossier-RetrieveComponentListReqMsg">
+    <part name="RetrieveComponentListRequest" element="dossier-retrievecomponentlist:RetrieveComponentList" />
+  </message>
+  <message name="Dossier-RetrieveComponentListRespMsg">
+    <part name="RetrieveComponentListResponse" element="dossier-retrievecomponentlist:RetrieveComponentListResponse" />
+  </message>
+  <message name="Dossier-RetrieveCompanyCategoryListReqMsg">
+    <part name="RetrieveCompanyCategoryListRequest" element="dossier-retrievecompanycategorylist:RetrieveCompanyCategoryList" />
+  </message>
+  <message name="Dossier-RetrieveCompanyCategoryListRespMsg">
+    <part name="RetrieveCompanyCategoryListResponse" element="dossier-retrievecompanycategorylist:RetrieveCompanyCategoryListResponse" />
+  </message>
+  <message name="Dossier-RetrieveFullTextAttributeListReqMsg">
+    <part name="RetrieveFullTextAttributeListRequest" element="dossier-retrievefulltextattributelist:RetrieveFullTextAttributeList" />
+  </message>
+  <message name="Dossier-RetrieveFullTextAttributeListRespMsg">
+    <part name="RetrieveFullTextAttributeListResponse" element="dossier-retrievefulltextattributelist:RetrieveFullTextAttributeListResponse" />
+  </message>
+  <message name="Dossier-SearchIndustryDossierReqMsg">
+    <part name="SearchIndustryDossierRequest" element="dossier-searchindustrydossier:SearchIndustryDossier" />
+  </message>
+  <message name="Dossier-SearchIndustryDossierRespMsg">
+    <part name="SearchIndustryDossierResponse" element="dossier-searchindustrydossier:SearchIndustryDossierResponse" />
+  </message>
+  <message name="Dossier-SearchIndustryDossierWithResultHierarchyReqMsg">
+    <part name="SearchIndustryDossierWithResultHierarchyRequest" element="dossier-searchindustrydossierwithresulthierarchy:SearchIndustryDossierWithResultHierarchy" />
+  </message>
+  <message name="Dossier-SearchIndustryDossierWithResultHierarchyRespMsg">
+    <part name="SearchIndustryDossierWithResultHierarchyResponse" element="dossier-searchindustrydossierwithresulthierarchy:SearchIndustryDossierWithResultHierarchyResponse" />
+  </message>
+  <message name="Dossier-BrowseIndustryHierarchyReqMsg">
+    <part name="BrowseIndustryHierarchyRequest" element="dossier-browseindustryhierarchy:BrowseIndustryHierarchy" />
+  </message>
+  <message name="Dossier-BrowseIndustryHierarchyRespMsg">
+    <part name="BrowseIndustryHierarchyResponse" element="dossier-browseindustryhierarchy:BrowseIndustryHierarchyResponse" />
+  </message>
+  <message name="Dossier-SearchExecutiveDossierReqMsg">
+    <part name="SearchExecutiveDossierRequest" element="dossier-searchexecutivedossier:SearchExecutiveDossier" />
+  </message>
+  <message name="Dossier-SearchExecutiveDossierRespMsg">
+    <part name="SearchExecutiveDossierResponse" element="dossier-searchexecutivedossier:SearchExecutiveDossierResponse" />
+  </message>
+  <message name="GlobalSourceDirectory-BrowseGlobalSourcesAlphabeticallyReqMsg">
+    <part name="BrowseGlobalSourcesAlphabeticallyRequest" element="globalsourcedirectory-browseglobalsourcesalphabetically:BrowseGlobalSourcesAlphabetically" />
+  </message>
+  <message name="GlobalSourceDirectory-BrowseGlobalSourcesAlphabeticallyRespMsg">
+    <part name="BrowseGlobalSourcesAlphabeticallyResponse" element="globalsourcedirectory-browseglobalsourcesalphabetically:BrowseGlobalSourcesAlphabeticallyResponse" />
+  </message>
+  <message name="GlobalSourceDirectory-FindGlobalSourceBySourceCodeReqMsg">
+    <part name="FindGlobalSourceBySourceCodeRequest" element="globalsourcedirectory-findglobalsourcebysourcecode:FindGlobalSourceBySourceCode" />
+  </message>
+  <message name="GlobalSourceDirectory-FindGlobalSourceBySourceCodeRespMsg">
+    <part name="FindGlobalSourceBySourceCodeResponse" element="globalsourcedirectory-findglobalsourcebysourcecode:FindGlobalSourceBySourceCodeResponse" />
+  </message>
+  <message name="GlobalSourceDirectory-GetGlobalSourceFiltersReqMsg">
+    <part name="GetGlobalSourceFiltersRequest" element="globalsourcedirectory-getglobalsourcefilters:GetGlobalSourceFilters" />
+  </message>
+  <message name="GlobalSourceDirectory-GetGlobalSourceFiltersRespMsg">
+    <part name="GetGlobalSourceFiltersResponse" element="globalsourcedirectory-getglobalsourcefilters:GetGlobalSourceFiltersResponse" />
+  </message>
+  <message name="GlobalSourceDirectory-GetGlobalSourceTaxonomiesReqMsg">
+    <part name="GetGlobalSourceTaxonomiesRequest" element="globalsourcedirectory-getglobalsourcetaxonomies:GetGlobalSourceTaxonomies" />
+  </message>
+  <message name="GlobalSourceDirectory-GetGlobalSourceTaxonomiesRespMsg">
+    <part name="GetGlobalSourceTaxonomiesResponse" element="globalsourcedirectory-getglobalsourcetaxonomies:GetGlobalSourceTaxonomiesResponse" />
+  </message>
+  <message name="GlobalSourceDirectory-FindGlobalSourcesByKeywordReqMsg">
+    <part name="FindGlobalSourcesByKeywordRequest" element="globalsourcedirectory-findglobalsourcesbykeyword:FindGlobalSourcesByKeyword" />
+  </message>
+  <message name="GlobalSourceDirectory-FindGlobalSourcesByKeywordRespMsg">
+    <part name="FindGlobalSourcesByKeywordResponse" element="globalsourcedirectory-findglobalsourcesbykeyword:FindGlobalSourcesByKeywordResponse" />
+  </message>
+  <message name="GlobalSourceDirectory-BrowseGlobalSourcesReqMsg">
+    <part name="BrowseGlobalSourcesRequest" element="globalsourcedirectory-browseglobalsources:BrowseGlobalSources" />
+  </message>
+  <message name="GlobalSourceDirectory-BrowseGlobalSourcesRespMsg">
+    <part name="BrowseGlobalSourcesResponse" element="globalsourcedirectory-browseglobalsources:BrowseGlobalSourcesResponse" />
+  </message>
+  <portType name="AuthenticationSoapPort">
+    <operation name="Authenticate">
+      <input message="tns:Authentication-AuthenticateReqMsg" />
+      <output message="tns:Authentication-AuthenticateRespMsg" />
+    </operation>
+    <operation name="AuthenticateEndUser">
+      <input message="tns:Authentication-AuthenticateEndUserReqMsg" />
+      <output message="tns:Authentication-AuthenticateEndUserRespMsg" />
+    </operation>
+    <operation name="AuthenticateLocation">
+      <input message="tns:Authentication-AuthenticateLocationReqMsg" />
+      <output message="tns:Authentication-AuthenticateLocationRespMsg" />
+    </operation>
+  </portType>
+  <portType name="SearchSoapPort">
+    <operation name="Search">
+      <input message="tns:Search-SearchReqMsg" />
+      <output message="tns:Search-SearchRespMsg" />
+    </operation>
+    <operation name="NarrowSearch">
+      <input message="tns:Search-NarrowSearchReqMsg" />
+      <output message="tns:Search-NarrowSearchRespMsg" />
+    </operation>
+    <operation name="BulkSearch">
+      <input message="tns:Search-BulkSearchReqMsg" />
+      <output message="tns:Search-BulkSearchRespMsg" />
+    </operation>
+    <operation name="LegalSearch">
+      <input message="tns:Search-LegalSearchReqMsg" />
+      <output message="tns:Search-LegalSearchRespMsg" />
+    </operation>
+    <operation name="GetSearchableSegments">
+      <input message="tns:Search-GetSearchableSegmentsReqMsg" />
+      <output message="tns:Search-GetSearchableSegmentsRespMsg" />
+    </operation>
+    <operation name="GetSearchableSegmentsV2">
+      <input message="tns:Search-GetSearchableSegmentsV2ReqMsg" />
+      <output message="tns:Search-GetSearchableSegmentsV2RespMsg" />
+    </operation>
+  </portType>
+  <portType name="LDCSoapPort">
+    <operation name="GetSourcesByJurisdiction">
+      <input message="tns:LDC-GetSourcesByJurisdictionReqMsg" />
+      <output message="tns:LDC-GetSourcesByJurisdictionRespMsg" />
+    </operation>
+    <operation name="GetDocumentByPartyName">
+      <input message="tns:LDC-GetDocumentByPartyNameReqMsg" />
+      <output message="tns:LDC-GetDocumentByPartyNameRespMsg" />
+    </operation>
+    <operation name="GetDocumentByDocketNumber">
+      <input message="tns:LDC-GetDocumentByDocketNumberReqMsg" />
+      <output message="tns:LDC-GetDocumentByDocketNumberRespMsg" />
+    </operation>
+    <operation name="GetShepardsLexcite">
+      <input message="tns:LDC-GetShepardsLexciteReqMsg" />
+      <output message="tns:LDC-GetShepardsLexciteRespMsg" />
+    </operation>
+    <operation name="GetDocumentByCitation">
+      <input message="tns:LDC-GetDocumentByCitationReqMsg" />
+      <output message="tns:LDC-GetDocumentByCitationRespMsg" />
+    </operation>
+    <operation name="BrowseCitationFormats">
+      <input message="tns:LDC-BrowseCitationFormatsReqMsg" />
+      <output message="tns:LDC-BrowseCitationFormatsRespMsg" />
+    </operation>
+    <operation name="SearchCitationFormats">
+      <input message="tns:LDC-SearchCitationFormatsReqMsg" />
+      <output message="tns:LDC-SearchCitationFormatsRespMsg" />
+    </operation>
+    <operation name="GetCitationFormatDetails">
+      <input message="tns:LDC-GetCitationFormatDetailsReqMsg" />
+      <output message="tns:LDC-GetCitationFormatDetailsRespMsg" />
+    </operation>
+  </portType>
+  <portType name="SavedSearchSoapPort">
+    <operation name="SaveSearch">
+      <input message="tns:SavedSearch-SaveSearchReqMsg" />
+      <output message="tns:SavedSearch-SaveSearchRespMsg" />
+    </operation>
+    <operation name="ExecuteSavedSearch">
+      <input message="tns:SavedSearch-ExecuteSavedSearchReqMsg" />
+      <output message="tns:SavedSearch-ExecuteSavedSearchRespMsg" />
+    </operation>
+    <operation name="ListSavedSearches">
+      <input message="tns:SavedSearch-ListSavedSearchesReqMsg" />
+      <output message="tns:SavedSearch-ListSavedSearchesRespMsg" />
+    </operation>
+    <operation name="GetSavedSearchDetails">
+      <input message="tns:SavedSearch-GetSavedSearchDetailsReqMsg" />
+      <output message="tns:SavedSearch-GetSavedSearchDetailsRespMsg" />
+    </operation>
+    <operation name="DeleteSavedSearches">
+      <input message="tns:SavedSearch-DeleteSavedSearchesReqMsg" />
+      <output message="tns:SavedSearch-DeleteSavedSearchesRespMsg" />
+    </operation>
+    <operation name="ModifySavedSearch">
+      <input message="tns:SavedSearch-ModifySavedSearchReqMsg" />
+      <output message="tns:SavedSearch-ModifySavedSearchRespMsg" />
+    </operation>
+  </portType>
+  <portType name="RetrievalSoapPort">
+    <operation name="GetAttachments">
+      <input message="tns:Retrieval-GetAttachmentsReqMsg" />
+      <output message="tns:Retrieval-GetAttachmentsRespMsg" />
+    </operation>
+    <operation name="GetAttachmentList">
+      <input message="tns:Retrieval-GetAttachmentListReqMsg" />
+      <output message="tns:Retrieval-GetAttachmentListRespMsg" />
+    </operation>
+    <operation name="GetDocumentsByDocumentId">
+      <input message="tns:Retrieval-GetDocumentsByDocumentIdReqMsg" />
+      <output message="tns:Retrieval-GetDocumentsByDocumentIdRespMsg" />
+    </operation>
+    <operation name="GetDocumentsByRange">
+      <input message="tns:Retrieval-GetDocumentsByRangeReqMsg" />
+      <output message="tns:Retrieval-GetDocumentsByRangeRespMsg" />
+    </operation>
+    <operation name="GetDocumentVersions">
+      <input message="tns:Retrieval-GetDocumentVersionsReqMsg" />
+      <output message="tns:Retrieval-GetDocumentVersionsRespMsg" />
+    </operation>
+    <operation name="GetAdjacentDocument">
+      <input message="tns:Retrieval-GetAdjacentDocumentReqMsg" />
+      <output message="tns:Retrieval-GetAdjacentDocumentRespMsg" />
+    </operation>
+    <operation name="GetDocumentInSourceContext">
+      <input message="tns:Retrieval-GetDocumentInSourceContextReqMsg" />
+      <output message="tns:Retrieval-GetDocumentInSourceContextRespMsg" />
+    </operation>
+    <operation name="ResolveRemoteLink">
+      <input message="tns:Retrieval-ResolveRemoteLinkReqMsg" />
+      <output message="tns:Retrieval-ResolveRemoteLinkRespMsg" />
+    </operation>
+    <operation name="ReportDocumentUse">
+      <input message="tns:Retrieval-ReportDocumentUseReqMsg" />
+      <output message="tns:Retrieval-ReportDocumentUseRespMsg" />
+    </operation>
+    <operation name="GetDocumentsWithCustomView">
+      <input message="tns:Retrieval-GetDocumentsWithCustomViewReqMsg" />
+      <output message="tns:Retrieval-GetDocumentsWithCustomViewRespMsg" />
+    </operation>
+    <operation name="GetRetrievableSegments">
+      <input message="tns:Retrieval-GetRetrievableSegmentsReqMsg" />
+      <output message="tns:Retrieval-GetRetrievableSegmentsRespMsg" />
+    </operation>
+  </portType>
+  <portType name="CitatorToolsSoapPort">
+    <operation name="GetShepardSignals">
+      <input message="tns:CitatorTools-GetShepardSignalsReqMsg" />
+      <output message="tns:CitatorTools-GetShepardSignalsRespMsg" />
+    </operation>
+    <operation name="GetSignalsAndHN">
+      <input message="tns:CitatorTools-GetSignalsAndHNReqMsg" />
+      <output message="tns:CitatorTools-GetSignalsAndHNRespMsg" />
+    </operation>
+  </portType>
+  <portType name="CitatorSoapPort">
+    <operation name="GetCitationDocument">
+      <input message="tns:Citator-GetCitationDocumentReqMsg" />
+      <output message="tns:Citator-GetCitationDocumentRespMsg" />
+    </operation>
+    <operation name="GetCitationReport">
+      <input message="tns:Citator-GetCitationReportReqMsg" />
+      <output message="tns:Citator-GetCitationReportRespMsg" />
+    </operation>
+    <operation name="FindCitations">
+      <input message="tns:Citator-FindCitationsReqMsg" />
+      <output message="tns:Citator-FindCitationsRespMsg" />
+    </operation>
+    <operation name="GetCourtsAndPracticeAreas">
+      <input message="tns:Citator-GetCourtsAndPracticeAreasReqMsg" />
+      <output message="tns:Citator-GetCourtsAndPracticeAreasRespMsg" />
+    </operation>
+    <operation name="GetCitationSignals">
+      <input message="tns:Citator-GetCitationSignalsReqMsg" />
+      <output message="tns:Citator-GetCitationSignalsRespMsg" />
+    </operation>
+  </portType>
+  <portType name="SourceDirectorySoapPort">
+    <operation name="BrowseSourceDirectory">
+      <input message="tns:SourceDirectory-BrowseSourceDirectoryReqMsg" />
+      <output message="tns:SourceDirectory-BrowseSourceDirectoryRespMsg" />
+    </operation>
+    <operation name="SearchSourceDirectory">
+      <input message="tns:SourceDirectory-SearchSourceDirectoryReqMsg" />
+      <output message="tns:SourceDirectory-SearchSourceDirectoryRespMsg" />
+    </operation>
+    <operation name="GetSourceDetails">
+      <input message="tns:SourceDirectory-GetSourceDetailsReqMsg" />
+      <output message="tns:SourceDirectory-GetSourceDetailsRespMsg" />
+    </operation>
+  </portType>
+  <portType name="SourceSoapPort">
+    <operation name="BrowseSources">
+      <input message="tns:Source-BrowseSourcesReqMsg" />
+      <output message="tns:Source-BrowseSourcesRespMsg" />
+    </operation>
+    <operation name="SearchSources">
+      <input message="tns:Source-SearchSourcesReqMsg" />
+      <output message="tns:Source-SearchSourcesRespMsg" />
+    </operation>
+    <operation name="GetSourceDetails">
+      <input message="tns:Source-GetSourceDetailsReqMsg" />
+      <output message="tns:Source-GetSourceDetailsRespMsg" />
+    </operation>
+    <operation name="GetGroupSourceMemberNames">
+      <input message="tns:Source-GetGroupSourceMemberNamesReqMsg" />
+      <output message="tns:Source-GetGroupSourceMemberNamesRespMsg" />
+    </operation>
+  </portType>
+  <portType name="IndexSoapPort">
+    <operation name="SearchIndexTerms">
+      <input message="tns:Index-SearchIndexTermsReqMsg" />
+      <output message="tns:Index-SearchIndexTermsRespMsg" />
+    </operation>
+    <operation name="BrowseIndexTerms">
+      <input message="tns:Index-BrowseIndexTermsReqMsg" />
+      <output message="tns:Index-BrowseIndexTermsRespMsg" />
+    </operation>
+    <operation name="GetIndexTermTaxonomies">
+      <input message="tns:Index-GetIndexTermTaxonomiesReqMsg" />
+      <output message="tns:Index-GetIndexTermTaxonomiesRespMsg" />
+    </operation>
+    <operation name="SearchCompanyIndex">
+      <input message="tns:Index-SearchCompanyIndexReqMsg" />
+      <output message="tns:Index-SearchCompanyIndexRespMsg" />
+    </operation>
+    <operation name="BrowseCorporateStructure">
+      <input message="tns:Index-BrowseCorporateStructureReqMsg" />
+      <output message="tns:Index-BrowseCorporateStructureRespMsg" />
+    </operation>
+    <operation name="GetCompanyDetail">
+      <input message="tns:Index-GetCompanyDetailReqMsg" />
+      <output message="tns:Index-GetCompanyDetailRespMsg" />
+    </operation>
+  </portType>
+  <portType name="TableOfContentsSoapPort">
+    <operation name="NavigateTOC">
+      <input message="tns:TableOfContents-NavigateTOCReqMsg" />
+      <output message="tns:TableOfContents-NavigateTOCRespMsg" />
+    </operation>
+    <operation name="GetTOCDocumentNavigationPath">
+      <input message="tns:TableOfContents-GetTOCDocumentNavigationPathReqMsg" />
+      <output message="tns:TableOfContents-GetTOCDocumentNavigationPathRespMsg" />
+    </operation>
+    <operation name="GetRelatedTOCIds">
+      <input message="tns:TableOfContents-GetRelatedTOCIdsReqMsg" />
+      <output message="tns:TableOfContents-GetRelatedTOCIdsRespMsg" />
+    </operation>
+  </portType>
+  <portType name="ClassificationSoapPort">
+    <operation name="BrowseResultClassifications">
+      <input message="tns:Classification-BrowseResultClassificationsReqMsg" />
+      <output message="tns:Classification-BrowseResultClassificationsRespMsg" />
+    </operation>
+  </portType>
+  <portType name="ResultSortingSoapPort">
+    <operation name="GetSortKeys">
+      <input message="tns:ResultSorting-GetSortKeysReqMsg" />
+      <output message="tns:ResultSorting-GetSortKeysRespMsg" />
+    </operation>
+    <operation name="SortResults">
+      <input message="tns:ResultSorting-SortResultsReqMsg" />
+      <output message="tns:ResultSorting-SortResultsRespMsg" />
+    </operation>
+    <operation name="LegalSearchSortResults">
+      <input message="tns:ResultSorting-LegalSearchSortResultsReqMsg" />
+      <output message="tns:ResultSorting-LegalSearchSortResultsRespMsg" />
+    </operation>
+    <operation name="LegalSearchGetSortKeys">
+      <input message="tns:ResultSorting-LegalSearchGetSortKeysReqMsg" />
+      <output message="tns:ResultSorting-LegalSearchGetSortKeysRespMsg" />
+    </operation>
+  </portType>
+  <portType name="DossierSoapPort">
+    <operation name="BrowseSupportedRegions">
+      <input message="tns:Dossier-BrowseSupportedRegionsReqMsg" />
+      <output message="tns:Dossier-BrowseSupportedRegionsRespMsg" />
+    </operation>
+    <operation name="CompareCompanies">
+      <input message="tns:Dossier-CompareCompaniesReqMsg" />
+      <output message="tns:Dossier-CompareCompaniesRespMsg" />
+    </operation>
+    <operation name="CreateDossierLinkId">
+      <input message="tns:Dossier-CreateDossierLinkIdReqMsg" />
+      <output message="tns:Dossier-CreateDossierLinkIdRespMsg" />
+    </operation>
+    <operation name="ResolveDossierLinkId">
+      <input message="tns:Dossier-ResolveDossierLinkIdReqMsg" />
+      <output message="tns:Dossier-ResolveDossierLinkIdRespMsg" />
+    </operation>
+    <operation name="RetrieveCorporateHierarchy">
+      <input message="tns:Dossier-RetrieveCorporateHierarchyReqMsg" />
+      <output message="tns:Dossier-RetrieveCorporateHierarchyRespMsg" />
+    </operation>
+    <operation name="RetrieveDossierLinks">
+      <input message="tns:Dossier-RetrieveDossierLinksReqMsg" />
+      <output message="tns:Dossier-RetrieveDossierLinksRespMsg" />
+    </operation>
+    <operation name="RetrieveDossierTaxonomy">
+      <input message="tns:Dossier-RetrieveDossierTaxonomyReqMsg" />
+      <output message="tns:Dossier-RetrieveDossierTaxonomyRespMsg" />
+    </operation>
+    <operation name="SearchCompanyDossier">
+      <input message="tns:Dossier-SearchCompanyDossierReqMsg" />
+      <output message="tns:Dossier-SearchCompanyDossierRespMsg" />
+    </operation>
+    <operation name="RetrieveComponents">
+      <input message="tns:Dossier-RetrieveComponentsReqMsg" />
+      <output message="tns:Dossier-RetrieveComponentsRespMsg" />
+    </operation>
+    <operation name="RetrieveComponentList">
+      <input message="tns:Dossier-RetrieveComponentListReqMsg" />
+      <output message="tns:Dossier-RetrieveComponentListRespMsg" />
+    </operation>
+    <operation name="RetrieveCompanyCategoryList">
+      <input message="tns:Dossier-RetrieveCompanyCategoryListReqMsg" />
+      <output message="tns:Dossier-RetrieveCompanyCategoryListRespMsg" />
+    </operation>
+    <operation name="RetrieveFullTextAttributeList">
+      <input message="tns:Dossier-RetrieveFullTextAttributeListReqMsg" />
+      <output message="tns:Dossier-RetrieveFullTextAttributeListRespMsg" />
+    </operation>
+    <operation name="SearchIndustryDossier">
+      <input message="tns:Dossier-SearchIndustryDossierReqMsg" />
+      <output message="tns:Dossier-SearchIndustryDossierRespMsg" />
+    </operation>
+    <operation name="SearchIndustryDossierWithResultHierarchy">
+      <input message="tns:Dossier-SearchIndustryDossierWithResultHierarchyReqMsg" />
+      <output message="tns:Dossier-SearchIndustryDossierWithResultHierarchyRespMsg" />
+    </operation>
+    <operation name="BrowseIndustryHierarchy">
+      <input message="tns:Dossier-BrowseIndustryHierarchyReqMsg" />
+      <output message="tns:Dossier-BrowseIndustryHierarchyRespMsg" />
+    </operation>
+    <operation name="SearchExecutiveDossier">
+      <input message="tns:Dossier-SearchExecutiveDossierReqMsg" />
+      <output message="tns:Dossier-SearchExecutiveDossierRespMsg" />
+    </operation>
+  </portType>
+  <portType name="GlobalSourceDirectorySoapPort">
+    <operation name="BrowseGlobalSourcesAlphabetically">
+      <input message="tns:GlobalSourceDirectory-BrowseGlobalSourcesAlphabeticallyReqMsg" />
+      <output message="tns:GlobalSourceDirectory-BrowseGlobalSourcesAlphabeticallyRespMsg" />
+    </operation>
+    <operation name="FindGlobalSourceBySourceCode">
+      <input message="tns:GlobalSourceDirectory-FindGlobalSourceBySourceCodeReqMsg" />
+      <output message="tns:GlobalSourceDirectory-FindGlobalSourceBySourceCodeRespMsg" />
+    </operation>
+    <operation name="GetGlobalSourceFilters">
+      <input message="tns:GlobalSourceDirectory-GetGlobalSourceFiltersReqMsg" />
+      <output message="tns:GlobalSourceDirectory-GetGlobalSourceFiltersRespMsg" />
+    </operation>
+    <operation name="GetGlobalSourceTaxonomies">
+      <input message="tns:GlobalSourceDirectory-GetGlobalSourceTaxonomiesReqMsg" />
+      <output message="tns:GlobalSourceDirectory-GetGlobalSourceTaxonomiesRespMsg" />
+    </operation>
+    <operation name="FindGlobalSourcesByKeyword">
+      <input message="tns:GlobalSourceDirectory-FindGlobalSourcesByKeywordReqMsg" />
+      <output message="tns:GlobalSourceDirectory-FindGlobalSourcesByKeywordRespMsg" />
+    </operation>
+    <operation name="BrowseGlobalSources">
+      <input message="tns:GlobalSourceDirectory-BrowseGlobalSourcesReqMsg" />
+      <output message="tns:GlobalSourceDirectory-BrowseGlobalSourcesRespMsg" />
+    </operation>
+  </portType>
+  <binding name="AuthenticationSoapBinding" type="tns:AuthenticationSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Authenticate">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AuthenticateEndUser">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AuthenticateLocation">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="SearchSoapBinding" type="tns:SearchSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Search">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="NarrowSearch">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="BulkSearch">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="LegalSearch">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSearchableSegments">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSearchableSegmentsV2">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="LDCSoapBinding" type="tns:LDCSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetSourcesByJurisdiction">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetDocumentByPartyName">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetDocumentByDocketNumber">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetShepardsLexcite">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetDocumentByCitation">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="BrowseCitationFormats">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SearchCitationFormats">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCitationFormatDetails">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="SavedSearchSoapBinding" type="tns:SavedSearchSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="SaveSearch">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ExecuteSavedSearch">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ListSavedSearches">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSavedSearchDetails">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="DeleteSavedSearches">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ModifySavedSearch">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="RetrievalSoapBinding" type="tns:RetrievalSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetAttachments">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetAttachmentList">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetDocumentsByDocumentId">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetDocumentsByRange">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetDocumentVersions">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetAdjacentDocument">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetDocumentInSourceContext">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ResolveRemoteLink">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ReportDocumentUse">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetDocumentsWithCustomView">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetRetrievableSegments">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="CitatorToolsSoapBinding" type="tns:CitatorToolsSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetShepardSignals">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSignalsAndHN">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="CitatorSoapBinding" type="tns:CitatorSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetCitationDocument">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCitationReport">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="FindCitations">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCourtsAndPracticeAreas">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCitationSignals">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="SourceDirectorySoapBinding" type="tns:SourceDirectorySoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="BrowseSourceDirectory">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SearchSourceDirectory">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSourceDetails">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="SourceSoapBinding" type="tns:SourceSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="BrowseSources">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SearchSources">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetSourceDetails">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetGroupSourceMemberNames">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="IndexSoapBinding" type="tns:IndexSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="SearchIndexTerms">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="BrowseIndexTerms">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetIndexTermTaxonomies">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SearchCompanyIndex">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="BrowseCorporateStructure">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetCompanyDetail">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="TableOfContentsSoapBinding" type="tns:TableOfContentsSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="NavigateTOC">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetTOCDocumentNavigationPath">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetRelatedTOCIds">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="ClassificationSoapBinding" type="tns:ClassificationSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="BrowseResultClassifications">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="ResultSortingSoapBinding" type="tns:ResultSortingSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetSortKeys">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SortResults">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="LegalSearchSortResults">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="LegalSearchGetSortKeys">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="DossierSoapBinding" type="tns:DossierSoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="BrowseSupportedRegions">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="CompareCompanies">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="CreateDossierLinkId">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="ResolveDossierLinkId">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="RetrieveCorporateHierarchy">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="RetrieveDossierLinks">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="RetrieveDossierTaxonomy">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SearchCompanyDossier">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="RetrieveComponents">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="RetrieveComponentList">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="RetrieveCompanyCategoryList">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="RetrieveFullTextAttributeList">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SearchIndustryDossier">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SearchIndustryDossierWithResultHierarchy">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="BrowseIndustryHierarchy">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="SearchExecutiveDossier">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="GlobalSourceDirectorySoapBinding" type="tns:GlobalSourceDirectorySoapPort">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="BrowseGlobalSourcesAlphabetically">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="FindGlobalSourceBySourceCode">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetGlobalSourceFilters">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetGlobalSourceTaxonomies">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="FindGlobalSourcesByKeyword">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+    <operation name="BrowseGlobalSources">
+      <soap11:operation soapAction="" />
+      <input>
+        <soap11:body use="literal" />
+      </input>
+      <output>
+        <soap11:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="WSAPI">
+    <port name="Authentication" binding="tns:AuthenticationSoapBinding">
+      <soap11:address location="https://wskcert-www.lexisnexis.com/wsapi/v1/services/Authentication" />
+    </port>
+    <port name="Search" binding="tns:SearchSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/Search" />
+    </port>
+    <port name="LDC" binding="tns:LDCSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/LDC" />
+    </port>
+    <port name="SavedSearch" binding="tns:SavedSearchSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/SavedSearch" />
+    </port>
+    <port name="Retrieval" binding="tns:RetrievalSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/Retrieval" />
+    </port>
+    <port name="CitatorTools" binding="tns:CitatorToolsSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/CitatorTools" />
+    </port>
+    <port name="Citator" binding="tns:CitatorSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/Citator" />
+    </port>
+    <port name="SourceDirectory" binding="tns:SourceDirectorySoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/SourceDirectory" />
+    </port>
+    <port name="Source" binding="tns:SourceSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/Source" />
+    </port>
+    <port name="Index" binding="tns:IndexSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/Index" />
+    </port>
+    <port name="TableOfContents" binding="tns:TableOfContentsSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/TableOfContents" />
+    </port>
+    <port name="Classification" binding="tns:ClassificationSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/Classification" />
+    </port>
+    <port name="ResultSorting" binding="tns:ResultSortingSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/ResultSorting" />
+    </port>
+    <port name="Dossier" binding="tns:DossierSoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/Dossier" />
+    </port>
+    <port name="GlobalSourceDirectory" binding="tns:GlobalSourceDirectorySoapBinding">
+      <soap11:address location="http://wskcert-www.lexisnexis.com/wsapi/v1/services/GlobalSourceDirectory" />
+    </port>
+  </service>
+</definitions>

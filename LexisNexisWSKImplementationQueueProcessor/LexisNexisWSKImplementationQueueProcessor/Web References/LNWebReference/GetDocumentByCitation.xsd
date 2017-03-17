@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:tns="http://getdocumentbycitation.ldc.services.v1.wsapi.lexisnexis.com" xmlns:common="http://common.services.v1.wsapi.lexisnexis.com" xmlns:ldccommon="http://ldccommon.common.services.v1.wsapi.lexisnexis.com" xmlns:security="http://security.common.services.v1.wsapi.lexisnexis.com" xmlns:result="http://result.common.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://getdocumentbycitation.ldc.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="Common.xsd" namespace="http://common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="LDCCommon.xsd" namespace="http://ldccommon.common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="Result.xsd" namespace="http://result.common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="Security.xsd" namespace="http://security.common.services.v1.wsapi.lexisnexis.com" />
+  <element name="GetDocumentByCitation" type="tns:GetDocumentByCitation">
+    <annotation>
+      <documentation>
+       	Represents a LexisNexis search and retrieval for a given citation.  Many options are 
+        exposed to allow a user to customize the search request.
+      </documentation>
+    </annotation>
+  </element>
+  <element name="GetDocumentByCitationResponse" type="tns:GetDocumentByCitationResponse">
+    <annotation>
+      <documentation>
+      	The response from a search request is a set of search results,   
+        containing document identifiers along with documents in the
+        specified or default output format and citation information.
+      </documentation>
+    </annotation>
+  </element>
+  <complexType name="GetDocumentByCitation">
+    <sequence>
+      <element name="binarySecurityToken" type="security:BinarySecurityToken">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">f4348ad8876542bc93748c89fb98a7e</example>
+            Security token that must be provided on all non-authentication
+            requests.
+          </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="1" name="citation" type="string">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">800 f2d 111</example>
+				A Citation String 
+			</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" default="USA" name="countryCode" type="string">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">USA</example>
+				Country Code 
+			</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="projectId" type="common:ProjectId">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">Research Project 001</example>
+	            Used for client or project identification purposes.  This 
+	            identifier will be associated with each search transaction 
+	            and will be reported on your organization's invoice.
+	             </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="retrievalOptions" type="result:RetrievalOptions">
+        <annotation>
+          <documentation>Retrieval options</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="GetDocumentByCitationResponse">
+    <sequence>
+      <element name="searchInformation" type="result:SearchResponse">
+        <annotation>
+          <documentation>
+		        The response from a search request is a set of search results,   
+		        containing document identifiers along with documents in the
+		        specified or default output format.
+		      </documentation>
+        </annotation>
+      </element>
+      <element name="citationInformation" type="ldccommon:CfaSourceKeyList">
+        <annotation>
+          <documentation>
+		      	Citation information details.
+		      </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

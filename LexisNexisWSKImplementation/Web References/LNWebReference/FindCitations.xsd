@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:citecommon="http://citator.common.services.v1.wsapi.lexisnexis.com" xmlns:tns="http://findcitations.citator.services.v1.wsapi.lexisnexis.com" xmlns:common="http://common.services.v1.wsapi.lexisnexis.com" xmlns:security="http://security.common.services.v1.wsapi.lexisnexis.com" xmlns:result="http://result.common.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://findcitations.citator.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="CitatorCommon.xsd" namespace="http://citator.common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="Common.xsd" namespace="http://common.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="Security.xsd" namespace="http://security.common.services.v1.wsapi.lexisnexis.com" />
+  <element name="FindCitations" type="tns:FindCitations">
+    <annotation>
+      <documentation>
+    Request for the client application to find legal citations within one or
+    more input text strings and provide the client application sufficient 
+    information to mark the recognized legal citations within the text.
+    To aid in matching inputs with responses, each input text string in 
+    the request is matched with a corresponding result item regardless 
+    of whether or not any citations are found. 
+    </documentation>
+    </annotation>
+  </element>
+  <element name="FindCitationsResponse" type="tns:FindCitationsResponse">
+    <annotation>
+      <documentation>
+    Citation information and status response sent to the client application. 
+    For each result, a list of zero or more recognized citations are 
+    returned.
+    </documentation>
+    </annotation>
+  </element>
+  <complexType name="FindCitations">
+    <sequence>
+      <element name="binarySecurityToken" type="security:BinarySecurityToken">
+        <annotation>
+          <documentation>
+        Security token that must be provided on all non-authentication requests.
+        Example:  f4348ad8876542bc93748c89fb98a7e
+        </documentation>
+        </annotation>
+      </element>
+      <element name="countryCode" type="string">
+        <annotation>
+          <documentation>
+        The two-letter ISO 3166 country code for the reporter code of the legal citation.
+        See http://userpage.chemie.fu-berlin.de/diverse/doc/ISO_3166.html
+        </documentation>
+        </annotation>
+      </element>
+      <element name="inputTextList" type="tns:InputTextList">
+        <annotation>
+          <documentation>
+        Structure enclosing a list of text strings, each potentially containing one 
+        or more legal citations.
+        </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="options" type="tns:Options" />
+    </sequence>
+  </complexType>
+  <complexType name="InputTextList">
+    <sequence>
+      <element maxOccurs="unbounded" name="inputText" type="string">
+        <annotation>
+          <documentation>
+        Text string potentially containing one or more legal citations.
+        </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="Options">
+    <sequence>
+      <element minOccurs="0" name="includeExtendedResults" type="boolean">
+        <annotation>
+          <documentation>
+        Controls inclusion of extended results detail information in the response.
+        </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="FindCitationsResponse">
+    <sequence>
+      <element name="resultList" type="tns:ResultList">
+        <annotation>
+          <documentation>
+        Structure containing the list of results.
+        </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ResultList">
+    <sequence>
+      <element maxOccurs="unbounded" name="result" type="tns:Result">
+        <annotation>
+          <documentation>
+        Structure containing the result information from citation recognition for a single
+        text string.  
+        </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="Result">
+    <sequence>
+      <element name="recognizedCitationList" type="tns:RecognizedCitationList">
+        <annotation>
+          <documentation>
+        List of zero or more legal citations found ("recognized") within the input
+        text.  There is a one-to-one correspondence between the input text strings
+        submitted in the request and this element, the recognized citation list.  
+        </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="RecognizedCitationList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="recognizedCitation" type="tns:RecognizedCitation">
+        <annotation>
+          <documentation>
+        Structure containing the metadata pertaining to a single recognized legal citation 
+        found within the input text string.
+        </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="RecognizedCitation">
+    <sequence>
+      <element name="status" type="tns:Status">
+        <annotation>
+          <documentation>
+        Enumeration indicating the outcome of recognizing a legal citation.
+        </documentation>
+        </annotation>
+      </element>
+      <element name="offset" type="integer">
+        <annotation>
+          <documentation>
+        The offset into the text string of the start of the recognized legal citation.
+        </documentation>
+        </annotation>
+      </element>
+      <element name="length" type="integer">
+        <annotation>
+          <documentation>
+        The length of the recognized legal citation.
+        </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="extendedResults" type="tns:ExtendedResults">
+        <annotation>
+          <documentation>
+	  	Structure containing optional extended result information.
+		</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="Status">
+    <restriction base="string">
+      <enumeration value="Ok" />
+      <enumeration value="OkFallback" />
+      <enumeration value="Invalid" />
+    </restriction>
+  </simpleType>
+  <complexType name="ExtendedResults">
+    <sequence>
+      <element name="keywordInfo" type="tns:KeywordInfo">
+        <annotation>
+          <documentation>
+        Citation-related information for use in subsequent requests for
+        purposes of comparison and retrieval.
+        </documentation>
+        </annotation>
+      </element>
+      <element name="parallelKeywordList" type="tns:ParallelKeywordList">
+        <annotation>
+          <documentation>
+		Structure containing a list of parallel keywords (parallel references)
+		to this citation.
+		</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="KeywordInfo">
+    <sequence>
+      <element name="keyword" type="string">
+        <annotation>
+          <documentation>
+	  	Normalized form of the recognized citation.  For use in subsequent
+	  	search/retrieval and citation matching.
+		</documentation>
+        </annotation>
+      </element>
+      <element name="fallbackOffset" type="integer">
+        <annotation>
+          <documentation>
+	  	Offset from the front of the keyword to the fallback section of the keyword.
+	  	If the value is zero, there is no fallback, i.e. no resolving to the previous
+	  	starting page, paragraph, or citation reference.
+		</documentation>
+        </annotation>
+      </element>
+      <element name="yearWildcardOffset" type="integer">
+        <annotation>
+          <documentation>
+	  	Offset from the front of the keyword to where the wildcard for the century 
+	  	portion of the year begins.  If this value is zero, there are no wildcards
+	  	in the keyword.
+		</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ParallelKeywordList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="parallelKeywordInfo" type="tns:ParallelKeywordInfo">
+        <annotation>
+          <documentation>
+	  	Structure containing keyword information for parallel citations.
+		</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ParallelKeywordInfo">
+    <sequence>
+      <element name="keyword" type="string">
+        <annotation>
+          <documentation>
+	  	Normalized form of a parallel reference of the recognized citation.  
+	  	For use in subsequent search/retrieval and citation matching.
+		</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

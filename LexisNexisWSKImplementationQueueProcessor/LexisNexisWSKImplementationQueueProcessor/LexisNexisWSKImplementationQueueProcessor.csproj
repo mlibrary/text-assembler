@@ -1,0 +1,673 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{65D97A1F-267D-4785-8A66-79E756C849C2}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LexisNexisWSKImplementationQueueProcessor</RootNamespace>
+    <AssemblyName>LexisNexisWSKImplementationQueueProcessor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Posix.4.0.0.0\lib\net40\Mono.Posix.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppLookup.cs" />
+    <Compile Include="AppParam.cs" />
+    <Compile Include="DBManager.cs" />
+    <Compile Include="DeletionProcessor.cs" />
+    <Compile Include="ISearchRequest.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="QueueProcessor.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="SearchRequest.cs" />
+    <Compile Include="Source.cs" />
+    <Compile Include="SourceProcessor.cs" />
+    <Compile Include="Web References\LNWebReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config.example">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="LexisNexisWSKImplementationQueueProcessor.licenseheader" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\LNWebReference\AuthenticateEndUser.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\AuthenticateEndUserResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\AuthenticateLocation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\AuthenticateLocationResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\AuthenticateResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\Authentication.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseCitationFormats.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseCitationFormatsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseCorporateStructure.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseCorporateStructureResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseGlobalSources.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseGlobalSourcesAlphabetically.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseGlobalSourcesAlphabeticallyResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseGlobalSourcesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseIndexTerms.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseIndexTermsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseIndustryHierarchy.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseIndustryHierarchyResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseResultClassifications.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseResultClassificationsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseSourceDirectory.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseSourceDirectoryResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseSources.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseSourcesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseSupportedRegions.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BrowseSupportedRegionsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\BulkSearch.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\BulkSearchResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\CitatorCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\Common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\Common0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\CompareCompanies.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\CompareCompaniesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\CreateDossierLinkId.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\CreateDossierLinkIdResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\DeleteSavedSearches.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\DeleteSavedSearchesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\DossierCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\ExecuteSavedSearch.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\FindCitations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\FindCitationsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\FindGlobalSourceBySourceCode.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\FindGlobalSourceBySourceCodeResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\FindGlobalSourcesByKeyword.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\FindGlobalSourcesByKeywordResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetAdjacentDocument.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetAttachmentList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetAttachmentListResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetAttachments.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetAttachmentsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetCitationDocument.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetCitationDocumentResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetCitationFormatDetails.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetCitationFormatDetailsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetCitationReport.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetCitationReportResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetCitationSignals.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetCitationSignalsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetCompanyDetail.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetCompanyDetailResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetCourtsAndPracticeAreas.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetCourtsAndPracticeAreasResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentByCitation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentByCitationResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentByDocketNumber.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentByPartyName.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentInSourceContext.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentsByDocumentId.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentsByRange.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentsWithCustomView.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentVersions.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetDocumentVersionsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetGlobalSourceFilters.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetGlobalSourceFiltersResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetGlobalSourceTaxonomies.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetGlobalSourceTaxonomiesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetGroupSourceMemberNames.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetGroupSourceMemberNamesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetIndexTermTaxonomies.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetIndexTermTaxonomiesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetRelatedTOCIds.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetRelatedTOCIdsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetRetrievableSegments.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetRetrievableSegmentsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetSavedSearchDetails.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSavedSearchDetailsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetSearchableSegments.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSearchableSegmentsV2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSearchableSegmentsV2Response1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetShepardSignals.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetShepardSignalsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetShepardsLexcite.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSignalsAndHN.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSignalsAndHNResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetSortKeys.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSortKeysResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetSourceDetails-SourceDirectory.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSourceDetails.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSourceDetailsResponse11.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetSourceDetailsResponse2.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetSourcesByJurisdiction.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GetSourcesByJurisdictionResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\GetTOCDocumentNavigationPath.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\GlobalSourceDirectoryCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\IndexCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\LDCCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\LegalSearch.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\LegalSearchGetSortKeys.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\LegalSearchGetSortKeysResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\LegalSearchResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\LegalSearchSortResults.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\LegalSearchSortResultsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\ListSavedSearches.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\ListSavedSearchesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\ModifySavedSearch.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\ModifySavedSearchResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\NarrowSearch.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\NavigateTOC.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\LNWebReference\ReportDocumentUse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\ReportDocumentUseResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\ResolveDossierLinkId.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\ResolveDossierLinkIdResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\ResolveRemoteLink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\Result.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\Result0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\RetrievalResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveCompanyCategoryList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveCompanyCategoryListResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveComponentList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveComponentListResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveComponents.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveComponentsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveCorporateHierarchy.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveCorporateHierarchyResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveDossierLinks.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveDossierLinksResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveDossierTaxonomy.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveDossierTaxonomyResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveFullTextAttributeList.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\RetrieveFullTextAttributeListResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SavedSearchCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SaveSearch.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SaveSearchResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\Search.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchCitationFormats.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchCitationFormatsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchCompanyDossier.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchCompanyDossierResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchCompanyIndex.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchCompanyIndexResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchExecutiveDossier.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchExecutiveDossierResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchIndexTerms.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchIndustryDossier.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchIndustryDossierResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchIndustryDossierWithResultHierarchy.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchIndustryDossierWithResultHierarchyResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchResultsGroup1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchSourceDirectory.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchSourceDirectoryResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SearchSources.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SearchSourcesResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\Security.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\Security0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SortResults.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SortResultsResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SourceCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SourceContextResult.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\SourceContextRetrievalResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\SourceDirectoryCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\TOCCommon.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\LNWebReference\TOCResponse1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\LNWebReference\WSAPI.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="C:\Users\schanzme\Documents\wsapi\WSAPI.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\LNWebReference\</RelPath>
+      <UpdateFromURL>C:\Users\schanzme\Documents\wsapi\WSAPI.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>LexisNexisWSKImplementationQueueProcessor_LNWebReference_WSAPI</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

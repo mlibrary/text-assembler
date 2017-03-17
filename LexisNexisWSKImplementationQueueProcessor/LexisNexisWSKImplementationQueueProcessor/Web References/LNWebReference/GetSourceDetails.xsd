@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:security="http://security.common.services.v1.wsapi.lexisnexis.com" xmlns:tns="http://getsourcedetails.source.services.v1.wsapi.lexisnexis.com" xmlns:common="http://common.source.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://getsourcedetails.source.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="SourceCommon.xsd" namespace="http://common.source.services.v1.wsapi.lexisnexis.com" />
+  <import schemaLocation="Security.xsd" namespace="http://security.common.services.v1.wsapi.lexisnexis.com" />
+  <element name="GetSourceDetails" type="tns:GetSourceDetails">
+    <annotation>
+      <documentation>
+		 	To retrieve detailed information about a source, such as the 
+			description of the source content, permissible usage, etc.
+         </documentation>
+    </annotation>
+  </element>
+  <element name="GetSourceDetailsResponse" type="tns:GetSourceDetailsResponse">
+    <annotation>
+      <documentation>
+            The description of the content of a source.
+         </documentation>
+    </annotation>
+  </element>
+  <complexType name="GetSourceDetails">
+    <sequence>
+      <element name="binarySecurityToken" type="security:BinarySecurityToken">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">f4348ad8876542bc93748c89fb98a7e</example>
+                  Security token that must be provided on all non-authentication
+                  requests.
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="includeTypeOfSource" type="boolean">
+        <annotation>
+          <documentation>
+					   If true, it returns the "Type of Source" and AggregateSourceList in Response Source objects.
+					   Else, it does not return the "Type of Source" in Response.
+                   </documentation>
+        </annotation>
+      </element>
+      <element name="sourceId" type="integer">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">7944</example>
+                  An identifier used to represent a specific source in
+                  the source directory.
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="includeSourceElement" type="boolean">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">true</example>
+                  A flag indicates whether more detailed information about 
+                  a source (the Source element) should be returned in the response.  
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="useCSP" type="boolean">
+        <annotation>
+          <documentation>
+                Internal Use Only!
+                Use Combined Search Pricing Rules/Logic.
+              </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="GetSourceDetailsResponse">
+    <sequence>
+      <element minOccurs="0" name="sourceGuideList" type="tns:SourceGuideList">
+        <annotation>
+          <documentation>
+                  A list of guiding description of the content of a specific source.
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="securedSource" type="tns:SecuredSource">
+        <annotation>
+          <documentation>
+                  Detailed information about a secured source.
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="informationalMessage" type="base64Binary">
+        <annotation>
+          <documentation>
+                  More information about a source, such as currentness.
+               </documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="source" type="common:Source">
+        <annotation>
+          <documentation>
+                  Detailed information about a single source.
+               </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SecuredSource">
+    <sequence>
+      <element name="securedSourceId" type="string">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">1234abcdefgxyz</example>
+                  An identifier used to represent a secured source.  This 
+				  id is required to run search for a secured source.
+               </documentation>
+        </annotation>
+      </element>
+      <element name="expiration" type="dateTime">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">2002-07-30T13:23:47.601Z</example>
+                  Expiration date and time for this secured source ID.
+               </documentation>
+        </annotation>
+      </element>
+      <element name="permissibleUseMessage" type="base64Binary">
+        <annotation>
+          <documentation>
+                  The detailed information about the secured source.
+               </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SourceGuideList">
+    <sequence>
+      <element maxOccurs="unbounded" name="sourceGuide" type="base64Binary">
+        <annotation>
+          <documentation>
+                  The description of the content of a specific source.
+               </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

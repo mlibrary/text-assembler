@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:tns="http://indexcommon.index.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://indexcommon.index.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <complexType name="IndexTermList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="indexTerm" type="tns:IndexTerm">
+        <annotation>
+          <documentation>A LexisNexis search indexing term.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="IndexTerm">
+    <sequence>
+      <element name="indexTermId" type="string">
+        <annotation>
+          <documentation>An identifier that is associated with a particular 
+					indexing term.</documentation>
+        </annotation>
+      </element>
+      <element name="name" type="string">
+        <annotation>
+          <documentation>The name of an indexing term.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="description" type="string">
+        <annotation>
+          <documentation>The description and scope of the indexing term.</documentation>
+        </annotation>
+      </element>
+      <element name="strongMatchQueryString" type="string">
+        <annotation>
+          <documentation>A query string that represents documents that
+					have at least an 85% match with the indexing term.</documentation>
+        </annotation>
+      </element>
+      <element name="anyMatchQueryString" type="string">
+        <annotation>
+          <documentation>A query string that represents documents that
+					have any notable association with the indexing term.</documentation>
+        </annotation>
+      </element>
+      <element name="subTermsAvailable" type="boolean">
+        <annotation>
+          <documentation>A flag to indicate that the term can be
+					browsed for additional, related terms with a narrower scope.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="subTerms" type="tns:IndexTermList">
+        <annotation>
+          <documentation>The list of subterms within this indexing term.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CompanyIndexTermList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="companyIndexTerm" type="tns:CompanyIndexTerm">
+        <annotation>
+          <documentation>CompanyIndexTerm represents a company term. 
+					This object represents both a parent company term and subsidiary term. 
+					In case of this object serving as a parent company term the subsidiary 
+					list in the object will be populated with the list of its subsidiaries 
+					or empty if no subsidiaries were found. In case of this object serving 
+					as a leaf node the subsidiary list in the object will be set to null. 
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CompanyIndexTerm">
+    <sequence>
+      <element name="companyId" type="string">
+        <annotation>
+          <documentation>The company identifier.</documentation>
+        </annotation>
+      </element>
+      <element name="indexCode" type="tns:IndexTermVariants">
+        <annotation>
+          <documentation> The indexCode with two variants.</documentation>
+        </annotation>
+      </element>
+      <element name="displayName" type="string">
+        <annotation>
+          <documentation>Name of the company.</documentation>
+        </annotation>
+      </element>
+      <element name="location" type="string">
+        <annotation>
+          <documentation>Location of the company.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="nodeId" type="string">
+        <annotation>
+          <documentation>The dca entity id.</documentation>
+        </annotation>
+      </element>
+      <element name="ultimateParentName" type="string">
+        <annotation>
+          <documentation>Name of the ultimate parent company.</documentation>
+        </annotation>
+      </element>
+      <element name="children" type="tns:CompanyIndexTermList">
+        <annotation>
+          <documentation>ArrayList of type CompanyIndexTerm, 
+					the child or subsidiary companies.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="companyInformationAvailable" type="boolean">
+        <annotation>
+          <documentation>Flag for company details available.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="corporateStructureAvailable" type="boolean">
+        <annotation>
+          <documentation>Flag for corporate structure available.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="hit" type="boolean">
+        <annotation>
+          <documentation>Flag value is True if this term is a search hit,
+					false otherwise.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="parent" type="boolean">
+        <annotation>
+          <documentation>Flag value is true if this company term is a 
+					parent company, false otherwise.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CompanyIndexTermDetail">
+    <sequence>
+      <element name="companyId" type="string">
+        <annotation>
+          <documentation>The company identifier.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="alternativeNames" type="tns:nameList">
+        <annotation>
+          <documentation>List of all the alternative names used by this company.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="displayLocale" type="string">
+        <annotation>
+          <documentation> Locale in which the display text and other details are retrieved.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="displayName" type="string">
+        <annotation>
+          <documentation>The company display name.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="headquarterCountry" type="string">
+        <annotation>
+          <documentation>The country of company headquarter.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="indexCode" type="tns:IndexTermVariants">
+        <annotation>
+          <documentation>CCT Code of an indexed company.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="companyInformationAvailable" type="boolean">
+        <annotation>
+          <documentation>Flag for company details available.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="industrySector" type="string">
+        <annotation>
+          <documentation>The industry sector of the company.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="previousNames" type="tns:nameList">
+        <annotation>
+          <documentation>List of all the previous names used by this company.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="nameList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="name" type="string">
+        <annotation>
+          <documentation>List of name strings.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="IndexTermDetailList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="indexTermDetail" type="tns:IndexTermDetail">
+        <annotation>
+          <documentation>ArrayList of IndexTermDetail objects.
+					IndexTermDetail represents the details for a term. The details can be fetched for any term. 
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CompanyIndexTermDetailList">
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="companyIndexTermDetail" type="tns:CompanyIndexTermDetail">
+        <annotation>
+          <documentation>List of CompanyIndexTermDetail objects.
+					CompanyIndexTermDetail encapsulates the detailed information for a given company id. 
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="HotTermData">
+    <sequence>
+      <element minOccurs="0" name="companyList" type="tns:CompanyIndexTermDetailList">
+        <annotation>
+          <documentation>List of CompanyIndexTermDetail objects contaning hot terms in the company domain.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="geographyList" type="tns:IndexTermDetailList">
+        <annotation>
+          <documentation>List of IndexTermDetail objects contaning hot terms in the geography domain.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="industryList" type="tns:IndexTermDetailList">
+        <annotation>
+          <documentation>List of IndexTermDetail objects contaning hot terms in the industry domain.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="peopleList" type="tns:IndexTermDetailList">
+        <annotation>
+          <documentation>List of IndexTermDetail objects contaning hot terms in the people domain.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="subjectList" type="tns:IndexTermDetailList">
+        <annotation>
+          <documentation>List of IndexTermDetail objects contaning hot terms in the subject domain.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="IndexTermDetail">
+    <sequence>
+      <element name="broaderTerms" type="tns:IndexTermDetailList">
+        <annotation>
+          <documentation>The list of broader terms this Term might have.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="displayLocale" type="string">
+        <annotation>
+          <documentation> Locale in which the display text and other details are retrieved.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="displayName" type="string">
+        <annotation>
+          <documentation>The company display name.</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="indexCode" type="tns:IndexTermVariants">
+        <annotation>
+          <documentation>CCT Code of an indexed company.</documentation>
+        </annotation>
+      </element>
+      <element name="isHasScopeNote" type="boolean">
+        <annotation>
+          <documentation>True if scope notes exists for this term.</documentation>
+        </annotation>
+      </element>
+      <element name="scopeNote" type="string">
+        <annotation>
+          <documentation>The scopeNote this Term might have.</documentation>
+        </annotation>
+      </element>
+      <element name="narrowerTerms" type="tns:IndexTermDetailList">
+        <annotation>
+          <documentation>The list of narrower terms this Term might have.</documentation>
+        </annotation>
+      </element>
+      <element name="relatedTerms" type="tns:IndexTermDetailList">
+        <annotation>
+          <documentation>The list of related terms this Term might have.</documentation>
+        </annotation>
+      </element>
+      <element name="termId" type="long">
+        <annotation>
+          <documentation>Id for the term.</documentation>
+        </annotation>
+      </element>
+      <element name="sortKey" type="string">
+        <annotation>
+          <documentation>Name of a term for sorting, can vary with adapation.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="IndexTermVariants">
+    <sequence>
+      <element name="strongMatchQueryString" type="string">
+        <annotation>
+          <documentation>A query string that represents documents that
+					have at least an 85% match with the indexing term.</documentation>
+        </annotation>
+      </element>
+      <element name="anyMatchQueryString" type="string">
+        <annotation>
+          <documentation>A query string that represents documents that
+					have any notable association with the indexing term.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+</schema>

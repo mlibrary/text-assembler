@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+COPYRIGHT  2015-16
+MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES
+ALL RIGHTS RESERVED
+
+PERMISSION IS GRANTED TO USE, COPY, CREATE DERIVATIVE WORKS AND REDISTRIBUTE
+THIS SOFTWARE AND SUCH DERIVATIVE WORKS FOR ANY PURPOSE, SO LONG AS THE NAME
+OF MICHIGAN STATE UNIVERSITY IS NOT USED IN ANY ADVERTISING OR PUBLICITY
+PERTAINING TO THE USE OR DISTRIBUTION OF THIS SOFTWARE WITHOUT SPECIFIC,
+WRITTEN PRIOR AUTHORIZATION.  IF THE ABOVE COPYRIGHT NOTICE OR ANY OTHER
+IDENTIFICATION OF MICHIGAN STATE UNIVERSITY IS INCLUDED IN ANY COPY OF ANY
+PORTION OF THIS SOFTWARE, THEN THE DISCLAIMER BELOW MUST ALSO BE INCLUDED.
+
+THIS SOFTWARE IS PROVIDED AS IS, WITHOUT REPRESENTATION FROM MICHIGAN STATE
+UNIVERSITY AS TO ITS FITNESS FOR ANY PURPOSE, AND WITHOUT WARRANTY BY
+MICHIGAN STATE UNIVERSITY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE. THE MICHIGAN STATE UNIVERSITY BOARD OF TRUSTEES SHALL
+NOT BE LIABLE FOR ANY DAMAGES, INCLUDING SPECIAL, INDIRECT, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES, WITH RESPECT TO ANY CLAIM ARISING OUT OF OR IN
+CONNECTION WITH THE USE OF THE SOFTWARE, EVEN IF IT HAS BEEN OR IS HEREAFTER
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Written by Megan Schanz, 2015-16
+(c) Michigan State University Board of Trustees
+Licensed under GNU General Public License (GPL) Version 2.
+-->
+<schema xmlns:security="http://security.common.services.v1.wsapi.lexisnexis.com" xmlns:tns="http://getcitationsignals.citator.services.v1.wsapi.lexisnexis.com" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://getcitationsignals.citator.services.v1.wsapi.lexisnexis.com" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="Security.xsd" namespace="http://security.common.services.v1.wsapi.lexisnexis.com" />
+  <element name="GetCitationSignals" type="tns:GetCitationSignals">
+    <annotation>
+      <documentation>
+				This call is used to retrieve citation signals from
+				the Cite Store given a list of case, legislation or EU
+				directive citations or persistent ids.
+			</documentation>
+    </annotation>
+  </element>
+  <element name="GetCitationSignalsResponse" type="tns:GetCitationSignalsResponse">
+    <annotation>
+      <documentation>
+				Relevant signals from the Cite Store for the
+				supplied citation is returned.
+			</documentation>
+    </annotation>
+  </element>
+  <complexType name="GetCitationSignals">
+    <sequence>
+      <element name="binarySecurityToken" type="security:BinarySecurityToken">
+        <annotation>
+          <documentation>
+            <example xmlns="http://www.w3.org/2001/XMLSchema">
+							f4348ad8876542bc93748c89fb98a7e
+						</example>
+						Security token that must be provided on all
+						non-authentication requests.
+					</documentation>
+        </annotation>
+      </element>
+      <element name="citationInputList" type="tns:CitationInputList">
+        <annotation>
+          <documentation>
+						Structure enclosing a list of text strings, each
+						potentially containing one or more legal
+						citations.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CitationInputList">
+    <sequence>
+      <element maxOccurs="unbounded" name="citationInput" type="tns:CitationInput">
+        <annotation>
+          <documentation>
+						The object potentially containing citation input
+						elements.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CitationInput">
+    <sequence>
+      <element name="inputType" type="tns:CitationType">
+        <annotation>
+          <documentation>
+						This indicates whether the input is a case,
+						legislation or an EU directive citation.
+					</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="caseInput" type="tns:CaseCitation">
+        <annotation>
+          <documentation>
+						The object that holds information about a case
+						citation.
+					</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="legisInput" type="tns:LegisCitation">
+        <annotation>
+          <documentation>
+						The object that holds information about a
+						legislation citation.
+					</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="directiveInput" type="tns:DirectiveCitation">
+        <annotation>
+          <documentation>
+						The object that holds information about a EU
+						Directive.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="CitationType">
+    <restriction base="string">
+      <enumeration value="CASES" />
+      <enumeration value="EUDIRECTIVE" />
+      <enumeration value="LEGISLATION " />
+    </restriction>
+  </simpleType>
+  <complexType name="CaseCitation">
+    <sequence>
+      <element minOccurs="0" name="persistentIdentifier" type="string">
+        <annotation>
+          <documentation>
+						The persistent id to use when request type is
+						RequestType.PERSISTENTID.
+					</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="caseMetadata" type="tns:CaseMetadata">
+        <annotation>
+          <documentation>
+						Object that holds case metadata.
+					</documentation>
+        </annotation>
+      </element>
+      <element name="requestType" type="tns:RequestType">
+        <annotation>
+          <documentation>
+						This indicates whether the input should be taken
+						from the case metadata or from the persistent
+						id.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CaseMetadata">
+    <sequence>
+      <element name="lbuIdentifier" type="string">
+        <annotation>
+          <documentation>
+						The lbu id (country code).
+					</documentation>
+        </annotation>
+      </element>
+      <element name="caseName" type="string">
+        <annotation>
+          <documentation>The case name.</documentation>
+        </annotation>
+      </element>
+      <element name="citation" type="string">
+        <annotation>
+          <documentation>Citation Strings.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="LegisCitation">
+    <sequence>
+      <element minOccurs="0" name="persistentIdentifier" type="string">
+        <annotation>
+          <documentation>
+						The persistent id to use when request type is
+						RequestType.PERSISTENTID.
+					</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="legisMetadata" type="tns:LegisMetadata">
+        <annotation>
+          <documentation>
+						Object that holds legis metadata.
+					</documentation>
+        </annotation>
+      </element>
+      <element name="requestType" type="tns:RequestType">
+        <annotation>
+          <documentation>
+						This indicates whether the input should be taken
+						from the case metadata or from the persistent
+						id.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="LegisMetadata">
+    <sequence>
+      <element name="lbuIdentifier" type="string">
+        <annotation>
+          <documentation>
+						The lbu id (country code)
+					</documentation>
+        </annotation>
+      </element>
+      <element name="legislationName" type="string">
+        <annotation>
+          <documentation>
+						LegislationName string.
+					</documentation>
+        </annotation>
+      </element>
+      <element name="citation" type="string">
+        <annotation>
+          <documentation>Citation string.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="DirectiveCitation">
+    <sequence>
+      <element minOccurs="0" name="persistentIdentifier" type="string">
+        <annotation>
+          <documentation>
+						The persistent id to use when request type is
+						RequestType.PERSISTENTID.
+					</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="directiveMetadata" type="tns:DirectiveMetadata">
+        <annotation>
+          <documentation>
+						object that holds EU Directive metadata
+					</documentation>
+        </annotation>
+      </element>
+      <element name="requestType" type="tns:RequestType">
+        <annotation>
+          <documentation>
+						This indicates whether the input should be taken
+						from the case metadata or from the persistent
+						id.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="DirectiveMetadata">
+    <sequence>
+      <element name="lbuIdentifier" type="string">
+        <annotation>
+          <documentation>
+						The lbu id (country code).
+					</documentation>
+        </annotation>
+      </element>
+      <element name="citation" type="string">
+        <annotation>
+          <documentation>Citation string.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="RequestType">
+    <restriction base="string">
+      <enumeration value="METADATA" />
+      <enumeration value="PERSISTENTID" />
+    </restriction>
+  </simpleType>
+  <complexType name="GetCitationSignalsResponse">
+    <sequence>
+      <element name="signalOutputList" type="tns:SignalOutputList">
+        <annotation>
+          <documentation>
+						List of citation outputs.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SignalOutputList">
+    <sequence>
+      <element maxOccurs="unbounded" name="signalOutput" type="tns:SignalOutput">
+        <annotation>
+          <documentation>
+						The object potentially containing citation
+						output elements.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SignalOutput">
+    <sequence>
+      <element name="signalResultList" type="tns:SignalResultList">
+        <annotation>
+          <documentation>
+						List of Signals Results.
+					</documentation>
+        </annotation>
+      </element>
+      <element name="returnCode" type="tns:ReturnCode">
+        <annotation>
+          <documentation>
+						Return code for the particular citation.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SignalResultList">
+    <sequence>
+      <element maxOccurs="unbounded" name="signalResult" type="tns:SignalResult">
+        <annotation>
+          <documentation>
+						collection of signal result objects.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SignalResult">
+    <sequence>
+      <element name="persistentIdentifier" type="string">
+        <annotation>
+          <documentation>
+						The persistentId.
+					</documentation>
+        </annotation>
+      </element>
+      <element name="signalValue" type="string">
+        <annotation>
+          <documentation>
+						The signal value as String.
+					</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="ReturnCode">
+    <restriction base="string">
+      <enumeration value="MULTI_MATCH" />
+      <enumeration value="NOT_FOUND" />
+      <enumeration value="NOT_RECOGNIZED" />
+      <enumeration value="SUCCESSFUL" />
+      <enumeration value="THRESHOLD_EXCEEDED" />
+    </restriction>
+  </simpleType>
+</schema>
