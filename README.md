@@ -67,9 +67,15 @@ sudo chmod -R 755 /var/www
         ServerName [SERVER_NAME]
         ServerAlias www.[SERVER_NAME]
         DocumentRoot /var/www/lexnex
+        
         SSLEngine on
         SSLCertificateFile [PATH_TO_.crt]
         SSLCertificateKeyFile [PATH_TO_.key]
+        SSLCertificateChainFile [PATH_TO_interm.cer]
+        SSLProtocol all -TLSv1 -SSLv2 -SSLv3
+        SSLCipherSuite ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+        SSLHonorCipherOrder     on
+        SSLCompression          off
 
         MonoServerPath [SERVER_NAME] "/usr/bin/mod-mono-server4"
         MonoPath [SERVER_NAME] "/usr/lib/mono/4.5/usr/lib"
