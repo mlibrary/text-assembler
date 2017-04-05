@@ -208,8 +208,8 @@ Licensed under GNU General Public License (GPL) Version 2.
                 </div>
                 <div class="modal-body">
                     <p style="line-height:1.2em;">Lexis Nexis supports both Boolean and Natural Language searching.  The following is a brief description of the characteristics of each method.
-                    <br /><br />For information on developing a Boolean Search, please see <a href="http://www.lexisnexis.com.proxy1.cl.msu.edu/Webserviceskit/Developers/v2_0beta/text/LN_help/gh_terms.htm" style="color:#0000FF;border-bottom: 1px solid #0000FF;">Developing a Search (with Terms and Conditions)</a>
-                    <br />For information on developing a Natural Language Search, please see <a href="http://www.lexisnexis.com.proxy1.cl.msu.edu/Webserviceskit/Developers/v2_0beta/text/LN_help/gh_natural.htm" style="color:#0000FF;border-bottom: 1px solid #0000FF;">Developing a Search (with Natural Language)</a></p> 
+                    <br /><br />For information on developing a Boolean Search, please see <a href="https://www.lexisnexis.com/Webserviceskit/Developers/v2_0beta/text/LN_help/gh_terms.htm" style="color:#0000FF;border-bottom: 1px solid #0000FF;">Developing a Search (with Terms and Conditions)</a>
+                    <br />For information on developing a Natural Language Search, please see <a href="https://www.lexisnexis.com/Webserviceskit/Developers/v2_0beta/text/LN_help/gh_natural.htm" style="color:#0000FF;border-bottom: 1px solid #0000FF;">Developing a Search (with Natural Language)</a></p> 
                     <table class="methodTbl">
                         <thead><tr><th>Search Method</th><th>Description</th></tr></thead>
                           <tr>

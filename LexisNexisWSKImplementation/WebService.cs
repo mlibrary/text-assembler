@@ -507,7 +507,7 @@ namespace LexisNexisWSKImplementation
             {
 
                 XmlNamespaceManager nsmgr = new XmlNamespaceManager(se.Detail.OwnerDocument.NameTable);
-                nsmgr.AddNamespace("p", "http://services.v1.wsapi.lexisnexis.com");
+                nsmgr.AddNamespace("p", "https://services.v1.wsapi.lexisnexis.com");
                 XmlNode nd = se.Detail.SelectSingleNode("//p:errorCode", nsmgr);
                 if (nd != null)
                 {

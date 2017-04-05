@@ -27,7 +27,7 @@
             <asp:ContentPlaceHolder runat="server" ID="userPlaceholder" />
         </div>
 
-        <span style="float:left;"><a href="http://www.lexisnexis.com.proxy1.cl.msu.edu"><img src="Images/ID_Web_horizontal_lrg_white.gif" alt="LexisNexis(R)" style="width:200px;height:61px"></a></span>
+        <span style="float:left;"><a href="https://www.lexisnexis.com"><img src="Images/ID_Web_horizontal_lrg_white.gif" alt="LexisNexis(R)" style="width:200px;height:61px"></a></span>
  
     </header>
 
