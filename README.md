@@ -24,7 +24,7 @@ Minimum System Requirements
 - Ubuntu 14.04.02 LTS
 - MariaDB 5.5 (Should work on MySQL, but haven't tested it)
 - Apache 2.4.7
-- Mono 4.0.1
+- Mono 5.0
 - Git 1.9.1 (If using Git for a code repository)
 
 Special Ubuntu Packages:
@@ -141,16 +141,15 @@ sudo chmod 777 /var/www/.mono -R
 ```
 
 **8. Install Mono**
-
+http://www.mono-project.com/download/#download-lin-ubuntu 
 ```
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+echo "deb http://download.mono-project.com/repo/ubuntu trusty main" | sudo tee /etc/apt/sources.list.d/mono-official.list
 sudo apt-get update
 sudo apt-get install mono-complete
 sudo apt-get install mono-xsp4
-echo "deb http://download.mono-project.com/repo/debian wheezy-apache24-compat main" | sudo tee -a /etc/apt/sources.list.d/mono-xamarin.list
-sudo apt-get update
 sudo apt-get install libapache2-mod-mono mono-apache-server4
+sudo a2enmod mod_mono
 ```
 
 **9. Setup the Lexis Nexis site** 
@@ -308,7 +307,7 @@ For additional troubleshooting tips, see the section below.
 Troubleshooting
 ------------------------------------
 
-To enable debug information to be displayed on the web page, modify the Web.config file and add the below section: 
+- To enable debug information to be displayed on the web page, modify the Web.config file and add the below section: 
 
 ```
  <system.web>
@@ -316,7 +315,7 @@ To enable debug information to be displayed on the web page, modify the Web.conf
 </system.web>
 ```
 
-The most common errors occur because the bin folder has extra dll files in it. To fix, run 
+- The most common errors occur because the bin folder has extra dll files in it. To fix, run 
 the clean_bin script with the following command:
 
 ```
@@ -360,33 +359,48 @@ System.Web.Providers.xml
 ```
 
 
-It is important to note that some errors require Apache to be completely stopped and restarted instead of just performing 
+- It is important to note that some errors require Apache to be completely stopped and restarted instead of just performing 
 a restart.
 
-An error with 'Invalid IL Code' usually means that some of the dll files were not removed from the bin folder when they should have been
+- An error with 'Invalid IL Code' usually means that some of the dll files were not removed from the bin folder when they should have been
 
-Note that commented out code is still processed by Mono, so if testing something by commenting it out, be sure to remove the code from the file instead of commenting it out before compiling.
+- Note that commented out code is still processed by Mono, so if testing something by commenting it out, be sure to remove the code from the file instead of commenting it out before compiling.
 
-When Apache configtest fails on a Mono related error, check if there was an update performed on the server affecting Mono. If doing apt-get update fails because of a checksum error run the following to clear the cache and re-try the update:
+- When Apache configtest fails on a Mono related error, check if there was an update performed on the server affecting Mono. If doing apt-get update fails because of a checksum error run the following to clear the cache and re-try the update:
 
 ```
 sudo rm /var/lib/apt/lists/*
 ```
 
-Assuming the site still does not work because of configtest failure, ensure that mod-mono is enabled (in /etc/apache2/mods-enabled) and that the .so file exists that it references. If it still does not work, make sure all mono packages are marked with i and not c in aptitude search mono.
+- Assuming the site still does not work because of configtest failure, ensure that mod-mono is enabled (in /etc/apache2/mods-enabled) and that the .so file exists that it references. If it still does not work, make sure all mono packages are marked with i and not c in aptitude search mono.
 
-Sometime restarting Apache does not stop all of the Mono processes (you'll see these in `htop` still). In this case the server 
+- Sometime restarting Apache does not stop all of the Mono processes (you'll see these in `htop` still). In this case the server 
 should just be rebooted. You'll notice this happening on system login when there system load is reporting higher than 1.  
 
-Note on cron job timings: the processor application that processes the search queue runs every hour, but stops if it fails the check
+- After Mono is updated and Apache starts failing on the configtest, try to totally uninstall mono and re-install it making sure you are grabbing the 
+latest version of the packge from http://www.mono-project.com/download/#download-lin-ubuntu. Steps to totally uninstall:  
+```
+sudo apt-get remove mono-complete mono-xsp4 libapache2-mod-mono mono-apache-server4
+sudo apt-get autoremove
+sudo rm /etc/apt/sources_list.d/mono*
+```
+Then follow the commands for your version at the url to add back the correct package location. then re-run the install steps:  
+```
+sudo apt-get update
+sudo apt-get install mono-complete mono-xsp4 libapache2-mod-mono mono-apache-server4
+sudo a2enmod mod_mono
+sudo service apache2 restart
+```
+
+- Note on cron job timings: the processor application that processes the search queue runs every hour, but stops if it fails the check
 to the database to see if it is within the processing window (currently nights and weekends). So normally I try not to reboot the
 server right on the hour so it doesn't mess up any runs, or also not at night since that is when the processing is occuring.
 
-Note on errors reported to the APPL_LOG table in the database: it is normal to see a few errors daily when the processor has been
+- Note on errors reported to the APPL_LOG table in the database: it is normal to see a few errors daily when the processor has been
 processing a query because the Lexis Nexis web service regularly will return an INTERNAL_SERVER_ERROR code to us when re-trying with
 the same query just seconds later will work. I log all the errors but just increment the retry_count field in the main search status
 table to allow queries to be retried a certain number of times before marking them as invalid.
 
-Also, there is a nightly job that will re-pull the latest sources that users can query from, this will occassionally fail too when
+- Also, there is a nightly job that will re-pull the latest sources that users can query from, this will occassionally fail too when
 Lexis Nexis is having too high a load. Since the sources change irregularly it's not too concerning if it fails once and a while
 since we'll still have the sources from the previous day.
