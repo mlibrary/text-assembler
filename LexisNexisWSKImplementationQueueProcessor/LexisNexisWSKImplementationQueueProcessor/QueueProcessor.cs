@@ -207,7 +207,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
                                 request.currStartDate = begDt;
                                 DBManager.Instance.updateSearch(request);
                             }
-                            
+
+                            // clear out the previous saved search ID since it will have expired from the previous run
+                            request.searchLNID = null;
+                            DBManager.Instance.updateSearch(request);
 
                             // process the search
                             try
