@@ -191,7 +191,7 @@ sudo a2enmod mod_mono
 - Rebuild the project once the changes are made
 
 ```
-sudo xbuild LexisNexisWSKImplementation.cproj
+sudo xbuild LexisNexisWSKImplementation.csproj
 ```
 
 - Remove the extra dlls from the bin folder leaving only: 
@@ -260,15 +260,15 @@ sudo service apache2 start
 - Rebuild the project once the changes are made
 
 ```
-sudo xbuild LexisNexisWSKImplementationQueueProcessor.cproj
+sudo xbuild LexisNexisWSKImplementationQueueProcessor.csproj
 ```
 
 - Remove the extra dll files
 
 ```
-sudo rm bin\Debug\System.*  
-sudo rm bin\Debug\Microsoft.*  
-sudo rm bin\Debug\Mono.Posix.ddl  
+sudo rm bin/Debug/System.*  
+sudo rm bin/Debug/Microsoft.*  
+sudo rm bin/Debug/Mono.Posix.ddl  
 ```
 
 - Add a new Cron entry so that the processor runs every hour, the sources will update daily, and the search deletion processing will be run daily
