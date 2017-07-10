@@ -268,7 +268,7 @@ sudo xbuild LexisNexisWSKImplementationQueueProcessor.csproj
 ```
 sudo rm bin/Debug/System.*  
 sudo rm bin/Debug/Microsoft.*  
-sudo rm bin/Debug/Mono.Posix.ddl  
+sudo rm bin/Debug/Mono.Posix.dll  
 ```
 
 - Add a new Cron entry so that the processor runs every hour, the sources will update daily, and the search deletion processing will be run daily
