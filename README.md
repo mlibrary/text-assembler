@@ -78,9 +78,10 @@ sudo chmod -R 755 /var/www
         SSLCompression          off
 
         MonoServerPath [SERVER_NAME] "/usr/bin/mod-mono-server4"
-        MonoPath [SERVER_NAME] "/usr/lib/mono/4.5/usr/lib"
+        MonoPath [SERVER_NAME] "/usr/lib/mono/4.5"
         MonoSetEnv [SERVER_NAME] MONO_IOMAP=all
         MonoApplications [SERVER_NAME] "/:/var/www/lexnex"
+	MonoDebug
 
         <Directory /var/www/lexnex>
                 Options -Indexes +FollowSymLinks +MultiViews
