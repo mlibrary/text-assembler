@@ -287,9 +287,9 @@ sudo vim /etc/crontab
 ```
 
 ```
-@hourly mono <path to the .exe> --processQueue
-@daily mono <path to the .exe> --processDeletion
-@daily mono <path to the .exe> --updateSources
+@hourly mono --debug <path to the .exe> --processQueue
+@daily mono --debug <path to the .exe> --processDeletion
+@daily mono --debug <path to the .exe> --updateSources
 ```
 
 **12. Database setup**
