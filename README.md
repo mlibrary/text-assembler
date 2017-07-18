@@ -81,6 +81,13 @@ sudo chmod -R 755 /var/www
         MonoPath [SERVER_NAME] "/usr/lib/mono/4.5"
         MonoSetEnv [SERVER_NAME] MONO_IOMAP=all
         MonoApplications [SERVER_NAME] "/:/var/www/lexnex"
+        # Enables line numbers to be printed in stack trace
+        # Make sure that mono_dbg is installed and <compilation debug="true" /> is set in the Web.config
+        MonoDebug [SERVER_NAME] true
+        # Auto restart the mono processes after 3 hours to prevent them from building up and overloading the server
+        MonoAutoRestartMode Time
+        MonoAutoRestartTime 00:03
+        
 	MonoDebug
 
         <Directory /var/www/lexnex>
@@ -157,6 +164,7 @@ sudo apt-get install mono-complete
 sudo apt-get install mono-xsp4
 sudo apt-get install libapache2-mod-mono mono-apache-server4
 sudo a2enmod mod_mono
+sudo apt-get install mono-dbg
 ```
 
 **9. Setup the Lexis Nexis site** 
