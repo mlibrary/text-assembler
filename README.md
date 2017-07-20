@@ -25,12 +25,13 @@ Minimum System Requirements
 - MariaDB 5.5 (Should work on MySQL, but haven't tested it)
 - Apache 2.4.7
 - Mono 5.0
-- Git 1.9.1 (If using Git for a code repository)
+- Git 1.9 (If using Git for a code repository)
 
 Special Ubuntu Packages:
 
 - libapache2-mod-mono
 - mono-apache-server4
+- mono-dbg
 
 
 Environment
@@ -419,3 +420,30 @@ table to allow queries to be retried a certain number of times before marking th
 - Also, there is a nightly job that will re-pull the latest sources that users can query from, this will occassionally fail too when
 Lexis Nexis is having too high a load. Since the sources change irregularly it's not too concerning if it fails once and a while
 since we'll still have the sources from the previous day.
+
+- Line numbers not appearing in error logs:  
+For the web application make sure that the following things are set:  
+In the `Web.config`: 
+```
+<compilation debug="true"/>
+```
+In the Apache config:  
+```
+MonoDebug lexnex.lib.msu.edu true
+```
+`mono-dbg` is installed:  
+```
+aptitude search mono-dbg
+```
+The project was build on the server:  
+```
+xbuild LexisNexisWSKImplementation.csproj
+```
+
+For the queue processors make sure the following additional things are set:  
+The debug flag for the cron job in `/etc/crontab`:
+```
+@hourly mono --debug <path to the .exe> --processQueue
+@daily mono --debug <path to the .exe> --processDeletion
+@daily mono --debug <path to the .exe> --updateSources
+```
