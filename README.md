@@ -317,6 +317,11 @@ cd /var/www/lexnex
 ./clean_bin
 ```
 
+Some common entries in the APP_LOG table that don't require any action to resolve are:  `EXPIRED_SECURITY_TOKEN` and 
+`INTERNAL_SERVER_ERROR`. Both occassionally happen during runs but are surrounded by successful calls to the API. 
+The expired security token error seems to occur even before the expiration timestamp on the token but is resolved 
+in the next run when it requests a new one.  
+
 For additional troubleshooting tips, see the section below.  
 
 
@@ -330,6 +335,10 @@ Troubleshooting
     <customErrors mode="Off" />
 </system.web>
 ```
+
+- To enable trace level logging of the API calls to LexisNexis, update the `WS_TRACE_LOGGING` record in the `APPL_PARAM` 
+table to 1 instead of 0. This will insert a record in the `APPL_LOG` table for all calls to the API. 
+
 
 - The most common errors occur because the bin folder has extra dll files in it. To fix, run 
 the clean_bin script with the following command:
