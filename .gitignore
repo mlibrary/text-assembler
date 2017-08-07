@@ -12,14 +12,14 @@ Web.config
 app.config
 
 # Build results
-[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 x64/
 build/
 bld/
-[Bb]in/
 [Oo]bj/
+LexisNexisWSKImplementation.*
+LexisNexisWSKImplementationQueueProcessor.*
 
 # Roslyn cache directories
 *.ide/
