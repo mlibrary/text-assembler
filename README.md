@@ -201,7 +201,7 @@ sudo apt-get install mono-dbg
 - Rebuild the project once the changes are made
 
 ```
-sudo xbuild LexisNexisWSKImplementation.csproj
+sudo msbuild LexisNexisWSKImplementation.csproj
 ```
 
 - Remove the extra dlls from the bin folder leaving only: 
@@ -270,7 +270,7 @@ sudo service apache2 start
 - Rebuild the project once the changes are made
 
 ```
-sudo xbuild LexisNexisWSKImplementationQueueProcessor.csproj
+sudo msbuild LexisNexisWSKImplementationQueueProcessor.csproj
 ```
 
 - Remove the extra dll files
@@ -446,7 +446,7 @@ aptitude search mono-dbg
 ```
 The project was build on the server:  
 ```
-xbuild LexisNexisWSKImplementation.csproj
+msbuild LexisNexisWSKImplementation.csproj
 ```
 
 For the queue processors make sure the following additional things are set:  

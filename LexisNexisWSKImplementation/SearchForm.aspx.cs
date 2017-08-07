@@ -660,16 +660,14 @@ namespace LexisNexisWSKImplementation
                         For advice on capturing datasets larger than 10,000 items contact 
                         <a href=""http://staff.lib.msu.edu/chua/"" style=""color:#0000FF;border-bottom: 1px solid #0000FF;"">Hui Hua Chua</a>. </p>";
                 }
-                else if (ex.Message.Contains("EXPIRED_SECURITY_TOKEN") && (adhocRetries == null || adhocRetries == 0))
+                else if (ex.Message.Contains("EXPIRED_SECURITY_TOKEN") && adhocRetries == 0)
                 {
                     WebService.Instance.authenticate();
-                    if (adhocRetries == null) adhocRetries = 0;
                     adhocRetries++;
                     performAdhocSearch();
                 }
-                else if (adhocRetries == null || adhocRetries == 0)
+                else if (adhocRetries == 0)
                 {
-                    if (adhocRetries == null) adhocRetries = 0;
                     adhocRetries++;
                     performAdhocSearch();
                 }
