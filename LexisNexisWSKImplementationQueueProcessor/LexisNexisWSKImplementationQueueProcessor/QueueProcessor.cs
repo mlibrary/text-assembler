@@ -310,9 +310,12 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     }
                     else if (errMsg.Contains("EXPIRED_SECURITY_TOKEN"))
                     {
-                        Logger.Instance.logMessage(string.Format("The search '{0}' had an expired security token, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                        DBManager.Instance.logError(string.Format("The search '{0}', had an expired secirity token, will stop and attempt next processing cycle. Error: {1}. Security Token: {2}. Exp Date: {3}", request.searchFullName, errMsg, securityToken, expirationTime.ToString("F")), WS_ERROR_CODE, "SYSTEM");
-
+                        // only log the expiration if it was really past the expiration time provided by the security token
+                        if (DateTime.Now >= expirationTime)
+                        {
+                            Logger.Instance.logMessage(string.Format("The search '{0}' had an expired security token, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
+                            DBManager.Instance.logError(string.Format("The search '{0}', had an expired secirity token, will stop and attempt next processing cycle. Error: {1}. Security Token: {2}. Exp Date: {3}", request.searchFullName, errMsg, securityToken, expirationTime.ToString("F")), WS_ERROR_CODE, "SYSTEM");
+                        }
                         DBManager.Instance.updateSearch(request);
 
                         // skip the rest of the processing for this search by throwing an exception
@@ -406,9 +409,12 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 }
                 else if (errMsg.Contains("EXPIRED_SECURITY_TOKEN"))
                 {
-                    Logger.Instance.logMessage(string.Format("The search '{0}' had an expired security token, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                    DBManager.Instance.logError(string.Format("The search '{0}', had an expired secirity token, will stop and attempt next processing cycle. Error: {1}. Security Token: {2}. Exp Date: {3}", request.searchFullName, errMsg, securityToken, expirationTime.ToString("F")), WS_ERROR_CODE, "SYSTEM");
-
+                    // only log the expiration if it was really past the expiration time provided by the security token
+                    if (DateTime.Now >= expirationTime)
+                    {
+                        Logger.Instance.logMessage(string.Format("The search '{0}' had an expired security token, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
+                        DBManager.Instance.logError(string.Format("The search '{0}', had an expired secirity token, will stop and attempt next processing cycle. Error: {1}. Security Token: {2}. Exp Date: {3}", request.searchFullName, errMsg, securityToken, expirationTime.ToString("F")), WS_ERROR_CODE, "SYSTEM");
+                    }
                     DBManager.Instance.updateSearch(request);
 
                     // skip the rest of the processing for this search by throwing an exception
