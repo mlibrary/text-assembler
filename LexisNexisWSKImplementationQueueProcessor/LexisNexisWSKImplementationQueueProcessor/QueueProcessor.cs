@@ -542,6 +542,29 @@ namespace LexisNexisWSKImplementationQueueProcessor
             srchPerReq = Convert.ToInt32(AppParams.getParameterByName("RSLT_PR_SRCH").AppParamValue);
             docPerReq = Convert.ToInt32(AppParams.getParameterByName("DOC_PR_SRCH").AppParamValue);
             startIndex = request.searchStartIndex;
+            if (startIndex > request.numResultsInRange) // this search is complete for the curr range
+            {
+                if (request.searchEndDate == null || request.searchStartDate == null)
+                {
+                    DateTime begDt = new DateTime(1800, 1, 1);
+                    try
+                    {
+                        string dtParam = AppParams.getParameterByName("BEGIN_DT").AppParamValue;
+                        string[] dtArray = dtParam.Split('/');
+                        begDt = new DateTime(Convert.ToInt32(dtArray[2]), Convert.ToInt32(dtArray[1]), Convert.ToInt32(dtArray[0]));
+                    }
+                    catch { }
+                    request.searchPercentComplete = Math.Round(Convert.ToDecimal(((DateTime)request.currEndDate).Subtract(begDt).Days + 1) / Convert.ToDecimal((DateTime.Today).Subtract(begDt).Days + 1), 2);
+                }
+                else
+                {
+                    request.searchPercentComplete = Math.Round(Convert.ToDecimal(((DateTime)request.currEndDate).Subtract(((DateTime)request.searchStartDate)).Days + 1) / Convert.ToDecimal(((DateTime)request.searchEndDate).Subtract(((DateTime)request.searchStartDate)).Days + 1), 2);
+                }
+                if (request.searchPercentComplete > 1m) request.searchPercentComplete = 1m; // this scenario happens when there are less than 100 results or when the number of results changes during the search
+                request.searchNumberResults += request.numResultsInRange;
+                request.searchStartIndex = 1;
+                DBManager.Instance.updateSearch(request);
+            }
             int fileNum = request.searchNumberResults + startIndex;
             endIndex = 0;
             if (endIndex == 0 || endIndex > (startIndex + srchPerReq - 1)) endIndex = startIndex + srchPerReq - 1;
@@ -634,6 +657,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                             }
                             if (request.searchPercentComplete > 1m) request.searchPercentComplete = 1m; // this scenario happens when there are less than 100 results or when the number of results changes during the search
                             request.searchNumberResults += request.numResultsInRange;
+                            request.searchStartIndex = 1;
                             DBManager.Instance.updateSearch(request);
                             break;
                         }
