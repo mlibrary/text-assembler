@@ -282,7 +282,7 @@ namespace LexisNexisWSKImplementation
                currentUser = null;
                Session["userObject"] = null;
                Session.Clear();
-               Response.Redirect("https://oauth.ais.msu.edu/oauth/logout", false);
+               Response.Redirect("https://oauth.itservices.msu.edu/oauth/logout", false);
            }
            catch (Exception ex)
            {

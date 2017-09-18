@@ -47,17 +47,17 @@ namespace LexisNexisWSKImplementation
         /// <summary>
         /// The authorization endpoint.
         /// </summary>
-        private const string AuthorizationEndPoint = "https://oauth.ais.msu.edu/oauth/authorize";
+        private const string AuthorizationEndPoint = "https://oauth.itservices.msu.edu/oauth/authorize";
 
         /// <summary>
         /// The token endpoint.
         /// </summary>
-        private const string TokenEndPoint = "https://oauth.ais.msu.edu/oauth/token";
+        private const string TokenEndPoint = "https://oauth.itservices.msu.edu/oauth/token";
 
         /// <summary>
         /// The token endpoint.
         /// </summary>
-        private const string UserInfoEndPoint = "https://oauth.ais.msu.edu/oauth/me";
+        private const string UserInfoEndPoint = "https://oauth.itservices.msu.edu/oauth/me";
 
         /// <summary>
         /// The _app id.
