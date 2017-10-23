@@ -27,9 +27,6 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Configuration;
 
 namespace LexisNexisWSKImplementationQueueProcessor
@@ -294,7 +291,8 @@ namespace LexisNexisWSKImplementationQueueProcessor
                                     errMsg: "",
                                     retryCount: reader.IsDBNull(15) ? 0 : reader.GetInt32(15),
                                     searchLNID: reader.IsDBNull(16) ? "" : reader.GetString(16),
-                                    numResultsInRange: reader.IsDBNull(17) ? 0: reader.GetInt32(17)
+                                    numResultsInRange: reader.IsDBNull(17) ? 0: reader.GetInt32(17),
+                                    searchQueuePosition: reader.IsDBNull(18) ? (int?)null : reader.GetInt32(18)
                                     ));
                             }
                         }
@@ -309,6 +307,64 @@ namespace LexisNexisWSKImplementationQueueProcessor
             }
             return results;
         }
+
+        /// <summary>
+        /// Get all of the searches that have completed but not marked as ready for download
+        /// </summary>
+        /// <returns></returns>
+        public List<SearchRequest> getCompletedSearches()
+        {
+            List<SearchRequest> results = new List<SearchRequest>();
+            try
+            {
+                using (MySqlConnection con = getConnection())
+                {
+                    con.Open();
+                    MySqlCommand cmd = new MySqlCommand("p_get_zip_queue", con);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                // id, name, status, result location, query, source, start date, end date, percent complete
+                                results.Add(new SearchRequest(id: reader.GetInt32(0),
+                                    name: reader.IsDBNull(1) ? "" : reader.GetString(1),
+                                    status: reader.IsDBNull(2) ? 1 : reader.GetInt32(2),
+                                    location: reader.IsDBNull(3) ? null : reader.GetString(3),
+                                    query: reader.IsDBNull(4) ? "" : reader.GetString(4),
+                                    source: reader.IsDBNull(5) ? "" : reader.GetString(5),
+                                    startDate: reader.IsDBNull(6) ? (DateTime?)null : (DateTime?)reader.GetDateTime(6),
+                                    endDate: reader.IsDBNull(7) ? (DateTime?)null : (DateTime?)reader.GetDateTime(7),
+                                    percent: reader.IsDBNull(8) ? 0 : reader.GetDecimal(8),
+                                    user: reader.IsDBNull(9) ? "" : reader.GetString(9),
+                                    startIndex: reader.IsDBNull(10) ? 1 : reader.GetInt32(10),
+                                    numResults: reader.IsDBNull(11) ? 0 : reader.GetInt32(11),
+                                    method: reader.IsDBNull(12) ? "" : reader.GetString(12),
+                                    currStart: reader.IsDBNull(13) ? (DateTime?)null : (DateTime?)reader.GetDateTime(13),
+                                    currEnd: reader.IsDBNull(14) ? (DateTime?)null : (DateTime?)reader.GetDateTime(14),
+                                    errMsg: "",
+                                    retryCount: reader.IsDBNull(15) ? 0 : reader.GetInt32(15),
+                                    searchLNID: reader.IsDBNull(16) ? "" : reader.GetString(16),
+                                    numResultsInRange: reader.IsDBNull(17) ? 0 : reader.GetInt32(17),
+                                    fileSize: reader.IsDBNull(18) ? 0 : reader.GetInt64(18),
+                                    fileSizeCheckDate: reader.IsDBNull(19) ? (DateTime?)null : (DateTime?)reader.GetDateTime(19),
+                                    readyToDownload: reader.IsDBNull(20) ? false : reader.GetBoolean(20)
+                                    ));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return results;
+        }
+
 
         /// <summary>
         /// Retrieves the applications's run status from the database
@@ -428,6 +484,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     cmd.Parameters.AddWithValue("@RETRY_CNT", record.retryCount);
                     cmd.Parameters.AddWithValue("@LN_ID", record.searchLNID);
                     cmd.Parameters.AddWithValue("@RNG_RSLTS", record.numResultsInRange);
+                    cmd.Parameters.AddWithValue("@FILE_SIZE", record.fileSize);
+                    cmd.Parameters.AddWithValue("@FILE_CHECK", record.fileSizeCheckDate);
+                    cmd.Parameters.AddWithValue("@READY_FLAG", record.readyToDownload);
+                    cmd.Parameters.AddWithValue("@QUEUE_POS", record.searchQueuePosition);
 
                     cmd.ExecuteNonQuery();
                 }

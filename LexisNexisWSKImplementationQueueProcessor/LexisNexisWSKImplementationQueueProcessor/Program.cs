@@ -25,9 +25,6 @@
 // Licensed under GNU General Public License (GPL) Version 2.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LexisNexisWSKImplementationQueueProcessor
 {
@@ -48,6 +45,10 @@ Parameters
                     from the web service.
 --processDeletion   Processes the deletion of searches, the number of months
                     retained is stored in the database in APPL_PARAM.
+---processZip       Processes completed searches to check if the zipping of 
+                    results has completed. Will set the search as ready to 
+                    download and remove the uncompressed directory from the 
+                    filesystem.
 --help              Returns this help message.";
 
         #endregion
@@ -115,6 +116,22 @@ Parameters
                             Logger.Instance.logMessage("Deletion Processing Complete.");
                         }
                         return 0;
+                    case "--processZips":
+                        Logger.Instance.logMessage("Starting processing of zipped searches.");
+                        ZipProcessor zipProcessor = new ZipProcessor();
+                        Tuple<int, string> zipResults = zipProcessor.processZips();
+                        if (zipResults.Item1 != 0)
+                        {
+                            DBManager.Instance.logError(zipResults.Item2, zipResults.Item1, "SYSTEM");
+                            Logger.Instance.logMessage(string.Format("Error(s) occured while processing the zip files. ({0}) {1}", zipResults.Item1, zipResults.Item2));
+                            System.Console.WriteLine(string.Format("Error(s) occured while processing the zip files. ({0}) {1}", zipResults.Item1, zipResults.Item2));
+                        }
+                        else
+                        {
+                            Logger.Instance.logMessage("Zip Processing Complete.");
+                        }
+                        return 0;
+
                     case "--help":
                         System.Console.WriteLine(HELP_MSG);
                         break;

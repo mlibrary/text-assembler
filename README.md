@@ -288,6 +288,7 @@ sudo vim /etc/crontab
 ```
 
 ```
+*/5 * * * * mono --debug <path to the .exe> --processZips
 @hourly mono --debug <path to the .exe> --processQueue
 @daily mono --debug <path to the .exe> --processDeletion
 @daily mono --debug <path to the .exe> --updateSources

@@ -632,6 +632,10 @@ input, textarea {
     font-size:14px;
 }
 
+.ui-datepicker {
+    width:auto;
+}
+
 /********************
 *   Mobile Styles   *
 ********************/

@@ -58,6 +58,11 @@ namespace LexisNexisWSKImplementationQueueProcessor
         public int retryCount { get; set; }
         public string searchLNID { get; set; } // search ID field from LN search response (used to call getdocumentsbyrange)
         public int numResultsInRange { get; set; }
+        public long? fileSize { get; set; }
+        public DateTime? fileSizeCheckDate { get; set; }
+        public bool readyToDownload { get; set; }
+        public int? searchQueuePosition { get; set; }
+
 
         public string searchFullName
         {
@@ -87,8 +92,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
         /// <param name="numResults">Number of results in the search</param>
         /// <param name="method">Search method</param>
         public SearchRequest(int id = 0, string name = "",  int status = 1, string location = "", string query = "", string source = "", DateTime? startDate = null, 
-            DateTime? endDate = null, decimal percent = 0.0m, string user = "", int startIndex = 1, int numResults = 0, string method = "", DateTime? currStart = null, 
-            DateTime? currEnd = null, string errMsg = "", int retryCount = 0, string searchLNID = "", int numResultsInRange = 0)
+            DateTime? endDate = null, decimal percent = 0.0m, string user = "", int startIndex = 1, int numResults = 0, string method = "", DateTime? currStart = null,
+            DateTime? currEnd = null, string errMsg = "", int retryCount = 0, string searchLNID = "", int numResultsInRange = 0, long? fileSize = null, DateTime? fileSizeCheckDate = null,
+            bool readyToDownload = false, int? searchQueuePosition = null)
+
         {
             this.searchRecID = id;
             this.searchName = name;
@@ -109,6 +116,12 @@ namespace LexisNexisWSKImplementationQueueProcessor
             this.retryCount = retryCount;
             this.searchLNID = searchLNID;
             this.numResultsInRange = numResultsInRange;
+            this.searchQueuePosition = searchQueuePosition;
+
+            this.fileSize = fileSize;
+            this.fileSizeCheckDate = fileSizeCheckDate;
+            this.readyToDownload = readyToDownload;
+
 
             // split out the id from the name
             string[] split = name.Split(new char[] { '_' }, 2);

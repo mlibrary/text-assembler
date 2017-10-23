@@ -56,6 +56,8 @@ Licensed under GNU General Public License (GPL) Version 2.
                 includeFilterClearBtn: false,
                 nonSelectedText: 'No Title(s) Selected'
             });
+            $('[id*=txtFrom]').datepicker({ dateFormat: 'mm/dd/yy' });
+            $('[id*=txtTo]').datepicker({ dateFormat: 'mm/dd/yy' });
         });
 </script>
 

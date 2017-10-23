@@ -177,5 +177,8 @@ ModelManifest.xml
 LexisNexisWSKImplementation/SearchResults
 LexisNexisWSKImplementation/SearchResults/*
 
+# Database project file
+lexis_nexis.mwb.bak
+
 #Ignore Visual Studio files
 .vs/

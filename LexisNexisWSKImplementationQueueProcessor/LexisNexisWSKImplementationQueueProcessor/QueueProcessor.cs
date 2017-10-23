@@ -70,15 +70,20 @@ namespace LexisNexisWSKImplementationQueueProcessor
         {
             get { return AppLookups.getLookupByDescription("Web Service Call").AppLookupCd; }
         }
+        private int UI_TRACE_CODE
+        {
+            get { return AppLookups.getLookupByDescription("UI Call").AppLookupCd; }
+        }
         private int DB_ERROR_CODE
         {
             get { return AppLookups.getLookupByDescription("Database Error").AppLookupCd; }
         }
 
+        private bool traceEnabled;
+
         private SearchRequest request;
 
          // fields needed for recussive search function
-         private int startIndex;
          private int endIndex;
          private int docPerReq;
          private int srchPerReq;
@@ -106,6 +111,8 @@ namespace LexisNexisWSKImplementationQueueProcessor
             Tuple<int, string> results = new Tuple<int, string>(0,"");
             errorLocation = "";
             errorCode = 0;
+
+            traceEnabled = Convert.ToInt32(AppParams.getParameterByName("WS_TRACE_LOGGING").AppParamValue) == 1 ? true : false;
 
             try
             {
@@ -182,6 +189,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 foreach (SearchRequest search in searchQueue)
                 {
                     request = search;
+                    bool changed = false;
                     if (DBManager.Instance.getRemainingSearches().Item1 > 0)
                     {
                         // verify the search is still active before starting processing
@@ -191,7 +199,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                             if (request.currEndDate == null)
                             {
                                 request.currEndDate = DateTime.Today;
-                                DBManager.Instance.updateSearch(request);
+                                changed = true;
                             }
                             if (request.currStartDate == null)
                             {
@@ -205,8 +213,20 @@ namespace LexisNexisWSKImplementationQueueProcessor
                                 }
                                 catch { }
                                 request.currStartDate = begDt;
+                                changed = true;
+                            }
+                            if (!string.IsNullOrEmpty(request.searchLNID))
+                            {
+                                // clear out the previous saved search ID since it will have expired from the previous run
+                                request.searchLNID = null;
+                                changed = true;
+                            }
+                            if (changed)
+                            {
+                                DBManager.Instance.updateSearch(request);
                                 DBManager.Instance.updateSearch(request);
                             }
+
 
                             // clear out the previous saved search ID since it will have expired from the previous run
                             request.searchLNID = null;
@@ -218,28 +238,26 @@ namespace LexisNexisWSKImplementationQueueProcessor
                                 processSearch();
 
                                 //now that search is complete, check if there are 0 results and if so update it in the DB
-                                if (DBManager.Instance.getRemainingSearches().Item1 > 0 && verifyProcessingWindow()) { // this check isn't relavent if there are no remaining searches
-                                    if (request.searchNumberResults == 0)
-                                    {
-                                        request.searchResultLocation = "";
-                                        request.searchNumberResults = 0;
-                                        request.searchPercentComplete = 1m;
-                                        request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
-                                        DBManager.Instance.updateSearch(request);
+                                if (request.searchNumberResults == 0)
+                                {
+                                    request.searchResultLocation = "";
+                                    request.searchNumberResults = 0;
+                                    request.searchPercentComplete = 1m;
+                                    request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
+                                    DBManager.Instance.updateSearch(request);
 
-                                        // send email that the search completed with 0 results
-                                        string body = string.Format(@"<html>
-                                                                        <body>
-	                                                                        <p>Your queued search completed with 0 results. Please log on to the <a href='https://lexnex.lib.msu.edu'>Text Assembler</a> site to refine your search and queue it again.
-	                                                                        <br/><br/>
-                                                                            For assistance with refining your search contact <a href='http://staff.lib.msu.edu/chua/'>Hui Hua Chua</a>
-                                                                            <br/><br/>
-	                                                                        Search Name: {0}<br/>
-	                                                                        </p>
-                                                                        </body>
-                                                                        </html>", request.searchName);
-                                        sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
-                                    }
+                                    // send email that the search completed with 0 results
+                                    string body = string.Format(@"<html>
+                                                                    <body>
+	                                                                    <p>Your queued search completed with 0 results. Please log on to the <a href='https://lexnex.lib.msu.edu'>Text Assembler</a> site to refine your search and queue it again.
+	                                                                    <br/><br/>
+                                                                        For assistance with refining your search contact <a href='http://staff.lib.msu.edu/chua/'>Hui Hua Chua</a>
+                                                                        <br/><br/>
+	                                                                    Search Name: {0}<br/>
+	                                                                    </p>
+                                                                    </body>
+                                                                    </html>", request.searchName);
+                                    sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
                                 }
                             }
                             catch (Exception e)
@@ -282,10 +300,21 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 throw new Exception("STOP PROCESSING");
             }
 
+            if (traceEnabled)
+            {
+                DBManager.Instance.logError(string.Format("Starting processing of search: '{0}'.", request.searchFullName), UI_TRACE_CODE, "SYSTEM");
+            }
+
+
             // finish the in progress search before continuing. No errors are expected since the rest of the search processed sucessfully
             // only potential error should be operation timeout
-            if (request.searchStartIndex != 1)
+            if (request.searchStartIndex != 1 && request.searchStartIndex != 0)
             {
+                if (traceEnabled)
+                {
+                    DBManager.Instance.logError(string.Format("Search: '{0}': resuming in progress search. Start index={1}", request.searchFullName, request.searchStartIndex), UI_TRACE_CODE, "SYSTEM");
+                }
+
                 errMsg = processRange(); // no changes need to be made to currDate since this search is in progress
                 if (errMsg != "") // handle errors that could occur mid-process
                 {
@@ -383,7 +412,11 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 }
             }
 
-           
+            if (traceEnabled)
+            {
+                DBManager.Instance.logError(string.Format("Search: '{0}': starting search for new range.", request.searchFullName), UI_TRACE_CODE, "SYSTEM");
+            }
+
             errMsg = processRange(); // process the range, could throw errors
 
             if (errMsg != "") // handle errors that could occur mid-process
@@ -541,9 +574,15 @@ namespace LexisNexisWSKImplementationQueueProcessor
             // Get the number of searches we can perform per request and documents we can get at a time
             srchPerReq = Convert.ToInt32(AppParams.getParameterByName("RSLT_PR_SRCH").AppParamValue);
             docPerReq = Convert.ToInt32(AppParams.getParameterByName("DOC_PR_SRCH").AppParamValue);
-            startIndex = request.searchStartIndex;
-            if (startIndex > request.numResultsInRange) // this search is complete for the curr range
+            if (request.searchStartIndex < 1) request.searchStartIndex = 1;
+
+            if (request.searchStartIndex > request.numResultsInRange && request.numResultsInRange != 0) // this search is complete for the curr range
             {
+                if (traceEnabled)
+                {
+                    DBManager.Instance.logError(string.Format("Search: '{0}': complete for the current range. Start index={1}. Results in range={2}", request.searchFullName, request.searchStartIndex, request.numResultsInRange), UI_TRACE_CODE, "SYSTEM");
+                }
+
                 if (request.searchEndDate == null || request.searchStartDate == null)
                 {
                     DateTime begDt = new DateTime(1800, 1, 1);
@@ -565,20 +604,28 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 request.searchStartIndex = 1;
                 DBManager.Instance.updateSearch(request);
             }
-            int fileNum = request.searchNumberResults + startIndex;
+            int fileNum = request.searchNumberResults + request.searchStartIndex;
             endIndex = 0;
-            if (endIndex == 0 || endIndex > (startIndex + srchPerReq - 1)) endIndex = startIndex + srchPerReq - 1;
+            if (endIndex == 0 || endIndex > (request.searchStartIndex + srchPerReq - 1)) endIndex = request.searchStartIndex + srchPerReq - 1;
             List<string> searchResult = null;
             string saveLocation = Path.Combine(Path.Combine(ConfigurationManager.AppSettings["saveLocation"], request.searchUser), request.searchName.Replace(' ', '_'));
 
-            if (startIndex <= endIndex && (request.currEndDate >= request.currStartDate && request.searchPercentComplete != 1) ||( request.currEndDate > request.currStartDate && request.searchPercentComplete == 1))
+            if (traceEnabled)
+            {
+                DBManager.Instance.logError(string.Format("Search: '{0}': checking if search is complete. Start index={1}. End index={2}. Percent Complete={3}. Current Start Date={4}. Current End Date={5}.",
+                    request.searchFullName, request.searchStartIndex, endIndex, request.searchPercentComplete, ((DateTime)request.currStartDate).ToString("MM/dd/yyyy"),
+                    ((DateTime)request.currEndDate).ToString("MM/dd/yyyy")), UI_TRACE_CODE, "SYSTEM");
+            }
+
+            if (request.searchStartIndex <= endIndex && (request.currEndDate >= request.currStartDate && request.searchPercentComplete != 1)
+                || (request.currEndDate > request.currStartDate && request.searchPercentComplete == 1))
             {
                 // Perform the first search with a range of 1 - max results per request
                 errorCode = WS_ERROR_CODE;
                 errorLocation = string.Format("retrieving documents from the web service (search: {0})", request.searchFullName);
                 try
                 {
-                    searchResult = getDocuments(startIndex, endIndex, docPerReq);
+                    searchResult = getDocuments(request.searchStartIndex, endIndex, docPerReq);
                 }
                 // catch any exception caused by the web service code and throw back to the driver function
                 catch (Exception e)
@@ -635,9 +682,9 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     // The final index will be determined based on the total # of documents
                     while (DBManager.Instance.getRemainingSearches().Item1 > 0 && verifyProcessingWindow())
                     {
-                        startIndex = endIndex + 1;
+                        request.searchStartIndex = endIndex + 1;
                         endIndex += srchPerReq;
-                        if (startIndex > request.numResultsInRange) // this search is complete for the curr range
+                        if (request.numResultsInRange != 0 && request.searchStartIndex > request.numResultsInRange) // this search is complete for the curr range
                         {
                             if (request.searchEndDate == null || request.searchStartDate == null)
                             {
@@ -668,7 +715,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                         errorLocation = string.Format("retrieving documents from the web service (search: {0})", request.searchFullName);
                         try
                         {
-                            searchResult = getDocuments(startIndex, endIndex, docPerReq);
+                            searchResult = getDocuments(request.searchStartIndex, endIndex, docPerReq);
                         }
                         // catch any exception caused by the web service code and throw to the driver function
                         catch (Exception e)
@@ -697,16 +744,16 @@ namespace LexisNexisWSKImplementationQueueProcessor
             // Only do the below actions if the search is actually complete
             if (request.searchPercentComplete >= 1 || request.currEndDate <= request.currStartDate)
             {
+                if (traceEnabled)
+                {
+                    DBManager.Instance.logError(string.Format("Search: '{0}': marking as complete.", request.searchFullName), UI_TRACE_CODE, "SYSTEM");
+                }
+
                 errorCode = UI_ERROR_CODE;
 
                 // Add logo image to the folder
                 errorLocation = string.Format("adding logo images to the documents folder (search: {0})", request.searchFullName);
                 addLogoImageToFolder(saveLocation);
-
-                // Reverse the order of the results
-                /// THIS WAS CAUSING PROBLEMS ON THE SERVER SO I AM COMMENTING IT OUT UNTIL RESOLVED
-                //errorLocation = string.Format("reversing the document results in the folders (search: {0})", request.searchFullName);
-                //reverseDocNameOrder(saveLocation, request.searchFullName);
 
                 // Zip up all of the results for the search, only retaining the zip file (not the individual html files)              
                 errorLocation = string.Format("zipping the documents on the server (search: {0})", request.searchFullName);
@@ -719,33 +766,8 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 request.searchPercentComplete = 1m;
                 request.searchNumberResults = Directory.GetFiles(Path.Combine(saveLocation, "txt"), "*", SearchOption.TopDirectoryOnly).Length;
                 request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
-                DBManager.Instance.updateSearch(request);
-
-                // Delete the un-zipped files since they are no longer needed
-                errorCode = UI_ERROR_CODE;
-                errorLocation = string.Format("removing the unzipped directory with search results (search: {0})", request.searchFullName);
-                try
-                {
-                    deleteDirectory(saveLocation);
-                }
-                catch (Exception e)
-                {
-                    // we will log the error but not cause the process to fail here since this is a trivial issue that can be cleaned up independently
-                    Logger.Instance.logMessage(string.Format("Error {0}. Error: {1}.", errorLocation, e.Message));
-                    DBManager.Instance.logError(string.Format("Error {0}. Error: {1}. Stack Trace {2}", errorLocation, e.Message, e.StackTrace), errorCode, "SYSTEM");
-                }
-
-                // send email that the search is complete
-                string body = string.Format(@"<html>
-                                <body>
-	                                <p>Your queued search has successfully completed. Please log on to the <a href='https://lexnex.lib.msu.edu'>Text Assembler</a> site to download your results.
-	                                <br/><br/>
-	                                Search Name: {0}<br/>
-	                                Number of Results: {1}
-	                                </p>
-                                </body>
-                                </html>",request.searchName, request.searchNumberResults);
-                sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
+                request.searchQueuePosition = null;
+                DBManager.Instance.updateSearch(request);               
             }
             return "";
         }
@@ -763,7 +785,6 @@ namespace LexisNexisWSKImplementationQueueProcessor
         /// <returns>List of strings: the html for the documents retrieved</returns>
         private  List<string> getDocuments(int startIndex, int endIndex, int docsPerSrch)
         {
-            bool traceEnabled = Convert.ToInt32(AppParams.getParameterByName("WS_TRACE_LOGGING").AppParamValue) == 1? true : false;
             List<string> results = new List<string>();
 
             // Verify our web service connection is still active, and if not 
@@ -944,8 +965,8 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 //Make the Web Service call
                 if (traceEnabled)
                 {
-                    DBManager.Instance.logError(string.Format("Calling: `GetDocumentsByRange`. Name: {0}. Start Date: {1}. End Date: {2}. SearchID: {3}. Start Index: {4}.", 
-                        request.searchFullName, ((DateTime)request.currStartDate).ToString("MM/dd/yyyy"), ((DateTime)request.currEndDate).ToString("MM/dd/yyyy"),
+                    DBManager.Instance.logError(string.Format("Calling: `GetDocumentsByRange`. Name: {0}. Start Date: {1}. End Date: {2}. SearchID: {3}. Start Index: {4}. End Index: {5}.",
+                         request.searchFullName, ((DateTime)request.currStartDate).ToString("MM/dd/yyyy"), ((DateTime)request.currEndDate).ToString("MM/dd/yyyy"),
                         request.searchLNID, startIndex.ToString(), endIndex.ToString()), WS_TRACE_CODE, "SYSTEM");
                 }
                 getByDocRangeResp = retrieveBind.GetDocumentsByRange(rangeReq);
@@ -1015,8 +1036,6 @@ namespace LexisNexisWSKImplementationQueueProcessor
         {
             if (!isActiveSession())
             {
-                bool traceEnabled = Convert.ToInt32(AppParams.getParameterByName("WS_TRACE_LOGGING").AppParamValue) == 1 ? true : false;
-
                 //************************ Authenticate ************************
 
                 // Create the request and response objects
@@ -1481,36 +1500,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
              return fullPath;
          }
         
-         /// <summary>
-         /// Recursively deletes everything in the provided directory and finally, the 
-         /// folder itself.
-         /// </summary>
-         /// <param name="directory">Directory to delete allong with any files in it</param>
-        private void deleteDirectory(string directory)
-        {
-            foreach (string dir in Directory.GetDirectories(directory))
-            {
-                deleteDirectory(dir);
-            }
-
-            try
-            {
-                Directory.Delete(directory, true);
-            }
-            catch (DirectoryNotFoundException)
-            {
-                // do nothing, the directory has already been deleted
-            }
-            catch (IOException)
-            {
-                Directory.Delete(directory, true);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                Directory.Delete(directory, true);
-            }
-            
-        }
+         
        
          /// <summary>
          /// Copies the Lexis Nexis logo to the provided base directory
