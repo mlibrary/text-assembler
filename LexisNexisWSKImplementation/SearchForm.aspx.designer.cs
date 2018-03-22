@@ -130,15 +130,6 @@ namespace LexisNexisWSKImplementation {
         protected global::System.Web.UI.WebControls.TextBox txtTo;
         
         /// <summary>
-        /// cbDateRange control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbDateRange;
-        
-        /// <summary>
         /// labelSearchQuery control.
         /// </summary>
         /// <remarks>

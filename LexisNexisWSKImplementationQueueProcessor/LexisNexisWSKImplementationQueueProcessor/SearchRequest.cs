@@ -62,6 +62,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
         public DateTime? fileSizeCheckDate { get; set; }
         public bool readyToDownload { get; set; }
         public int? searchQueuePosition { get; set; }
+        public bool emailed { get; set; }
 
 
         public string searchFullName
@@ -94,7 +95,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
         public SearchRequest(int id = 0, string name = "",  int status = 1, string location = "", string query = "", string source = "", DateTime? startDate = null, 
             DateTime? endDate = null, decimal percent = 0.0m, string user = "", int startIndex = 1, int numResults = 0, string method = "", DateTime? currStart = null,
             DateTime? currEnd = null, string errMsg = "", int retryCount = 0, string searchLNID = "", int numResultsInRange = 0, long? fileSize = null, DateTime? fileSizeCheckDate = null,
-            bool readyToDownload = false, int? searchQueuePosition = null)
+            bool readyToDownload = false, int? searchQueuePosition = null, bool emailed = false)
 
         {
             this.searchRecID = id;
@@ -117,6 +118,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
             this.searchLNID = searchLNID;
             this.numResultsInRange = numResultsInRange;
             this.searchQueuePosition = searchQueuePosition;
+            this.emailed = emailed;
 
             this.fileSize = fileSize;
             this.fileSizeCheckDate = fileSizeCheckDate;

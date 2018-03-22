@@ -581,31 +581,59 @@ namespace LexisNexisWSKImplementation
             }
 
             // Verify the date fields if populated
-            if (!cbDateRange.Checked) // only check if the option for no date range was not selected
+            try
             {
-                try
+                if (txtFrom.Text.ToString().Equals(string.Empty) || txtTo.Text.ToString().Equals(string.Empty))
                 {
-                    if (txtFrom.Text.ToString().Equals(string.Empty) || txtTo.Text.ToString().Equals(string.Empty))
-                    {
-                        error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not valid. Both of the date fields should be propulated.</p>";
-                        return;
-                    }
-                    fromDate = Convert.ToDateTime(txtFrom.Text.ToString());
-                    toDate = Convert.ToDateTime(txtTo.Text.ToString());
-                    // also make sure the to date is greater than the from date
-                    if (toDate < fromDate)
-                    {
-                        error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not valid. The 'To' date should be later than the 'From' date.</p>";
-                        return;
-                    }
-
-                }
-                catch (FormatException)
-                {
-                    error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not properly formated as a date. Try: 5/14/2015</p>";
+                    error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not valid. Both of the date fields should be propulated.</p>";
                     return;
                 }
+                fromDate = Convert.ToDateTime(txtFrom.Text.ToString());
+                toDate = Convert.ToDateTime(txtTo.Text.ToString());
+                // also make sure the to date is greater than the from date
+                if (toDate < fromDate)
+                {
+                    error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not valid. The 'To' date should be later than the 'From' date.</p>";
+                    return;
+                }
+
+                // Verify the from date is greater than or equal to 1/1/1984
+                if (fromDate != null)
+                {
+                    // try to pull the begining date from the APPL_PARAM table, if not able to use 1/1/1800 instead
+                    DateTime begDt = new DateTime(1800, 1, 1);
+                    try
+                    {
+                        string dtParam = AppParams.getParameterByName("BEGIN_DT").AppParamValue;
+                        string[] dtArray = dtParam.Split('/');
+                        begDt = new DateTime(Convert.ToInt32(dtArray[2]), Convert.ToInt32(dtArray[1]), Convert.ToInt32(dtArray[0]));
+                    }
+                    catch { }
+
+                    if (fromDate < begDt)
+                    {
+                        error_label.InnerHtml = string.Format("<p class = 'errLbl'>The 'From' date provided is earlier than LexisNexis has results for. Please pick a date on or after {0}.</p>", begDt.ToString(@"MM\/dd\/yyyy"));
+                        return;
+                    }
+                }
+
+                // Verify the date range is within 10 yrs
+                if (fromDate != null && toDate != null)
+                {
+                    DateTime TenYears = ((DateTime)fromDate).AddYears(10);
+                    if (toDate > TenYears)
+                    {
+                        error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was more than 10 years in span, please break searches into 10 year blocks.</p>";
+                        return;
+                    }
+                }
             }
+            catch (FormatException)
+            {
+                error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not properly formated as a date. Try: 5/14/2015</p>";
+                return;
+            }
+
             try
             {
                 // Retrieve the selected search method
@@ -755,30 +783,59 @@ namespace LexisNexisWSKImplementation
             }
 
             // Verify the date fields if populated
-            if (!cbDateRange.Checked) // only check if the option for no date range was not selected
+            try
             {
-                try
+                if (txtFrom.Text.ToString().Equals(string.Empty) || txtTo.Text.ToString().Equals(string.Empty))
                 {
-                    if (txtFrom.Text.ToString().Equals(string.Empty) || txtTo.Text.ToString().Equals(string.Empty))
-                    {
-                        error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not valid. Both of the date fields should be propulated.</p>";
-                        return;
-                    }
-                    fromDate = Convert.ToDateTime(txtFrom.Text.ToString());
-                    toDate = Convert.ToDateTime(txtTo.Text.ToString());
-                    // also make sure the to date is greater than the from date
-                    if (toDate < fromDate)
-                    {
-                        error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not valid. The 'To' date should be later than the 'From' date.</p>";
-                        return;
-                    }
-                }
-                catch (FormatException)
-                {
-                    error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not properly formated as a date. Try: 5/14/2015</p>";
+                    error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not valid. Both of the date fields should be propulated.</p>";
                     return;
                 }
+                fromDate = Convert.ToDateTime(txtFrom.Text.ToString());
+                toDate = Convert.ToDateTime(txtTo.Text.ToString());
+                // also make sure the to date is greater than the from date
+                if (toDate < fromDate)
+                {
+                    error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not valid. The 'To' date should be later than the 'From' date.</p>";
+                    return;
+                }
+
+                // Verify the from date is greater than or equal to 1/1/1984
+                if (fromDate != null)
+                {
+                    // try to pull the begining date from the APPL_PARAM table, if not able to use 1/1/1800 instead
+                    DateTime begDt = new DateTime(1800, 1, 1);
+                    try
+                    {
+                        string dtParam = AppParams.getParameterByName("BEGIN_DT").AppParamValue;
+                        string[] dtArray = dtParam.Split('/');
+                        begDt = new DateTime(Convert.ToInt32(dtArray[2]), Convert.ToInt32(dtArray[1]), Convert.ToInt32(dtArray[0]));
+                    }
+                    catch { }
+
+                    if (fromDate < begDt)
+                    {
+                        error_label.InnerHtml = string.Format("<p class = 'errLbl'>The 'From' date provided is earlier than LexisNexis has results for. Please pick a date on or after {0}.</p>", begDt.ToString(@"MM\/dd\/yyyy"));
+                        return;
+                    }
+                }
+
+                // Verify the date range is within 10 yrs
+                if (fromDate != null && toDate != null)
+                {
+                    DateTime TenYears = ((DateTime)fromDate).AddYears(10);
+                    if (toDate > TenYears)
+                    {
+                        error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was more than 10 years in span, please break searches into 10 year blocks.</p>";
+                        return;
+                    }
+                }
             }
+            catch (FormatException)
+            {
+                error_label.InnerHtml = "<p class = 'errLbl'>The date range provided was not properly formated as a date. Try: 5/14/2015</p>";
+                return;
+            }      
+
             try
             {
                 // Retrieve the selected search method

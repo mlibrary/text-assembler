@@ -128,7 +128,8 @@ Licensed under GNU General Public License (GPL) Version 2.
                             <table><tr><td><asp:Label  id="labelFrom" AssociatedControlId="txtFrom"  runat="server" Text="From: " CssClass="noFormatLabel"/></td><td><asp:TextBox ID="txtFrom" runat="server"  style="width:100px;margin-left:auto;margin-right:auto" /></td>
                                     <td><asp:Label  id="labelTo" AssociatedControlId="txtTo"  runat="server" Text="To: " CssClass="noFormatLabel"/></td><td><asp:TextBox ID="txtTo" runat="server" style="width:100px;margin-left:auto;margin-right:auto" /></td>
                                 <td><div class="checkbox">
-                              &nbsp&nbsp<label id="NoDateRange" class="noFormatLabel"><asp:CheckBox ID="cbDateRange" runat="server"/>No Date Range</label>                               
+                                    <%-- Commenting out since this can lead to dangerously large searches --%>
+<%--                              &nbsp&nbsp<label id="NoDateRange" class="noFormatLabel"><asp:CheckBox ID="cbDateRange" runat="server"/>No Date Range</label>    --%>                           
                             </div></td>
                                    </tr>
                             </table>

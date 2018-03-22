@@ -105,27 +105,28 @@ namespace LexisNexisWSKImplementationQueueProcessor
                         search.readyToDownload = true;
 
                         // send email that the search is complete
-                        string body = string.Format(@"<html>
-                                <body>
-	                                <p>Your queued search has successfully completed. Please log on to the <a href='https://lexnex.lib.msu.edu'>Text Assembler</a> site to download your results.
-	                                <br/><br/>
-	                                Search Name: {0}<br/>
-	                                Number of Results: {1}
-	                                </p>
-                                </body>
-                                </html>", search.searchName, search.searchNumberResults);
-                        sendEmail(search.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
+                        string body = string.Format(@"Your queued search has successfully completed. Please log on to https://lexnex.lib.msu.edu to download your results.
+
+Search Name: {0}
+Number of Results: {1}", search.searchName, search.searchNumberResults);
+                        if (search.emailed == false)
+                        {
+                            sendEmail(search.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
+                            search.emailed = true;
+                            DBManager.Instance.updateSearch(search);
+                        }
+
+                        errorLocation = string.Format("updating the database after processing zip for search: {0}", search.searchFullName);
+                        DBManager.Instance.updateSearch(search);
 
                         // Delete the un-zipped files since they are no longer needed
                         errorLocation = string.Format("removing the unzipped directory with search results (search: {0})", search.searchFullName);
                         try
                         {
                             // get the directory to delete from the zip file name
-                            string dir = "";
-                            string[] path_parts = search.searchResultLocation.Split('/');
-                            string[] name_parts = path_parts[path_parts.Length - 1].Split('_');
-                            string part_to_remove = "_" + name_parts[name_parts.Length - 2] + "_" + name_parts[name_parts.Length - 1];
                             dir = search.searchResultLocation.Replace(part_to_remove, "");
+
+                            errorLocation = string.Format("removing the unzipped directory with search results (directory: {0})", dir);
 
                             deleteDirectory(dir);
                         }
@@ -175,7 +176,9 @@ namespace LexisNexisWSKImplementationQueueProcessor
 
             foreach (string file in files)
             {
+                if (!File.Exists(file)) continue;
                 File.SetAttributes(file, FileAttributes.Normal);
+                if (!File.Exists(file)) continue;
                 File.Delete(file);
             }
 

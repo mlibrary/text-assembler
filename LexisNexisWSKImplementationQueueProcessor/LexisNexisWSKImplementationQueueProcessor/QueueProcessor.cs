@@ -78,7 +78,6 @@ namespace LexisNexisWSKImplementationQueueProcessor
         {
             get { return AppLookups.getLookupByDescription("Database Error").AppLookupCd; }
         }
-
         private bool traceEnabled;
 
         private SearchRequest request;
@@ -177,9 +176,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 errorLocation = "authenticating with the web service";
                 errorCode = WS_ERROR_CODE;
 
-                authenticateWebService(); // this will throw an exception if any errors occur
-
-               
+                authenticateWebService(); // this will throw an exception if any errors occur           
 
                 // Loop through the search queue until the remaining searches is 0
                 //// For each search item: run the search, save the results, update the database with the stats, incremened 
@@ -221,48 +218,59 @@ namespace LexisNexisWSKImplementationQueueProcessor
                                 request.searchLNID = null;
                                 changed = true;
                             }
+
                             if (changed)
                             {
                                 DBManager.Instance.updateSearch(request);
-                                DBManager.Instance.updateSearch(request);
                             }
 
-
-                            // clear out the previous saved search ID since it will have expired from the previous run
-                            request.searchLNID = null;
-                            DBManager.Instance.updateSearch(request);
 
                             // process the search
                             try
                             {
                                 processSearch();
 
-                                //now that search is complete, check if there are 0 results and if so update it in the DB
-                                if (request.searchNumberResults == 0)
+                                // if search is complete, check if there are 0 results and if so update it in the DB
+                                if (request.searchNumberResults == 0 && request.searchPercentComplete == 1)
                                 {
                                     request.searchResultLocation = "";
                                     request.searchNumberResults = 0;
                                     request.searchPercentComplete = 1m;
                                     request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
-                                    DBManager.Instance.updateSearch(request);
+                                    request.emailed = true;
 
                                     // send email that the search completed with 0 results
-                                    string body = string.Format(@"<html>
-                                                                    <body>
-	                                                                    <p>Your queued search completed with 0 results. Please log on to the <a href='https://lexnex.lib.msu.edu'>Text Assembler</a> site to refine your search and queue it again.
-	                                                                    <br/><br/>
-                                                                        For assistance with refining your search contact <a href='http://staff.lib.msu.edu/chua/'>Hui Hua Chua</a>
-                                                                        <br/><br/>
-	                                                                    Search Name: {0}<br/>
-	                                                                    </p>
-                                                                    </body>
-                                                                    </html>", request.searchName);
+                                    string body = string.Format(@"Your queued search completed with 0 results. Please log on to https://lexnex.lib.msu.edu to refine your search and queue it again.	                                                                    
+
+For assistance with refining your search contact Hui Hua Chua (http://staff.lib.msu.edu/chua/)
+                                                                        
+Search Name: {0}", request.searchName);
                                     sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
+                                    DBManager.Instance.updateSearch(request);
                                 }
                             }
                             catch (Exception e)
                             {
                                 if (e.Message != "STOP PROCESSING") throw e; // we want to ignore the exception that was just thrown to stop the processing of that request
+
+				// if search is complete, check if there are 0 results and if so update it in the DB                          
+                                else if (e.Message == "STOP PROCESSING" && request.searchNumberResults == 0 && request.searchPercentComplete == 1)
+                                {
+                                    request.searchResultLocation = "";
+                                    request.searchNumberResults = 0;
+                                    request.searchPercentComplete = 1m;
+                                    request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
+                                    request.emailed = true;                                       
+
+                                    // send email that the search completed with 0 results
+                                    string body = string.Format(@"Your queued search completed with 0 results. Please log on to https://lexnex.lib.msu.edu to refine your search and queue it again.                                                                    
+
+For assistance with refining your search contact Hui Hua Chua (http://staff.lib.msu.edu/chua/)                                                                    
+
+Search Name: {0}", request.searchName);
+                                    sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
+                                    DBManager.Instance.updateSearch(request);
+                                }
                             }
                         }
                     }
@@ -304,7 +312,6 @@ namespace LexisNexisWSKImplementationQueueProcessor
             {
                 DBManager.Instance.logError(string.Format("Starting processing of search: '{0}'.", request.searchFullName), UI_TRACE_CODE, "SYSTEM");
             }
-
 
             // finish the in progress search before continuing. No errors are expected since the rest of the search processed sucessfully
             // only potential error should be operation timeout
@@ -420,7 +427,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
             errMsg = processRange(); // process the range, could throw errors
 
             if (errMsg != "") // handle errors that could occur mid-process
-            {              
+            {
                 if (errMsg.Contains("timed out"))
                 {
                     Logger.Instance.logMessage(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
@@ -468,20 +475,17 @@ namespace LexisNexisWSKImplementationQueueProcessor
                         request.searchStatus = AppLookups.getLookupByDescription("Invalid").AppLookupCd;
                         request.searchPercentComplete = 0;
                         request.errorMsg = errMsg;
-                        DBManager.Instance.updateSearch(request);
+                        request.emailed = true;                     
 
                         // send email that the search is invalid
-                        string body = string.Format(@"<html>
-                                <body>
-	                                <p>Your queued search has failed due to being invalid. Please log on to the <a href='https://lexnex.lib.msu.edu'>Text Assembler</a> site to refine your search and queue it again.
-	                                <br/><br/>
-                                    For assistance with refining your search contact <a href='http://staff.lib.msu.edu/chua/'>Hui Hua Chua</a>
-                                    <br/><br/>
-	                                Search Name: {0}<br/>
-	                                </p>
-                                </body>
-                                </html>", request.searchName);
+                        string body = string.Format(@"Your queued search has failed due to being invalid. Please log on to https://lexnex.lib.msu.edu to refine your search and queue it again.
+	                                
+For assistance with refining your search contact Hui Hua Chua (http://staff.lib.msu.edu/chua/)
+For technical assistance with the system contact Megan Schanz (schanzme@lib.msu.edu)
+
+Search Name: {0}", request.searchName);
                         sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Failed", body);
+                        DBManager.Instance.updateSearch(request);
 
                         Logger.Instance.logMessage(string.Format("Error processing '{0}', invalid search. Error: {1}", request.searchFullName, errMsg));
                         DBManager.Instance.logError(string.Format("Error processing '{0}', invalid search. Error: {1}", request.searchFullName, errMsg), WS_ERROR_CODE, "SYSTEM");
@@ -502,20 +506,18 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     request.searchStatus = AppLookups.getLookupByDescription("Invalid").AppLookupCd;
                     request.searchPercentComplete = 0;
                     request.errorMsg = "Search too general.";
-                    DBManager.Instance.updateSearch(request);
+                   request.emailed = true;                
 
                     // send email that the search is invalid
-                    string body = string.Format(@"<html>
-                                <body>
-	                                <p>Your queued search has failed due to being too general. Please log on to the <a href='https://lexnex.lib.msu.edu'>Text Assembler</a> site to refine your search and queue it again.
-	                                <br/><br/>
-                                    For assistance with refining your search contact <a href='http://staff.lib.msu.edu/chua/'>Hui Hua Chua</a>
-                                    <br/><br/>
-	                                Search Name: {0}<br/>
-	                                </p>
-                                </body>
-                                </html>", request.searchName);
+                    string body = string.Format(@"
+	                                Your queued search has failed due to being too general. Please log on to https://lexnex.lib.msu.edu to refine your search and queue it again.
+	                                
+For assistance with refining your search contact Hui Hua Chua (http://staff.lib.msu.edu/chua/)
+                                    
+Search Name: {0}", request.searchName);
                     sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Failed", body);
+
+                    DBManager.Instance.updateSearch(request);
 
                     Logger.Instance.logMessage(string.Format("Error processing '{0}', search was too general to process. Error: {1}", request.searchFullName, errMsg));
                     DBManager.Instance.logError(string.Format("Error processing '{0}', search was too general to process. Error: {1}", request.searchFullName, errMsg), WS_ERROR_CODE, "SYSTEM");
@@ -575,8 +577,53 @@ namespace LexisNexisWSKImplementationQueueProcessor
             srchPerReq = Convert.ToInt32(AppParams.getParameterByName("RSLT_PR_SRCH").AppParamValue);
             docPerReq = Convert.ToInt32(AppParams.getParameterByName("DOC_PR_SRCH").AppParamValue);
             if (request.searchStartIndex < 1) request.searchStartIndex = 1;
+            string saveLocation = Path.Combine(Path.Combine(ConfigurationManager.AppSettings["saveLocation"], request.searchUser), request.searchName.Replace(' ', '_').Replace("/","_").Replace("\\","_"));
 
-            if (request.searchStartIndex > request.numResultsInRange && request.numResultsInRange != 0) // this search is complete for the curr range
+            // Only do the below actions if the search is actually complete
+            if (request.searchPercentComplete >= 1 || (request.currEndDate <= request.currStartDate && request.searchPercentComplete != 0))
+            {
+                if (traceEnabled)
+                {
+                    DBManager.Instance.logError(string.Format("Search: '{0}': marking as complete.", request.searchFullName), UI_TRACE_CODE, "SYSTEM");
+                }
+
+                errorCode = UI_ERROR_CODE;
+
+                // Add logo image to the folder
+                errorLocation = string.Format("adding logo images to the documents folder (search: {0})", request.searchFullName);
+                addLogoImageToFolder(saveLocation);
+
+                // Reverse the order of the results
+                /// THIS WAS CAUSING PROBLEMS ON THE SERVER SO I AM COMMENTING IT OUT UNTIL RESOLVED
+                //errorLocation = string.Format("reversing the document results in the folders (search: {0})", request.searchFullName);
+                //reverseDocNameOrder(saveLocation, request.searchFullName);
+
+                // Determine the zip file name that will be created
+                errorLocation = string.Format("Updating the target zip file for the search (search: {0})", request.searchFullName);
+                String zipPath = Path.Combine(Path.Combine(ConfigurationManager.AppSettings["saveLocation"], request.searchUser), string.Format("{0}.zip", request.searchName.Replace(' ', '_')));
+                request.searchResultLocation = zipPath;
+                request.searchPercentComplete = 1m;
+                DBManager.Instance.updateSearch(request);
+
+                // Zip up all of the results for the search, only retaining the zip file (not the individual html files)              
+                errorLocation = string.Format("zipping the documents on the server (search: {0})", request.searchFullName);
+                zipPath = zipDocuments(saveLocation, request.searchName.Replace(' ', '_'), Path.Combine(ConfigurationManager.AppSettings["saveLocation"], request.searchUser));
+
+                // Update the DB with the final status of the search with the location of the zip file and 100% complete status
+                errorCode = DB_ERROR_CODE;
+                errorLocation = string.Format("updating the search status in the database (search: {0})", request.searchFullName);
+                request.searchResultLocation = zipPath;
+                request.searchPercentComplete = 1m;
+                request.searchNumberResults = Directory.GetFiles(Path.Combine(saveLocation, "txt"), "*", SearchOption.TopDirectoryOnly).Length;
+                request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
+                request.searchQueuePosition = null;
+                DBManager.Instance.updateSearch(request);
+
+                return "";
+            }
+
+            // this search is complete for the curr range
+            if (request.searchStartIndex > request.numResultsInRange && request.numResultsInRange != 0) 
             {
                 if (traceEnabled)
                 {
@@ -604,25 +651,30 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 request.searchStartIndex = 1;
                 DBManager.Instance.updateSearch(request);
             }
+
             int fileNum = request.searchNumberResults + request.searchStartIndex;
             endIndex = 0;
             if (endIndex == 0 || endIndex > (request.searchStartIndex + srchPerReq - 1)) endIndex = request.searchStartIndex + srchPerReq - 1;
             List<string> searchResult = null;
-            string saveLocation = Path.Combine(Path.Combine(ConfigurationManager.AppSettings["saveLocation"], request.searchUser), request.searchName.Replace(' ', '_'));
+
 
             if (traceEnabled)
             {
                 DBManager.Instance.logError(string.Format("Search: '{0}': checking if search is complete. Start index={1}. End index={2}. Percent Complete={3}. Current Start Date={4}. Current End Date={5}.",
-                    request.searchFullName, request.searchStartIndex, endIndex, request.searchPercentComplete, ((DateTime)request.currStartDate).ToString("MM/dd/yyyy"),
+                    request.searchFullName, request.searchStartIndex, endIndex, request.searchPercentComplete, ((DateTime)request.currStartDate).ToString("MM/dd/yyyy"), 
                     ((DateTime)request.currEndDate).ToString("MM/dd/yyyy")), UI_TRACE_CODE, "SYSTEM");
             }
 
-            if (request.searchStartIndex <= endIndex && (request.currEndDate >= request.currStartDate && request.searchPercentComplete != 1)
-                || (request.currEndDate > request.currStartDate && request.searchPercentComplete == 1))
+            // if the search is in progress for the current range
+            if (request.searchStartIndex <= endIndex && request.currEndDate >= request.currStartDate && request.searchPercentComplete != 1)
             {
                 // Perform the first search with a range of 1 - max results per request
                 errorCode = WS_ERROR_CODE;
                 errorLocation = string.Format("retrieving documents from the web service (search: {0})", request.searchFullName);
+                if (traceEnabled)
+                {
+                    DBManager.Instance.logError(errorLocation, UI_TRACE_CODE, "SYSTEM");
+                }
                 try
                 {
                     searchResult = getDocuments(request.searchStartIndex, endIndex, docPerReq);
@@ -662,6 +714,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     //// File location: <root save location>\<requesting user>\<search name>
                     errorCode = UI_ERROR_CODE;
                     errorLocation = string.Format("saving documents to the server (search: {0})", request.searchFullName);
+                    if (traceEnabled)
+                    {
+                        DBManager.Instance.logError(errorLocation, UI_TRACE_CODE, "SYSTEM");
+                    }
                     fileNum = saveDocuments(searchResult, saveLocation, fileNum);
 
                     //// Update the DB with the % complete each search request
@@ -713,6 +769,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
                         //// Retrieve documents for the current group from the web service
                         errorCode = WS_ERROR_CODE;
                         errorLocation = string.Format("retrieving documents from the web service (search: {0})", request.searchFullName);
+                        if (traceEnabled)
+                        {
+                            DBManager.Instance.logError(errorLocation, UI_TRACE_CODE, "SYSTEM");
+                        }
                         try
                         {
                             searchResult = getDocuments(request.searchStartIndex, endIndex, docPerReq);
@@ -726,6 +786,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
                         //// Save the document text to html files saved to the server
                         errorCode = UI_ERROR_CODE;
                         errorLocation = string.Format("saving documents to the server (search: {0})", request.searchFullName);
+                        if (traceEnabled)
+                        {
+                            DBManager.Instance.logError(errorLocation, UI_TRACE_CODE, "SYSTEM");
+                        }
                         fileNum = saveDocuments(searchResult, saveLocation, fileNum);
 
                         //// Update the DB with the % complete each search request
@@ -741,34 +805,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     }
                 }
             }
-            // Only do the below actions if the search is actually complete
-            if (request.searchPercentComplete >= 1 || request.currEndDate <= request.currStartDate)
-            {
-                if (traceEnabled)
-                {
-                    DBManager.Instance.logError(string.Format("Search: '{0}': marking as complete.", request.searchFullName), UI_TRACE_CODE, "SYSTEM");
-                }
-
-                errorCode = UI_ERROR_CODE;
-
-                // Add logo image to the folder
-                errorLocation = string.Format("adding logo images to the documents folder (search: {0})", request.searchFullName);
-                addLogoImageToFolder(saveLocation);
-
-                // Zip up all of the results for the search, only retaining the zip file (not the individual html files)              
-                errorLocation = string.Format("zipping the documents on the server (search: {0})", request.searchFullName);
-                string zipPath = zipDocuments(saveLocation, request.searchName.Replace(' ', '_'), Path.Combine(ConfigurationManager.AppSettings["saveLocation"], request.searchUser));
-
-                // Update the DB with the final status of the search with the location of the zip file and 100% complete status
-                errorCode = DB_ERROR_CODE;
-                errorLocation = string.Format("updating the search status in the database (search: {0})", request.searchFullName);
-                request.searchResultLocation = zipPath;
-                request.searchPercentComplete = 1m;
-                request.searchNumberResults = Directory.GetFiles(Path.Combine(saveLocation, "txt"), "*", SearchOption.TopDirectoryOnly).Length;
-                request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
-                request.searchQueuePosition = null;
-                DBManager.Instance.updateSearch(request);               
-            }
+           
             return "";
         }
 
@@ -894,6 +931,12 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     // update the request with the searchID
                     request.searchLNID = searchResp.searchId;
                     DBManager.Instance.updateSearch(request);
+
+                    // Don't continue processing if no results found
+                    if (request.numResultsInRange == 0)
+                    {
+                        return results;
+                    }
                 }
                 catch (WebException we)
                 {
@@ -965,8 +1008,8 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 //Make the Web Service call
                 if (traceEnabled)
                 {
-                    DBManager.Instance.logError(string.Format("Calling: `GetDocumentsByRange`. Name: {0}. Start Date: {1}. End Date: {2}. SearchID: {3}. Start Index: {4}. End Index: {5}.",
-                         request.searchFullName, ((DateTime)request.currStartDate).ToString("MM/dd/yyyy"), ((DateTime)request.currEndDate).ToString("MM/dd/yyyy"),
+                    DBManager.Instance.logError(string.Format("Calling: `GetDocumentsByRange`. Name: {0}. Start Date: {1}. End Date: {2}. SearchID: {3}. Start Index: {4}. End Index: {5}.", 
+                        request.searchFullName, ((DateTime)request.currStartDate).ToString("MM/dd/yyyy"), ((DateTime)request.currEndDate).ToString("MM/dd/yyyy"),
                         request.searchLNID, startIndex.ToString(), endIndex.ToString()), WS_TRACE_CODE, "SYSTEM");
                 }
                 getByDocRangeResp = retrieveBind.GetDocumentsByRange(rangeReq);
@@ -1130,7 +1173,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 message.Subject = subject;
                 message.From = new System.Net.Mail.MailAddress(string.Format("root@{0}.lib.msu.edu", System.Net.Dns.GetHostName()));
                 message.Body = body;
-                message.IsBodyHtml = true;
+                //message.IsBodyHtml = true;
                 System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("localhost");
                 smtp.Send(message);
             }
@@ -1467,16 +1510,15 @@ namespace LexisNexisWSKImplementationQueueProcessor
          /// <returns>Returns the full path to the zip file that is created</returns>
         private string zipDocuments(string directory, string zipNamePrefix, string zipSaveLocation)
          {
-             string timestamp = DateTime.Now.ToString("MMddyyyy_HHmmss");
-             string fullPath = Path.Combine(zipSaveLocation, string.Format("{0}_{1}.zip", zipNamePrefix, timestamp));
+            string fullPath = Path.Combine(zipSaveLocation, string.Format("{0}.zip", zipNamePrefix));
 
-             using (ZipFile zip = new ZipFile())
-             {
+            using (ZipFile zip = new ZipFile())
+            {
                  zip.UseZip64WhenSaving = Zip64Option.AsNecessary;
                  zip.AddDirectory(directory, zipNamePrefix);
                  zip.Comment = "This zip was created at " + System.DateTime.Now.ToString("G"); 
                  zip.Save(fullPath);
-             }
+            }
 
              try
              {
