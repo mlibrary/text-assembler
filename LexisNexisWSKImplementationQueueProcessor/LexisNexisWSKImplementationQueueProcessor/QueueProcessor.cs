@@ -1587,34 +1587,27 @@ Search Name: {0}", request.searchName);
          /// <returns>True/False depending on if it is running</returns>
          private bool isAppRunning()
         {
-             // gets the application's run stat and the stat code for 'running'
-            int statCd = DBManager.Instance.getRunStatus();
-            int val = AppLookups.getLookupByDescription("Running").AppLookupCd;
-
-             // if the run stat is 'running' then return true, else false
-            if (val == statCd) return true;
-            else return false;
+            // gets the application's run stat and the stat code for 'running'
+            int code = AppLookups.getLookupByDescription("Queue Processor").AppLookupCd;
+            return DBManager.Instance.getRunStatus(code);
         }
 
-         /// <summary>
-         /// Sets the application run status wit the provided value
-         /// </summary>
-         /// <param name="runStatus">True/False if the application is currently running or not</param>
-         private void setAppRunStatus(bool runStatus)
+        /// <summary>
+        /// Sets the application run status wit the provided value
+        /// </summary>
+        /// <param name="runStatus">True/False if the application is currently running or not</param>
+        private void setAppRunStatus(bool runStatus)
          {
-             int statCode;
-             if (runStatus) statCode = AppLookups.getLookupByDescription("Running").AppLookupCd;
-             else statCode = AppLookups.getLookupByDescription("Not Running").AppLookupCd;
+            int code = AppLookups.getLookupByDescription("Queue Processor").AppLookupCd;
+            DBManager.Instance.setRunStatus(code, runStatus);
+        }
 
-             DBManager.Instance.setRunStatus(statCode);
-         }
-
-         /// <summary>
-         /// Gets the secured source ID from the web service for a given source ID
-         /// </summary>
-         /// <param name="sourceID">Source ID</param>
-         /// <returns>Secured Source ID</returns>
-         private Tuple<string, string> getSourceDetails(string[] sourceID)
+        /// <summary>
+        /// Gets the secured source ID from the web service for a given source ID
+        /// </summary>
+        /// <param name="sourceID">Source ID</param>
+        /// <returns>Secured Source ID</returns>
+        private Tuple<string, string> getSourceDetails(string[] sourceID)
          {
              // Verify our web service connection is still active, and if not 
              // re-authenticate using the same credentials to get a new session

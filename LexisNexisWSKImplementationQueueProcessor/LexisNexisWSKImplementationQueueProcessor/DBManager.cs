@@ -369,10 +369,12 @@ namespace LexisNexisWSKImplementationQueueProcessor
         /// <summary>
         /// Retrieves the applications's run status from the database
         /// </summary>
-        /// <returns>Integer with the run status value</returns>
-        public int getRunStatus()
+        /// <param name="typeCode">Job code from lookup table</param>
+        /// <returns>Boolean with the run status value</returns>
+        public bool getRunStatus(int typeCode)
         {
             int results;
+            bool result = false;
             try
             {
                 using (MySqlConnection con = getConnection())
@@ -381,6 +383,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     MySqlCommand cmd = new MySqlCommand("p_get_run_stat", con);
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
+                    cmd.Parameters.AddWithValue("@JOB_TYP", typeCode);
                     MySqlParameter outParmStat = new MySqlParameter("@RUN_STAT", MySqlDbType.Int32);
                     outParmStat.Direction = System.Data.ParameterDirection.Output;
 
@@ -389,8 +392,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     cmd.ExecuteNonQuery();
 
                     results = outParmStat.Value as int? ?? default(int);
-
-                    
+                    result = results == 1 ? true : false;
                 }
             }
             catch (Exception)
@@ -399,7 +401,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 //logError(string.Format("Error retrieving the user's search grid from the database. Error: {0}",ex.Message), DB_ERROR_CODE, userID);
                 throw;
             }
-            return results;
+            return result;
         }
 
 
@@ -503,8 +505,9 @@ namespace LexisNexisWSKImplementationQueueProcessor
         /// <summary>
         /// Updates the run status in the database
         /// </summary>
-        /// <param name="statCode">Status code representing the current status</param>
-        public void setRunStatus(int statCode)
+        /// <param name="isRunning">If the process is running</param>
+        /// <param name="typeCode">Job code from the lookup table</param>
+        public void setRunStatus(int typeCode, bool isRunning)
         {
             try
             {
@@ -512,8 +515,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 {
                     con.Open();
                     MySqlCommand cmd = new MySqlCommand("p_set_run_stat", con);
+                
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@RUN_STAT", statCode);
+                    cmd.Parameters.AddWithValue("@JOB_TYP", typeCode);
+                    cmd.Parameters.AddWithValue("@RUNNING", isRunning);
 
                     cmd.ExecuteNonQuery();
                 }

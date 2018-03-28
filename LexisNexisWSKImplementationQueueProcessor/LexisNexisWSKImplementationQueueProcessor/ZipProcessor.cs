@@ -74,6 +74,19 @@ namespace LexisNexisWSKImplementationQueueProcessor
 
             try
             {
+                // Check the application's run status
+                errorLocation = "verifying the application's run status in the database";
+                if (isAppRunning())
+                {
+                    // log that the application is already running then return
+                    Logger.Instance.logMessage("Another instance of the application is already running.");
+                    return results;
+                }
+
+                // Set the run status to running
+                errorLocation = "updating the run status";
+                setAppRunStatus(true);
+
                 // process the deletion in the database
                 errorLocation = "retrieving searches to check";
                 errorCode = DB_ERROR_CODE;
@@ -124,7 +137,7 @@ Number of Results: {1}", search.searchName, search.searchNumberResults);
                         try
                         {
                             // get the directory to delete from the zip file name
-                            dir = search.searchResultLocation.Replace(part_to_remove, "");
+                            string dir = search.searchResultLocation.Replace(".zip", "");
 
                             errorLocation = string.Format("removing the unzipped directory with search results (directory: {0})", dir);
 
@@ -154,7 +167,8 @@ Number of Results: {1}", search.searchName, search.searchNumberResults);
             }
             finally
             {
-
+                // Set the run status to not running
+                setAppRunStatus(false);
             }
 
             return results;
@@ -236,6 +250,27 @@ Number of Results: {1}", search.searchName, search.searchNumberResults);
             }
         }
 
+        /// <summary>
+        /// Determines if the application is currently running or not
+        /// </summary>
+        /// <returns>True/False depending on if it is running</returns>
+        private bool isAppRunning()
+        {
+            // gets the application's run stat and the stat code for 'running'
+            int code = AppLookups.getLookupByDescription("Zip Processor").AppLookupCd;
+            return DBManager.Instance.getRunStatus(code);
+
+        }
+
+        /// <summary>
+        /// Sets the application run status wit the provided value
+        /// </summary>
+        /// <param name="runStatus">True/False if the application is currently running or not</param>
+        private void setAppRunStatus(bool runStatus)
+        {
+            int code = AppLookups.getLookupByDescription("Zip Processor").AppLookupCd;
+            DBManager.Instance.setRunStatus(code, runStatus);
+        }
 
         #endregion
     }
