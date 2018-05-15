@@ -78,6 +78,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
         {
             get { return AppLookups.getLookupByDescription("Database Error").AppLookupCd; }
         }
+        private int NON_CRIT_ERROR_CODE
+        {
+            get { return AppLookups.getLookupByDescription("Non Critical Error").AppLookupCd; }
+        }
         private bool traceEnabled;
 
         private SearchRequest request;
@@ -301,6 +305,8 @@ Search Name: {0}", request.searchName);
         private void processSearch()
         {
             string errMsg = "";
+            string stackTrace = "";
+            Tuple<string, string> results = new Tuple<string, string>("", "");
 
             // check that there are searches remaining
             if (DBManager.Instance.getRemainingSearches().Item1 < 1 || !verifyProcessingWindow())
@@ -322,13 +328,23 @@ Search Name: {0}", request.searchName);
                     DBManager.Instance.logError(string.Format("Search: '{0}': resuming in progress search. Start index={1}", request.searchFullName, request.searchStartIndex), UI_TRACE_CODE, "SYSTEM");
                 }
 
-                errMsg = processRange(); // no changes need to be made to currDate since this search is in progress
+                results = processRange(); // no changes need to be made to currDate since this search is in progress
+                errMsg = results.Item1;
+                stackTrace = results.Item2;
                 if (errMsg != "") // handle errors that could occur mid-process
                 {
                     if (errMsg.Contains("timed out"))
                     {
                         Logger.Instance.logMessage(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                        DBManager.Instance.logError(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), WS_ERROR_CODE, "SYSTEM");
+                        DBManager.Instance.logError(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), NON_CRIT_ERROR_CODE, "SYSTEM");
+
+                        // skip the rest of the processing for this search by throwing an exception
+                        throw new Exception("STOP PROCESSING");
+                    }
+                    else if (errMsg.Contains("Error getting response stream"))
+                    {
+                        Logger.Instance.logMessage(string.Format("The search '{0}' errored when getting a response from LexisNexis, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
+                        DBManager.Instance.logError(string.Format("The search '{0}' errored when getting a response from LexisNexis, will stop and attempt next processing cycle. Error: {1}. Stack Trace: {2}", request.searchFullName, errMsg, stackTrace), NON_CRIT_ERROR_CODE, "SYSTEM");
 
                         // skip the rest of the processing for this search by throwing an exception
                         throw new Exception("STOP PROCESSING");
@@ -336,7 +352,7 @@ Search Name: {0}", request.searchName);
                     else if (errMsg.Contains("EXPIRED_ANSWERSET"))
                     {
                         Logger.Instance.logMessage(string.Format("The search '{0}' had an expired answerset, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                        DBManager.Instance.logError(string.Format("The search '{0}' had an expired answerset, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), WS_ERROR_CODE, "SYSTEM");
+                        DBManager.Instance.logError(string.Format("The search '{0}' had an expired answerset, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), NON_CRIT_ERROR_CODE, "SYSTEM");
 
                         request.searchLNID = null;
                         DBManager.Instance.updateSearch(request);
@@ -350,7 +366,7 @@ Search Name: {0}", request.searchName);
                         if (DateTime.Now >= expirationTime)
                         {
                             Logger.Instance.logMessage(string.Format("The search '{0}' had an expired security token, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                            DBManager.Instance.logError(string.Format("The search '{0}', had an expired secirity token, will stop and attempt next processing cycle. Error: {1}. Security Token: {2}. Exp Date: {3}", request.searchFullName, errMsg, securityToken, expirationTime.ToString("F")), WS_ERROR_CODE, "SYSTEM");
+                            DBManager.Instance.logError(string.Format("The search '{0}', had an expired secirity token, will stop and attempt next processing cycle. Error: {1}. Security Token: {2}. Exp Date: {3}", request.searchFullName, errMsg, securityToken, expirationTime.ToString("F")), NON_CRIT_ERROR_CODE, "SYSTEM");
                         }
                         DBManager.Instance.updateSearch(request);
 
@@ -424,14 +440,24 @@ Search Name: {0}", request.searchName);
                 DBManager.Instance.logError(string.Format("Search: '{0}': starting search for new range.", request.searchFullName), UI_TRACE_CODE, "SYSTEM");
             }
 
-            errMsg = processRange(); // process the range, could throw errors
+            results = processRange();  // process the range, could throw errors
+            errMsg = results.Item1;
+            stackTrace = results.Item2;
 
             if (errMsg != "") // handle errors that could occur mid-process
             {
                 if (errMsg.Contains("timed out"))
                 {
                     Logger.Instance.logMessage(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                    DBManager.Instance.logError(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), WS_ERROR_CODE, "SYSTEM");
+                    DBManager.Instance.logError(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), NON_CRIT_ERROR_CODE, "SYSTEM");
+
+                    // skip the rest of the processing for this search by throwing an exception
+                    throw new Exception("STOP PROCESSING");
+                }
+                else if (errMsg.Contains("Error getting response stream"))
+                {
+                    Logger.Instance.logMessage(string.Format("The search '{0}' errored when getting a response from LexisNexis, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
+                    DBManager.Instance.logError(string.Format("The search '{0}' errored when getting a response from LexisNexis, will stop and attempt next processing cycle. Error: {1}. Stack Trace: {2}", request.searchFullName, errMsg, stackTrace), NON_CRIT_ERROR_CODE, "SYSTEM");
 
                     // skip the rest of the processing for this search by throwing an exception
                     throw new Exception("STOP PROCESSING");
@@ -439,7 +465,7 @@ Search Name: {0}", request.searchName);
                 else if (errMsg.Contains("EXPIRED_ANSWERSET"))
                 {
                     Logger.Instance.logMessage(string.Format("The search '{0}' had an expired answerset, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                    DBManager.Instance.logError(string.Format("The search '{0}' had an expired answerset, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), WS_ERROR_CODE, "SYSTEM");
+                    DBManager.Instance.logError(string.Format("The search '{0}' had an expired answerset, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), NON_CRIT_ERROR_CODE, "SYSTEM");
 
                     request.searchLNID = null;
                     DBManager.Instance.updateSearch(request);
@@ -453,7 +479,7 @@ Search Name: {0}", request.searchName);
                     if (DateTime.Now >= expirationTime)
                     {
                         Logger.Instance.logMessage(string.Format("The search '{0}' had an expired security token, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                        DBManager.Instance.logError(string.Format("The search '{0}', had an expired secirity token, will stop and attempt next processing cycle. Error: {1}. Security Token: {2}. Exp Date: {3}", request.searchFullName, errMsg, securityToken, expirationTime.ToString("F")), WS_ERROR_CODE, "SYSTEM");
+                        DBManager.Instance.logError(string.Format("The search '{0}', had an expired secirity token, will stop and attempt next processing cycle. Error: {1}. Security Token: {2}. Exp Date: {3}", request.searchFullName, errMsg, securityToken, expirationTime.ToString("F")), NON_CRIT_ERROR_CODE, "SYSTEM");
                     }
                     DBManager.Instance.updateSearch(request);
 
@@ -571,7 +597,7 @@ Search Name: {0}", request.searchName);
         /// <summary>
         /// Processes the search for the specific date range in currStartDate and currEndDate and calls the web service and saves those results
         /// </summary>
-        private string processRange()
+        private Tuple<string, string> processRange()
         {
             // Get the number of searches we can perform per request and documents we can get at a time
             srchPerReq = Convert.ToInt32(AppParams.getParameterByName("RSLT_PR_SRCH").AppParamValue);
@@ -619,7 +645,7 @@ Search Name: {0}", request.searchName);
                 request.searchQueuePosition = null;
                 DBManager.Instance.updateSearch(request);
 
-                return "";
+                return new Tuple<string, string>("", "");
             }
 
             // this search is complete for the curr range
@@ -682,7 +708,7 @@ Search Name: {0}", request.searchName);
                 // catch any exception caused by the web service code and throw back to the driver function
                 catch (Exception e)
                 {
-                    return e.Message;
+                    return new Tuple<string, string>(e.Message, e.StackTrace);
                 }
                 //// Handle the scenario when there are no results returned
                 if (request.numResultsInRange == 0 || searchResult.Count == 0)
@@ -780,7 +806,7 @@ Search Name: {0}", request.searchName);
                         // catch any exception caused by the web service code and throw to the driver function
                         catch (Exception e)
                         {
-                            return e.Message;
+                            return new Tuple<string, string>(e.Message, e.StackTrace);
                         }
 
                         //// Save the document text to html files saved to the server
@@ -805,8 +831,8 @@ Search Name: {0}", request.searchName);
                     }
                 }
             }
-           
-            return "";
+
+            return new Tuple<string, string>("", "");
         }
 
         /// <summary>
