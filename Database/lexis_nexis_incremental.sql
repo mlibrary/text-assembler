@@ -469,6 +469,27 @@ BEGIN
  END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure p_del_usr_path
+-- -----------------------------------------------------
+
+USE `lexis_nexis`;
+DROP procedure IF EXISTS `lexis_nexis`.`p_del_usr_path`;
+
+DELIMITER $$
+USE `lexis_nexis`$$
+CREATE PROCEDURE `p_del_usr_path` (PATH VARCHAR(1000))
+BEGIN
+	UPDATE APPL_USR_SRCH_STAT
+    SET APPL_USR_SRCH_RSLT_LOC = NULL
+    WHERE APPL_USR_SRCH_RSLT_LOC = PATH
+    AND APPL_USR_SRCH_USR_NME = 'DELETED' AND APPL_USR_SRCH_REC_TRMN_DT IS NOT NULL
+    AND APPL_USR_SRCH_RSLT_LOC IS NOT NULL;
+END
+$$
+
+DELIMITER ;
 USE `lexis_nexis`;
 
 DELIMITER $$

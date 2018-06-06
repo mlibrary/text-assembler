@@ -25,11 +25,9 @@
 // Licensed under GNU General Public License (GPL) Version 2.
 
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 
 namespace LexisNexisWSKImplementationQueueProcessor
 {
@@ -76,10 +74,11 @@ namespace LexisNexisWSKImplementationQueueProcessor
         public void logMessage(string message)
         {
             string logFile = ConfigurationManager.AppSettings["logFilename"];
+            int id = Process.GetCurrentProcess().Id;
 
             using (StreamWriter writer = new StreamWriter(logFile,true) )
             {
-                writer.WriteLine(string.Format("{0}    {1}", DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss"), message));
+                writer.WriteLine(string.Format("{0}: {1}    {2}", id.ToString(), DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss"), message));
             }
         }
 

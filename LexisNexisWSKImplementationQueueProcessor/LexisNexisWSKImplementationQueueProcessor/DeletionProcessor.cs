@@ -108,15 +108,25 @@ namespace LexisNexisWSKImplementationQueueProcessor
         /// <param name="files">List of files that should be deleted, assumes they are the full path</param>
         private void deleteSearchFiles(List<string> files)
          {
-             foreach (string f in files)
-             {
-                 try
-                 {
-                     File.Delete(f);
-                 }
-                 catch (IOException) { } // ignore this error, we don't care if the file has already been deleted
-             }
-         }
+            foreach (string f in files)
+            {
+                // check if the path exists, if so, delete it
+                try
+                {
+                    File.Delete(f);
+                }
+                catch (Exception e)
+                {
+                    string message = string.Format("Error deleting {0}. Error: {1}", f, e.Message);
+                    DBManager.Instance.logError(message, UI_ERROR_CODE, "SYSTEM");
+                    Logger.Instance.logMessage(message);
+                    System.Console.WriteLine(message);
+                }
+
+                // Remove the location from the database even if an error occured
+                DBManager.Instance.removeSearhLocation(f);
+            }
+        }
        
         #endregion
     }

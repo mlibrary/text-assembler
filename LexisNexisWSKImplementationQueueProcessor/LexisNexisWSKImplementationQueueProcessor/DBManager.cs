@@ -628,6 +628,30 @@ namespace LexisNexisWSKImplementationQueueProcessor
 
             return fileLocations;
         }
+
+        /// <summary>
+        /// Removes the search location from the database
+        /// </summary>
+        /// <param name="path">The path to remove</param>
+        public void removeSearhLocation(string path)
+        {
+            try
+            {
+                using (MySqlConnection con = getConnection())
+                {
+                    con.Open();
+                    MySqlCommand cmd = new MySqlCommand("p_del_usr_path", con);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@path", path);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+                // throw the exception back to the UI to handle
+                throw;
+            }
+        }
         #endregion
         #endregion
     }

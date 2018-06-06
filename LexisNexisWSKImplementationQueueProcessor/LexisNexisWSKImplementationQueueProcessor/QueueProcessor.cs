@@ -125,6 +125,10 @@ namespace LexisNexisWSKImplementationQueueProcessor
 
                 if (!DBManager.Instance.testConnection())
                 {
+                    // Set the run status to not running
+                    Logger.Instance.logMessage("Setting the processor running status to OFF");
+                    setAppRunStatus(false);
+
                     return new Tuple<int, string>(errorCode, "Unable to connect to the application's database.");
                 }
 
@@ -139,6 +143,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
 
                 // Set the run status to running
                 errorLocation = "updating the run status";
+                Logger.Instance.logMessage("Setting the processor running status to ON");
                 setAppRunStatus(true);
 
                 // Ensure we are within the time window allowed for processing
@@ -148,6 +153,11 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 if (!verifyProcessingWindow())
                 {
                     Logger.Instance.logMessage("This process is not within the valid processing window allowed.");
+
+                    // Set the run status to not running
+                    Logger.Instance.logMessage("Setting the processor running status to OFF");
+                    setAppRunStatus(false);
+
                     return results;
                 }
 
@@ -157,6 +167,11 @@ namespace LexisNexisWSKImplementationQueueProcessor
                 if (DBManager.Instance.getRemainingSearches().Item1 < 1)
                 {
                     Logger.Instance.logMessage("There are no remaining searches for this hour.");
+
+                    // Set the run status to not running
+                    Logger.Instance.logMessage("Setting the processor running status to OFF");
+                    setAppRunStatus(false);
+
                     return results;
                 }
 
@@ -172,6 +187,11 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     if (searchQueue.Count == 0)
                     {
                         Logger.Instance.logMessage("There are no searches in the queue to process.");
+
+                        // Set the run status to not running
+                        Logger.Instance.logMessage("Setting the processor running status to OFF");
+                        setAppRunStatus(false);
+
                         return results;
                     }
                 }
@@ -275,22 +295,29 @@ Search Name: {0}", request.searchName);
                                     sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
                                     DBManager.Instance.updateSearch(request);
                                 }
+                                else if (e.Message == "STOP PROCESSING")
+                                {
+                                    results = new Tuple<int, string>(0, ""); // error has already been logged, just clear it
+
+                                    // Set the run status to not running
+                                    Logger.Instance.logMessage("Setting the processor running status to OFF");
+                                    setAppRunStatus(false);
+                                    return results;
+                                }
+
                             }
                         }
                     }
-                }
-
-              
+                }           
             }
             catch (Exception ex)
             {
                 results = new Tuple<int, string>(errorCode, string.Format("An error occurred while {0}. Error: {1}. Stack Trace: {2}", errorLocation, ex.Message, ex.StackTrace));
             }
-            finally
-            {
-                // Set the run status to not running
-                setAppRunStatus(false);
-            }
+
+            // Set the run status to not running
+            Logger.Instance.logMessage("Setting the processor running status to OFF");
+            setAppRunStatus(false);
 
             return results;
         }
@@ -336,7 +363,7 @@ Search Name: {0}", request.searchName);
                     if (errMsg.Contains("timed out"))
                     {
                         Logger.Instance.logMessage(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                        DBManager.Instance.logError(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), NON_CRIT_ERROR_CODE, "SYSTEM");
+                        DBManager.Instance.logError(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}. Stack Trace: {2}", request.searchFullName, errMsg, stackTrace), NON_CRIT_ERROR_CODE, "SYSTEM");
 
                         // skip the rest of the processing for this search by throwing an exception
                         throw new Exception("STOP PROCESSING");
@@ -449,7 +476,7 @@ Search Name: {0}", request.searchName);
                 if (errMsg.Contains("timed out"))
                 {
                     Logger.Instance.logMessage(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg));
-                    DBManager.Instance.logError(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}", request.searchFullName, errMsg), NON_CRIT_ERROR_CODE, "SYSTEM");
+                    DBManager.Instance.logError(string.Format("The search '{0}' timed out, will stop and attempt next processing cycle. Error: {1}. Stack Trace: {2}", request.searchFullName, errMsg, stackTrace), NON_CRIT_ERROR_CODE, "SYSTEM");
 
                     // skip the rest of the processing for this search by throwing an exception
                     throw new Exception("STOP PROCESSING");
