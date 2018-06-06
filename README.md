@@ -300,6 +300,11 @@ sudo vim /etc/crontab
 
 - Make any desired modifications to the APPL_PARAM table that contains query restrictions to be used for the WSK
 
+### Deploying Changes
+
+To deploy changes to the processor and/or web interface. You can use the `deployScript` provided with this repository or pulling the code changes and repeating Steps 9 - 11 above. There is a sample `runDeploy.example` that calls the `deployScript` that can be modified for your environment's use and called (to save having to rememeber all the flags to provide). 
+
+
 Systems Administration
 ------------------------------------
 
@@ -456,4 +461,5 @@ The debug flag for the cron job in `/etc/crontab`:
 @hourly mono --debug <path to the .exe> --processQueue
 @daily mono --debug <path to the .exe> --processDeletion
 @daily mono --debug <path to the .exe> --updateSources
+*/5 * * * * mono --debug <path to the .exe> --processZips
 ```

@@ -1,0 +1,2 @@
+# Deploy Processor to current location, deploy UI to web root
+/home/admin/lexnex/deployScript -u deploy -d /var/www/lexnex -b ./backup -r /home/admin/lexnex

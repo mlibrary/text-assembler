@@ -1,0 +1,215 @@
+#!/bin/bash
+
+## Deploy Processor and Web Interface code
+
+###### Functions ######
+
+## Usage message
+usage() 
+{   echo "Deploy processor and web interface
+Usage: (MUST BE RUN AS ROOT)
+-u: User to pull the git repository changes as
+    Defaults to 'git'
+    Not required when the 'c' flag is passed
+-o: User who should own the deploy files
+    Defaults to www-data
+    Only required when deploying the web processor
+
+-r: Path to the repository, this is where the processor will be deployed
+    Defaults to the current working directory
+-d: Path to deploy the web interface to
+    Not required when the 'p' flag is passed
+-b: Path to the backup directory which has the last build files in it
+    Not required when the 'c' flag is passed
+    Defaults to /backups one level up from the current working directory
+    Note: should not be located within the 'r' path
+
+-q: Name of the queue processor project
+    Defaults to 'LexisNexisQueueProcessor'
+-m: Name of the main web interface project
+    Defaults to 'LexisNexis'
+
+-c: Clean the web interface bin only
+-w: Deploy the web interface only
+-p: Deploy the processor only
+
+-h: Display the help message
+
+Examples of usage:
+sudo ./deployScript -u git -p . -d /var/www/lexnex -b ./backup
+sudo ./deployScript -d /var/www/lexnex
+sudo ./deployScript -c" 1>&2; exit 1;
+}
+
+## Clean the bin directories for the processor and web interface
+clean() {
+    echo "-- Cleaning the Processor bin from $REPO_DIR/$PROCESSOR_NME/$PROCESSOR_NME/bin/Debug"
+    rm -f $REPO_DIR/$PROCESSOR_NME/$PROCESSOR_NME/bin/Debug/System*
+    rm -f $REPO_DIR/$PROCESSOR_NME/$PROCESSOR_NME/bin/Debug/Microsoft*
+    rm -f $REPO_DIR/$PROCESSOR_NME/$PROCESSOR_NME/bin/Debug/Mono*
+
+    echo "-- Cleaning the web interface bin from $DEPLOY_DIR/bin"
+    rm -f $DEPLOY_DIR/bin/System*
+    rm -f $DEPLOY_DIR/bin/Microsoft.*
+    rm -f $DEPLOY_DIR/bin/N*
+    rm -f $DEPLOY_DIR/bin/DotNet*
+    rm -f $DEPLOY_DIR/bin/Entity*
+    rm -f $DEPLOY_DIR/bin/Asp*
+
+    mkdir -p $DEPLOY_DIR/bin/
+    echo "-- Restoring the required bin files from $REPO_DIR/web_bin_backup to $DEPLOY_DIR/bin"
+    cp $REPO_DIR/web_bin_backup/* $DEPLOY_DIR/bin/.
+}
+
+## Backup the processor and web interface
+createBackup() {
+    echo "-- Creating backup at $BACKUP_DIR for $REPO_DIR and $DEPLOY_DIR"
+    mkdir -p $BACKUP_DIR/processor_bkup
+    mkdir -p $BACKUP_DIR/web_bkup
+    rm -rf $BACKUP_DIR/processor_bkup/*
+    cp -r $REPO_DIR/* $BACKUP_DIR/processor_bkup 
+    cp -r $DEPLOY_DIR/* $BACKUP_DIR/web_bkup
+}
+
+## Deploy and build the processor
+deployProcessor() {
+    echo "-- Deploying the processor to $REPO_DIR/$PROCESSOR_NME/$PROCESSOR_NME" 
+    rm $REPO_DIR/$PROCESSOR_NME/$PROCESSOR_NME/bin/Debug/$PROCESSOR_NME*
+
+    msbuild $REPO_DIR/$PROCESSOR_NME/$PROCESSOR_NME/$PROCESSOR_NME.csproj
+}
+
+## Deploy and build the web interface
+deployWeb() {
+    echo "-- Deploying the web interface to $DEPLOY_DIR"
+    cp -r $REPO_DIR/$WEB_NME/* $DEPLOY_DIR/.
+    cp $BACKUP_DIR/web_bkup/Web.config $DEPLOY_DIR/.
+    msbuild $DEPLOY_DIR/$WEB_NME.csproj
+
+    chown -R $DEPLOY_USER:$DEPLOY_USER $DEPLOY_DIR
+
+    rm -rf $DEPLOY_DIR/$PROCESSOR_NME
+    rm -rf $DEPLPY_DIR/web_bin_backup
+    rm -rf $DEPLPY_DIR/processor_bin_backup
+    rm -f $DEPLOY_DIR/deployScript
+}
+
+
+###### Process ######
+
+if [ "$EUID" -ne 0 ]
+  then echo "This script needs to be run as root to perform the deploy operations"
+  exit
+fi
+
+# Process command line arguments
+while getopts :r:d:b:u:q:m:o:cpwh option; do
+    case "${option}" in
+        r) REPO_DIR=${OPTARG}
+            ;;
+        d) DEPLOY_DIR=${OPTARG}
+            ;;
+        b) BACKUP_DIR=${OPTARG}
+            ;;
+        u) GIT_USER=${OPTARG}
+            ;;
+        q) PROCESSOR_NME=${OPTARG}
+            ;;
+        m) WEB_NME=${OPTARG}
+            ;;
+        o) DEPLOY_USER=${OPTARG}
+            ;;
+        c) CLEAN_BIN_ONLY=true
+            ;;
+        p) PROCESSOR_ONLY=true
+            ;;
+        w) WEB_ONLY=true
+            ;;
+        h) usage
+            ;;
+    esac
+done
+
+# Set defaults for inputs not provided
+if [ -z "$REPO_DIR" ]; then
+    REPO_DIR=$PWD
+fi
+if [ -z "$BACKUP_DIR" ]; then
+    BACKUP_DIR="$PWD/../backup"
+fi
+if [ -z "$PROCESSOR_NME" ]; then
+    PROCESSOR_NME="LexisNexisQueueProcessor"
+fi
+if [ -z "$WEB_NME" ]; then
+    WEB_NME="LexisNexis"
+fi
+if [ -z "$CLEAN_BIN_ONLY" ]; then
+    CLEAN_BIN_ONLY=false
+fi
+if [ -z "$PROCESSOR_ONLY" ]; then
+    PROCESSOR_ONLY=false
+fi
+if [ -z "$WEB_ONLY" ]; then
+    WEB_ONLY=false
+fi
+if [ -z "$GIT_USER" ]; then
+    GIT_USER="git"
+fi
+if [ -z "$DEPLOY_USER" ]; then
+    DEPLOY_USER="www-data"
+fi
+
+if [ "$PROCESSOR_ONLY" == false ] && [ "$WEB_ONLY" = false ]; then
+    PROCESSOR=true
+    WEB=true
+else
+    PROCESSOR=$PROCESSOR_ONLY
+    WEB=$WEB_ONLY
+fi
+if [[ "$REPO_DIR"  != '/'* ]]; then
+    REPO_DIR=$PWD/$REPO_DIR
+fi
+if [[ "$BACKUP_DIR"  != '/'* ]]; then
+    BACKUP_DIR=$PWD/$BACKUP_DIR
+fi
+if [[ "$DEPLOY_DIR"  != '/'* ]]; then
+    DEPLOY_DIR=$PWD/$DEPLOY_DIR
+fi
+
+# Stop processing if any required inputs are missing
+if [ -z "$DEPLOY_DIR" ] && [ "$PROCESSOR_ONLY" = false ] && [ "$CLEAN_BIN_ONLY" = false ]; then
+    echo "The deploy directory for the web interface is required!
+    "
+    usage
+fi
+
+# Process clean-only flag
+if [ "$CLEAN_BIN_ONLY" = true ]; then
+    clean
+    exit 1
+fi
+
+
+# Take a new backup of processor and web interface
+createBackup
+
+# Pull latest code from repository
+echo "-- Pull the latest code from $REPO_DIR"
+sudo -Hu $GIT_USER git -C $REPO_DIR pull
+
+# Deploy and build
+if [ "$PROCESSOR" = true ]; then
+    deployProcessor
+fi
+if [ "$WEB" = true ]; then
+    deployWeb
+fi
+
+# Clear out non-required bin files
+clean
+
+if [ "$WEB" = true ]; then
+    echo "-- Restarting Apache"
+    sudo service apache2 stop
+    sudo service apache2 start
+fi
