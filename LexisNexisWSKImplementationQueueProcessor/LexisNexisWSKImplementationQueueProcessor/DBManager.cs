@@ -490,6 +490,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                     cmd.Parameters.AddWithValue("@FILE_CHECK", record.fileSizeCheckDate);
                     cmd.Parameters.AddWithValue("@READY_FLAG", record.readyToDownload);
                     cmd.Parameters.AddWithValue("@QUEUE_POS", record.searchQueuePosition);
+                    cmd.Parameters.AddWithValue("@EMAILED", record.emailed);
 
                     cmd.ExecuteNonQuery();
                 }
