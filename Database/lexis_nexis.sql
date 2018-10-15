@@ -812,3 +812,12 @@ INSERT INTO `lexis_nexis`.`APPL_PARAM` (`APPL_PARAM_REC_ID`, `APPL_PARAM_NME`, `
 
 COMMIT;
 
+-- -----------------------------------------------------
+-- Data for table `lexis_nexis`.`APPL_SRCH_STAT`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lexis_nexis`;
+INSERT INTO APPL_SRCH_STAT (APPL_SRCH_STAT_VAL, APPL_SRCH_STAT_REC_EFF_DT, APPL_SRCH_STAT_REC_LAST_UPD_DT, APPL_SRCH_STAT_REC_TRMN_DT) VALUES (0, NOW(), NOW(), NULL);
+
+COMMIT;
+
