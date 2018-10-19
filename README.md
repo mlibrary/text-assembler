@@ -22,7 +22,7 @@ Minimum System Requirements
 ------------------------------------
 
 - Ubuntu 14.04.02 LTS
-- MariaDB 5.5 (Should work on MySQL, but haven't tested it)
+- MariaDB 5.5 (Should work on MySQL 8, but I haven't completely tested it)
 - Apache 2.4.7
 - Mono 5.0
 - Git 1.9 (If using Git for a code repository)
@@ -36,7 +36,7 @@ Special Ubuntu Packages:
 
 Environment
 ------------------------------------
-This was developed in a Windows environment using Visual Studio 2013 Community Edition and stored the code base in a Git repository. The server is a Ubuntu machine that uses Mono and Apache to serve the application.  
+This was developed in a Windows environment using Visual Studio 2013 Community Edition (and has sense been updated on the 2017 version) and stored the code base in a Git repository. The server is a Ubuntu machine that uses Mono and Apache to serve the application.  
 
 Setup Instructions
 ---------------------------------
@@ -257,8 +257,8 @@ sudo service apache2 start
  <appSettings>
     <add key="logoLocation" value="[LOGO_DIR]" /> <!-- LexisNexis that is added to the result files -->
     <add key="saveLocation" value="[SEARCH_RESULTS_DIR]" /> <!-- Location where the search results should be stored -->
-    <add key="logFilename" value="[LOG_FULLPATH]" /> <!-- Full name and path to the log file -->
-	<add key="wskEndPoint" value="[LN_ENDPOINT]"/>
+    <add key="logFilename" value="[LOG_FULLPATH]" /> <!-- Full name and path to the log file. ex: /var/log/lexnex.log -->
+    <add key="wskEndPoint" value="[LN_ENDPOINT]"/>
     <add key="wskID" value="[LN_USER]" />
     <add key="wskPassword" value="[LN_PASS]" />
 ...
@@ -345,6 +345,8 @@ Troubleshooting
 - To enable trace level logging of the API calls to LexisNexis, update the `WS_TRACE_LOGGING` record in the `APPL_PARAM` 
 table to 1 instead of 0. This will insert a record in the `APPL_LOG` table for all calls to the API. 
 
+- To run the queue processing application during the day, make sure to update the runnable hours in the 
+`APPL_PARAM` table.
 
 - The most common errors occur because the bin folder has extra dll files in it. To fix, run 
 the clean_bin script with the following command:
