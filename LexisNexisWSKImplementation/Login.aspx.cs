@@ -33,8 +33,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Configuration;
-using DotNetOpenAuth.AspNet;
-using Microsoft.AspNet.Membership.OpenAuth;
 
 
 namespace LexisNexisWSKImplementation
@@ -70,37 +68,15 @@ namespace LexisNexisWSKImplementation
         {
             try
             {
-                bool BYPASS; // used to bypass OAuth when testing locally or on the test server
-
-                // bypass OAuth if running locally
-                string host = Request.Url.Host.Split('.')[0];
-                if (host == "localhost")
-                    BYPASS = true; //  for testing 
-                else
-                    BYPASS = false;
-
-
-                if (BYPASS)
-                {
-                    Session["userObject"] = new User("develUser");
-                    Response.Redirect("~/SearchForm.aspx", false);
-                }
-                else
-                {
-                    // this code will only be populated if the user went through OAuth authentication
-                    if (Request.QueryString["code"] != null)
+                    if (Request.ServerVariables["REMOTE_USER"] != null)
                     {
-                        if (!Request.QueryString["code"].Equals(string.Empty))
+                        if (!Request.ServerVariables["REMOTE_USER"].Equals(string.Empty))
                         {
-                            MsuOAuth2Client client = (MsuOAuth2Client)OpenAuth.AuthenticationClients.GetByProviderName("msunet");
-                            AuthenticationResult result = client.VerifyAuthentication(Request.QueryString["code"], new Uri(HttpContext.Current.Request.Url.AbsoluteUri));
 
-                            Session["userObject"] = new User(result.UserName.Split('@')[0]);
-                            Session["EXTRA_DATA"] = result.ExtraData;
+                            Session["userObject"] = new User(Request.ServerVariables["REMOTE_USER"]);
                             Response.Redirect("~/SearchForm.aspx", false);
                         }
                     }
-                }
 
                 
             }

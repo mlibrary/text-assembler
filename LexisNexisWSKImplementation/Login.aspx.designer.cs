@@ -22,15 +22,6 @@ namespace LexisNexisWSKImplementation {
         protected global::System.Web.UI.WebControls.LinkButton lnkDownloadTech;
         
         /// <summary>
-        /// OpenAuthLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::LexisNexisWSKImplementation.Account.OpenAuthProviders OpenAuthLogin;
-        
-        /// <summary>
         /// result_text control.
         /// </summary>
         /// <remarks>

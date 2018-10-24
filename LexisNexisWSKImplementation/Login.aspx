@@ -26,7 +26,6 @@ Written by Megan Schanz, 2015-16
 Licensed under GNU General Public License (GPL) Version 2.
 --%>
 <%@ Page Title="Login" Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="LexisNexisWSKImplementation._Default" MasterPageFile="site.master" %>
-<%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
@@ -43,7 +42,6 @@ Licensed under GNU General Public License (GPL) Version 2.
                 <li class="narrowP">You may not engage in bulk reproduction or distribution of the licensed materials in any form.</li>
                 </ul>
             
-        <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
             <hr />        
         <!-- Shows results or errors that occur during form processing -->
          <p> <span runat="server" id="result_text" /> </p>
