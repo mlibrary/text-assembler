@@ -118,13 +118,13 @@ namespace LexisNexisWSKImplementationQueueProcessor
                         search.readyToDownload = true;
 
                         // send email that the search is complete
-                        string body = string.Format(@"Your queued search has successfully completed. Please log on to https://lexnex.lib.msu.edu to download your results.
+                        string body = string.Format(@"Your queued search has successfully completed. Please log on to https://lexnex.lib.umich.edu to download your results.
 
 Search Name: {0}
 Number of Results: {1}", search.searchName, search.searchNumberResults);
                         if (search.emailed == false)
                         {
-                            sendEmail(search.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
+                            sendEmail(search.searchUser + "@umich.edu", "Text Assembler: Search Complete", body);
                             search.emailed = true;
                             DBManager.Instance.updateSearch(search);
                         }
@@ -235,7 +235,7 @@ Number of Results: {1}", search.searchName, search.searchNumberResults);
                 /// Optionally can add an email address to also receive all emails sent from the application, like a sys admin
                 //message.Bcc.Add("[EMAIL]");
                 message.Subject = subject;
-                message.From = new System.Net.Mail.MailAddress(string.Format("root@{0}.lib.msu.edu", System.Net.Dns.GetHostName()));
+                message.From = new System.Net.Mail.MailAddress("lit-ae-systems@umich.edu");
                 message.Body = body;
                 message.IsBodyHtml = true;
                 System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("localhost");

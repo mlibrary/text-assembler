@@ -289,7 +289,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
 
                     // Add a mapping of the XML prefix "p:" to the XML Namespace of WSK
                     XmlNamespaceManager nsmgr = new XmlNamespaceManager(se.Detail.OwnerDocument.NameTable);
-                    nsmgr.AddNamespace("p", "http://services.v1.wsapi.lexisnexis.com.proxy1.cl.msu.edu");
+                    nsmgr.AddNamespace("p", "http://services.v1.wsapi.lexisnexis.com");
 
                     // Search the Fault message's detail for the  element
                     XmlNode nd = se.Detail.SelectSingleNode("//p:errorCode", nsmgr);

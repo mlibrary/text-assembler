@@ -264,12 +264,9 @@ namespace LexisNexisWSKImplementationQueueProcessor
                                     request.emailed = true;
 
                                     // send email that the search completed with 0 results
-                                    string body = string.Format(@"Your queued search completed with 0 results. Please log on to https://lexnex.lib.msu.edu to refine your search and queue it again.	                                                                    
-
-For assistance with refining your search contact Hui Hua Chua (http://staff.lib.msu.edu/chua/)
-                                                                        
+                                    string body = string.Format(@"Your queued search completed with 0 results. Please log on to https://lexnex.lib.umich.edu to refine your search and queue it again.
 Search Name: {0}", request.searchName);
-                                    sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
+                                    sendEmail(request.searchUser + "@umich.edu", "Text Assembler: Search Complete", body);
                                     DBManager.Instance.updateSearch(request);
                                 }
                             }
@@ -287,12 +284,9 @@ Search Name: {0}", request.searchName);
                                     request.emailed = true;                                       
 
                                     // send email that the search completed with 0 results
-                                    string body = string.Format(@"Your queued search completed with 0 results. Please log on to https://lexnex.lib.msu.edu to refine your search and queue it again.                                                                    
-
-For assistance with refining your search contact Hui Hua Chua (http://staff.lib.msu.edu/chua/)                                                                    
-
+                                    string body = string.Format(@"Your queued search completed with 0 results. Please log on to https://lexnex.lib.umich.edu to refine your search and queue it again.
 Search Name: {0}", request.searchName);
-                                    sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Complete", body);
+                                    sendEmail(request.searchUser + "@umich.edu", "Text Assembler: Search Complete", body);
                                     DBManager.Instance.updateSearch(request);
                                 }
                                 else if (e.Message == "STOP PROCESSING")
@@ -531,13 +525,10 @@ Search Name: {0}", request.searchName);
                         request.emailed = true;                     
 
                         // send email that the search is invalid
-                        string body = string.Format(@"Your queued search has failed due to being invalid. Please log on to https://lexnex.lib.msu.edu to refine your search and queue it again.
+                        string body = string.Format(@"Your queued search has failed due to being invalid. Please log on to https://lexnex.lib.umich.edu to refine your search and queue it again.
 	                                
-For assistance with refining your search contact Hui Hua Chua (http://staff.lib.msu.edu/chua/)
-For technical assistance with the system contact Megan Schanz (schanzme@lib.msu.edu)
-
 Search Name: {0}", request.searchName);
-                        sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Failed", body);
+                        sendEmail(request.searchUser + "@umich.edu", "Text Assembler: Search Failed", body);
                         DBManager.Instance.updateSearch(request);
 
                         Logger.Instance.logMessage(string.Format("Error processing '{0}', invalid search. Error: {1}", request.searchFullName, errMsg));
@@ -563,12 +554,10 @@ Search Name: {0}", request.searchName);
 
                     // send email that the search is invalid
                     string body = string.Format(@"
-	                                Your queued search has failed due to being too general. Please log on to https://lexnex.lib.msu.edu to refine your search and queue it again.
-	                                
-For assistance with refining your search contact Hui Hua Chua (http://staff.lib.msu.edu/chua/)
+	                                Your queued search has failed due to being too general. Please log on to https://lexnex.lib.umich.edu to refine your search and queue it again.
                                     
 Search Name: {0}", request.searchName);
-                    sendEmail(request.searchUser + "@msu.edu", "Text Assembler: Search Failed", body);
+                    sendEmail(request.searchUser + "@umich.edu", "Text Assembler: Search Failed", body);
 
                     DBManager.Instance.updateSearch(request);
 
@@ -1072,11 +1061,11 @@ Search Name: {0}", request.searchName);
                 {
                     for (int i = 0; i < getByDocRangeResp.documentContainerList.Length; i++)
                     {
-                        // Add Lexis Nexis MSU Libraries images to the file
+                        // Add Lexis Nexis umich Libraries images to the file
                         string doc = Encoding.Default.GetString(getByDocRangeResp.documentContainerList[i].document).Replace("<html>",
                             @"<html>
                         <span style=""padding:31px"">
-                            <a href=""http://www.lexisnexis.com.proxy1.cl.msu.edu""><img src=""ID_Web_horizontal_lrg_white.gif"" alt=""LexisNexis(R)"" style=""width:200px;height:61px""></a>
+                            <a href=""http://www.lexisnexis.com.proxy.lib.umich.edu""><img src=""ID_Web_horizontal_lrg_white.gif"" alt=""LexisNexis(R)"" style=""width:200px;height:61px""></a>
                         </span>
                         </span>");
                         documents.Add(doc);
@@ -1181,7 +1170,7 @@ Search Name: {0}", request.searchName);
 
                     // Add a mapping of the XML prefix "p:" to the XML Namespace of WSK
                     XmlNamespaceManager nsmgr = new XmlNamespaceManager(se.Detail.OwnerDocument.NameTable);
-                    nsmgr.AddNamespace("p", "http://services.v1.wsapi.lexisnexis.com.proxy1.cl.msu.edu");
+                    nsmgr.AddNamespace("p", "http://services.v1.wsapi.lexisnexis.com");
 
                     // Search the Fault message's detail for the  element
                     XmlNode nd = se.Detail.SelectSingleNode("//p:errorCode", nsmgr);
@@ -1224,7 +1213,7 @@ Search Name: {0}", request.searchName);
                 /// Optionally can add an email address to also receive all emails sent from the application, like a sys admin
                 //message.Bcc.Add("[EMAIL]");
                 message.Subject = subject;
-                message.From = new System.Net.Mail.MailAddress(string.Format("root@{0}.lib.msu.edu", System.Net.Dns.GetHostName()));
+                message.From = new System.Net.Mail.MailAddress("lit-ae-systems@umich.edu");
                 message.Body = body;
                 //message.IsBodyHtml = true;
                 System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("localhost");
