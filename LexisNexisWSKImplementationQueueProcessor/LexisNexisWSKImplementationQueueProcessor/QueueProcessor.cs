@@ -260,6 +260,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                                     request.searchResultLocation = "";
                                     request.searchNumberResults = 0;
                                     request.searchPercentComplete = 1m;
+                                    request.searchQueuePosition = null;
                                     request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
                                     request.emailed = true;
 
@@ -280,6 +281,7 @@ Search Name: {0}", request.searchName);
                                     request.searchResultLocation = "";
                                     request.searchNumberResults = 0;
                                     request.searchPercentComplete = 1m;
+                                    request.searchQueuePosition = null;
                                     request.searchStatus = AppLookups.getLookupByDescription("Complete").AppLookupCd;
                                     request.emailed = true;                                       
 
