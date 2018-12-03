@@ -1564,25 +1564,29 @@ Search Name: {0}", request.searchName);
                  zip.Save(fullPath);
             }
 
-             try
-             {
-                 Syscall.chmod(Path.GetDirectoryName(fullPath), FilePermissions.S_IROTH); // change the permissions of the user's folder
-             }
-             catch (Exception e)
-             {
-                 // log the error but dont fail the process over permissions
-                 DBManager.Instance.logError(string.Format("Failed to add read permissions to the user's folder. Error: {0}", e.Message), UI_ERROR_CODE, "SYSTEM");
-             }
+            // Only try to change the permissions if running on a Mono server
+            if (Type.GetType("Mono.Runtime") != null)
+            {
+                try
+                {
+                    Syscall.chmod(Path.GetDirectoryName(fullPath), FilePermissions.S_IROTH); // change the permissions of the user's folder
+                }
+                catch (Exception e)
+                {
+                    // log the error but dont fail the process over permissions
+                    DBManager.Instance.logError(string.Format("Failed to add read permissions to the user's folder. Error: {0}", e.Message), UI_ERROR_CODE, "SYSTEM");
+                }
 
-             try
-             {
-                 Syscall.chmod(fullPath, FilePermissions.S_IROTH); // change the permissions of the zip file
-             }
-             catch (Exception e)
-             {
-                // log the error but dont fail the process over permissions
-                 DBManager.Instance.logError(string.Format("Failed to add read permissions to the zip. Error: {0}", e.Message), UI_ERROR_CODE, "SYSTEM");
-             }
+                try
+                {
+                    Syscall.chmod(fullPath, FilePermissions.S_IROTH); // change the permissions of the zip file
+                }
+                catch (Exception e)
+                {
+                    // log the error but dont fail the process over permissions
+                    DBManager.Instance.logError(string.Format("Failed to add read permissions to the zip. Error: {0}", e.Message), UI_ERROR_CODE, "SYSTEM");
+                }
+            }
              return fullPath;
          }
         
