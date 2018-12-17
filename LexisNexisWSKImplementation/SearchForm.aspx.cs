@@ -282,7 +282,7 @@ namespace LexisNexisWSKImplementation
                currentUser = null;
                Session["userObject"] = null;
                Session.Clear();
-               Response.Redirect("https://oauth.itservices.msu.edu/oauth/logout", false);
+               Response.Redirect("https://weblogin.umich.edu/cgi-bin/logout", false);
            }
            catch (Exception ex)
            {
@@ -684,9 +684,7 @@ namespace LexisNexisWSKImplementation
                         You have received this response because your search matches more than 10,000 results. In order to retrieve more than 10,000 results per day you 
                         will need to break your request into multiple queries wherein each query matches 10,000 or less results per day, queuing each query for download 
                         along the way.  For example if you searched for ‘Obama’ over the course of a year, across all English language newspapers, you would likely 
-                        return more than 10,000 results. In order to capture all matching content you would need to create multiple jobs scoped to smaller sources. 
-                        For advice on capturing datasets larger than 10,000 items contact 
-                        <a href=""http://staff.lib.msu.edu/chua/"" style=""color:#0000FF;border-bottom: 1px solid #0000FF;"">Hui Hua Chua</a>. </p>";
+                        return more than 10,000 results. In order to capture all matching content you would need to create multiple jobs scoped to smaller sources. ";
                 }
                 else if (ex.Message.Contains("EXPIRED_SECURITY_TOKEN") && adhocRetries == 0)
                 {
