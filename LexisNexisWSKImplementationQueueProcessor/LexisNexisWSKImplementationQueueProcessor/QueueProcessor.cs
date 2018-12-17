@@ -1569,7 +1569,7 @@ Search Name: {0}", request.searchName);
             {
                 try
                 {
-                    Syscall.chmod(Path.GetDirectoryName(fullPath), FilePermissions.S_IROTH); // change the permissions of the user's folder
+                    Syscall.chmod(Path.GetDirectoryName(fullPath), FilePermissions.S_IRWXU | FilePermissions.S_IRWXG | FilePermissions.S_IXOTH | FilePermissions.S_IROTH); // change the permissions of the user's folder
                 }
                 catch (Exception e)
                 {
@@ -1579,7 +1579,7 @@ Search Name: {0}", request.searchName);
 
                 try
                 {
-                    Syscall.chmod(fullPath, FilePermissions.S_IROTH); // change the permissions of the zip file
+                    Syscall.chmod(fullPath, FilePermissions.S_IRUSR | FilePermissions.S_IWUSR | FilePermissions.S_IRGRP | FilePermissions.S_IWGRP | FilePermissions.S_IROTH); // change the permissions of the zip file
                 }
                 catch (Exception e)
                 {
