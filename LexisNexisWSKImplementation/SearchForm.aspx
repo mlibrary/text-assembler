@@ -97,9 +97,11 @@ Licensed under GNU General Public License (GPL) Version 2.
             <h2>Search</h2>
             <p><b class="lnLabel">Instructions: </b>Select source(s), construct search, and preview results. If preview results look 
                 appropriate, assign a Corpus Name and queue for download. Downloading is queued for nights and weekends. Please plan ahead to ensure 
-                sufficient time to retrieve results. For more guidance consult the <a href="#" data-toggle="modal" data-target="#myModal" style="color:#0000FF;border-bottom: 1px solid #0000FF;">
-                    step by step instructions.</a>
-                For more information on how to construct more effective searches see <asp:LinkButton ID="lnkDownloadTips" runat="server" OnClick="lnkDownloadTips_Click" Text="these tips" style="color:#0000FF;border-bottom: 1px solid #0000FF;"/>.
+                sufficient time to retrieve results. 
+
+For guidance, consult the <a href="#" data-toggle="modal" data-target="#myModal" style="color:#0000FF;border-bottom: 1px solid #0000FF;">brief instructions.</a>
+For additional help,  <a id="ctl00_MainContent_lnkDownloadTips" href="https://drive.google.com/file/d/1ZwG1G35QPEgrHcm0oSsf0cWk9u15T5xg/view?usp=sharing" style="color:#0000FF;border-bottom: 1px solid #0000FF;">detailed instructions</a> are also available.
+
             </p> 
                         
             <table><tr><td><b class="lnLabel">Available Sources: </b></td>

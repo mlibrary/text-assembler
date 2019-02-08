@@ -124,7 +124,7 @@ Search Name: {0}
 Number of Results: {1}", search.searchName, search.searchNumberResults);
                         if (search.emailed == false)
                         {
-                            sendEmail(search.searchUser + "@umich.edu", "Text Assembler: Search Complete", body);
+                            sendEmail(search.searchUser + "@umich.edu", "LexisNexis Text Assembler: Search Complete", body);
                             search.emailed = true;
                             DBManager.Instance.updateSearch(search);
                         }

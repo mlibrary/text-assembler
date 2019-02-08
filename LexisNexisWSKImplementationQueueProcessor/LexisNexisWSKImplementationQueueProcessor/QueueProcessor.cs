@@ -267,7 +267,7 @@ namespace LexisNexisWSKImplementationQueueProcessor
                                     // send email that the search completed with 0 results
                                     string body = string.Format(@"Your queued search completed with 0 results. Please log on to https://lexnex.lib.umich.edu to refine your search and queue it again.
 Search Name: {0}", request.searchName);
-                                    sendEmail(request.searchUser + "@umich.edu", "Text Assembler: Search Complete", body);
+                                    sendEmail(request.searchUser + "@umich.edu", "LexisNexis Text Assembler: Search Complete", body);
                                     DBManager.Instance.updateSearch(request);
                                 }
                             }
@@ -288,7 +288,7 @@ Search Name: {0}", request.searchName);
                                     // send email that the search completed with 0 results
                                     string body = string.Format(@"Your queued search completed with 0 results. Please log on to https://lexnex.lib.umich.edu to refine your search and queue it again.
 Search Name: {0}", request.searchName);
-                                    sendEmail(request.searchUser + "@umich.edu", "Text Assembler: Search Complete", body);
+                                    sendEmail(request.searchUser + "@umich.edu", "LexisNexis Text Assembler: Search Complete", body);
                                     DBManager.Instance.updateSearch(request);
                                 }
                                 else if (e.Message == "STOP PROCESSING")
@@ -530,7 +530,7 @@ Search Name: {0}", request.searchName);
                         string body = string.Format(@"Your queued search has failed due to being invalid. Please log on to https://lexnex.lib.umich.edu to refine your search and queue it again.
 	                                
 Search Name: {0}", request.searchName);
-                        sendEmail(request.searchUser + "@umich.edu", "Text Assembler: Search Failed", body);
+                        sendEmail(request.searchUser + "@umich.edu", "LexisNexis Text Assembler: Search Failed", body);
                         DBManager.Instance.updateSearch(request);
 
                         Logger.Instance.logMessage(string.Format("Error processing '{0}', invalid search. Error: {1}", request.searchFullName, errMsg));
@@ -559,7 +559,7 @@ Search Name: {0}", request.searchName);
 	                                Your queued search has failed due to being too general. Please log on to https://lexnex.lib.umich.edu to refine your search and queue it again.
                                     
 Search Name: {0}", request.searchName);
-                    sendEmail(request.searchUser + "@umich.edu", "Text Assembler: Search Failed", body);
+                    sendEmail(request.searchUser + "@umich.edu", "LexisNexis Text Assembler: Search Failed", body);
 
                     DBManager.Instance.updateSearch(request);
 
